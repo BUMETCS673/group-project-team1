@@ -20,7 +20,7 @@ Hello my name is Timothy Flucker and I am a software developer consultant at Del
 
 ### Members: Xiaobing Hou
 
-Hi my name is Xiaobing Hou and I am a online student. I have no experience for software development. I have finished three classes (CS521, CS526, and CS622) and my former major is air conditioning. I am located in Golden, Colorado with my wife who's major is Chemical Engineering. 
+Hi my name is Xiaobing Hou. I am from China and I am a online student. I have no experience for software development. I have finished three classes (CS521, CS526, and CS622) and my former major is air conditioning. I am located in Golden, Colorado with my wife who's major is Chemical Engineering. 
 
 The following is my programing languages:
 
