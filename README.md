@@ -30,3 +30,18 @@ The following is my programing languages:
 - HTML5 + CSS3
 - Node.js
 - Git
+
+### Members: Jean Dorancy
+Hello I'm Jean Dorancy and I have been a Software Engineer for the past six years. I have worked on range of different applications.
+- APIs and microservices with the lightweight Dropwizard framework and one project with Spring Boot. 
+- Stream (Kafka) processing with Apache Storm, Akka Actors and Akka Streams (including simple Kafka consumers).
+- Web with Play Framework, PHP, and React JS, Webpack JS for frontend.
+- Batch with the powerful Spark framework.
+- Emails templates processing with Node JS and Grunt JS.
+- And others.
+
+I have recently been deploying on Google Cloud Platform especially on Dataproc clusters and Kubernetes (GKE) although couple years 
+ago it was VMs (now outdated)! I'm familiar with SQL Server primarily from professional experience while I have used PostgreSQL and MySQL in side projects
+years back. I have also recently worked with Memcached, Redis, Elasticsearch, Solr, HBase and Aerospike for storage/cache solutions.
+Some DevOps tools that I have used includes Docker, Jenkins, Airflow, Buildkite, Git, Kibana etc. On personal note, I'm married and father of one boy.
+We live in the greater Boston area in MA.
