@@ -1,6 +1,6 @@
-# Group 1 
+# Team 1 
 
-### Members: Timothy Flucker, 
+### Timothy Flucker
 
 
 Hello my name is Timothy Flucker and I am a software developer consultant at Deloitte.  I have 8 years of software development experience in an Agile-Scrum team based environment.  I have been part of the full software developemnt lifecycle and I have experience designing, developing, testing, and deploying code.  I have also participated in creating and updating project artifacts and project documentation. I am located in Washington DC with my wife Sydney and my dog Lincoln (4 year old German Shepard and Staffordshire Terrier mix). I have experience with the following programming languages and technologies:
@@ -18,7 +18,7 @@ Hello my name is Timothy Flucker and I am a software developer consultant at Del
 
 
 
-### Members: Xiaobing Hou
+### Xiaobing Hou
 
 Hi my name is Xiaobing Hou. I am from China and I am a online student. I have no experience for software development. I have finished three classes (CS521, CS526, and CS622) and my former major is air conditioning. I am located in Golden, Colorado with my wife who's major is Chemical Engineering. 
 
@@ -31,7 +31,7 @@ The following is my programing languages:
 - Node.js
 - Git
 
-### Members: Jean Dorancy
+### Jean Dorancy
 Hello I'm Jean Dorancy and I have been a Software Engineer for the past six years. I have worked on range of different applications.
 - APIs and microservices with the lightweight Dropwizard framework and one project with Spring Boot. 
 - Stream (Kafka) processing with Apache Storm, Akka Actors and Akka Streams (including simple Kafka consumers).
@@ -47,7 +47,7 @@ Some DevOps tools that I have used includes Docker, Jenkins, Airflow, Buildkite,
 We live in the greater Boston area in MA.
 
 
-### Members: Weijie Liang
+### Weijie Liang
 Hello my name is Weijie Liang. I am a BU student majoring Computer Science with concentration of Data Analysis. I have only had basic development experience 
 during my undergraduate years. The class I have finished are CS544,CS555,CS566,CS575,CS579,CS622. I am Located in Boston as an On-Campus Student. The programming 
 language I have used before are as follows:
