@@ -45,3 +45,15 @@ ago it was VMs (now outdated)! I'm familiar with SQL Server primarily from profe
 years back. I have also recently worked with Memcached, Redis, Elasticsearch, Solr, HBase and Aerospike for storage/cache solutions.
 Some DevOps tools that I have used includes Docker, Jenkins, Airflow, Buildkite, Git, Kibana etc. On personal note, I'm married and father of one boy.
 We live in the greater Boston area in MA.
+
+
+### Members: Weijie Liang
+Hello my name is Weijie Liang. I am a BU student majoring Computer Science with concentration of Data Analysis. I have only had basic development experience 
+during my undergraduate years. The class I have finished are CS544,CS555,CS566,CS575,CS579,CS622. I am Located in Boston as an On-Campus Student. The programming 
+language I have used before are as follows:
+
+- C
+- Java / J2EE / Android
+- R
+- SQL
+- Python
