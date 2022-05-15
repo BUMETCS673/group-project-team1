@@ -10,7 +10,7 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "trackr.swagger.io"
-basePath: "/v2"
+basePath: "/v1"
 tags:
   - name: "User Management"
   - name: "Bank Account Management"
@@ -57,7 +57,7 @@ paths:
           description: "Invalid Response, username already exists."
           schema:
             $ref: "#/definitions/MessageResponse"
-  /bankAccount:
+  /bank-account:
     get:
       tags:
         - "Bank Account Management"
@@ -113,7 +113,7 @@ paths:
           description: "invalid data response"
           schema:
             $ref: "#/definitions/MessageResponse"
-  /bankAccount/{id}:
+  /bank-account/{id}:
     get:
       tags:
         - "Bank Account Management"
