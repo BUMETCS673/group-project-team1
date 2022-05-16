@@ -1,0 +1,445 @@
+swagger: "2.0"
+info:
+  description: "This is the Team 1 group project for Boston University's MET CS 673 class in Summer 1 2022.  The application is modeled after personal finance applications like Mint and Truebill and allows users to input bank account and transaction data.  This data can then be accessed, modified, or voided at the user's discretion and it allows them to see their spending habits at a high level. \n\n Team members: Jean Dorancy, Timothy Flucker, Xiaobing Hou, Weijie Liang"
+  version: "1.0.0"
+  title: "Trackr - Personal Transaction Management"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "tflucker@bu.edu"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "trackr.swagger.io"
+basePath: "/v1"
+tags:
+  - name: "User Management"
+  - name: "Bank Account Management"
+  - name: "Transaction Management"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /user:
+    post:
+      tags:
+        - "User Management"
+      summary: "Add a new user to the application"
+      description: "This API will allow a person to create a new user in the application by specifying a username and a password. If the username is unique, a new user will be created and a success message will be returned.  If the username is not unique, no user will be created and an error message will be returned."
+      operationId: "addUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "JSON object used to create a new user in the application."
+          required: true
+          schema:
+            type: "object"
+            properties:
+              username:
+                type: "string"
+                example: "myUser"
+              password:
+                type: "string"
+                format: "password"
+                example: "myPassword"
+              email:
+                type: "string"
+                example: "myUser@email.com"
+      responses:
+        "200": 
+          description: "Successful reponse"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+        "400":
+          description: "Invalid Response, username already exists."
+          schema:
+            $ref: "#/definitions/MessageResponse"
+  /bank-account:
+    get:
+      tags:
+        - "Bank Account Management"
+      summary: "Retrieves all bank accounts tied to user."
+      description: "Retrieve all bank account records tied to the user"
+      operationId: "findBankAccounts"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/BankAccount" 
+    post:
+      tags:
+        - "Bank Account Management"
+      summary: "Create a bank account tied to the user."
+      description: "Query the database to find a bank account record tied to the particular user with the provided id value."
+      operationId: "createNewBankAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON object used to create a bank account user in the application."
+        required: true
+        schema:
+          type: "object"
+          properties:
+            accountType:
+              type: "string"
+              enum: ["CHECKING", "SAVINGS", "RETIREMENT", "OTHER"]
+              example: "CHECKING"
+            accountName:
+              type: "string"
+              example: "Personal checking account"
+            balance:
+              type: "number"
+              format: "float"
+              example: 5143.91
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            $ref: "#/definitions/MessageResponse"        
+        "400":
+          description: "invalid data response"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+  /bank-account/{id}:
+    get:
+      tags:
+        - "Bank Account Management"
+      summary: "Retrieves a bank account tied to the user based on the provided id"
+      description: "Query the database to find a bank account record tied to the particular user with the provided id value."
+      operationId: "findBankAccountById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            $ref: "#/definitions/BankAccount"        
+        "400":
+          description: "invalid data response"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+    delete:
+      tags:
+        - "Bank Account Management"
+      summary: "Voids a bank account tied to the user based on the provided id"
+      description: "Query the database to find a bank account record tied to the particular user with the provided id value, if it exists then set status to VOID to prevent transactions from being added."
+      operationId: "voidBankAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            $ref: "#/definitions/MessageResponse"        
+        "400":
+          description: "invalid data response"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+    put:
+      tags:
+        - "Bank Account Management"
+      summary: "Updateds a bank account tied to the user based on the provided id"
+      description: "Query the database to find a bank account record tied to the particular user with the provided id value, if it exists then update it with the provided information, else return an error."
+      operationId: "updateBankAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "JSON object used to create a bank account user in the application."
+        required: true
+        schema:
+          type: "object"
+          properties:
+            accountType:
+              type: "string"
+              enum: ["CHECKING", "SAVINGS", "RETIREMENT", "OTHER"]
+              example: "CHECKING"
+            accountName:
+              type: "string"
+              example: "Personal checking account"
+            balance:
+              type: "number"
+              format: "float"
+              example: 5143.91
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            $ref: "#/definitions/MessageResponse"        
+        "400":
+          description: "invalid data response"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+
+  /transaction:
+    get:
+      tags:
+        - "Transaction Management"
+      summary: "Retrieves all transactions tied to user."
+      description: "Retrieve all transaction records tied to the user"
+      operationId: "findAllTransactions"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Transaction" 
+    post:
+      tags:
+        - "Transaction Management"
+      summary: "Create a transaction tied to the user and a specific bank account"
+      description: "Insert a new transaction record into the database tied to the user."
+      operationId: "createTransaction"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON object used to create a transaction database record."
+        required: true
+        schema:
+          type: "object"
+          properties:
+            bankAccountId:
+              type: "integer"
+              format: "integer64"
+              example: 123
+            transactionType:
+              type: "string"
+              enum: ["DEPOSIT","WITHDRAWL"]
+              example: "WITHDRAWL"
+            transactionDesc:
+              type: "string"
+              example: "Starbucks morning coffee, with croissant"
+            transactionAmount:
+              type: "number"
+              format: "float"
+              example: 7.95
+            transactionDate:
+              type: "string"
+              format: "date"
+              example: "2022-05-10"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            $ref: "#/definitions/MessageResponse"        
+        "400":
+          description: "invalid data response"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+  /transaction/{id}:
+    get:
+      tags:
+        - "Transaction Management"
+      summary: "Retrieves a user's transaction record based on the provided id"
+      description: "Query the database to find a transaction record tied to the particular user with the provided id value."
+      operationId: "findTransactionById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of transaction"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            $ref: "#/definitions/Transaction"        
+        "400":
+          description: "invalid data response"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+    delete:
+      tags:
+        - "Transaction Management"
+      summary: "Voids a transaction tied to the user based on the provided id"
+      description: "Query the database to find a transaction record tied to the particular user with the provided id value, if it exists then set status to VOID and reverse the balance change to the related bank account."
+      operationId: "voidTransaction"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of transaction"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            $ref: "#/definitions/MessageResponse"        
+        "400":
+          description: "invalid data response"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+    put:
+      tags:
+        - "Transaction Management"
+      summary: "Updateds a bank account tied to the user based on the provided id"
+      description: "Query the database to find a bank account record tied to the particular user with the provided id value, if it exists then update it with the provided information, else return an error."
+      operationId: "updateTransaction"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "JSON object used to create a bank account user in the application."
+        required: true
+        schema:
+          type: "object"
+          properties:
+            accountType:
+              type: "string"
+              enum: ["CHECKING", "SAVINGS", "RETIREMENT", "OTHER"]
+              example: "CHECKING"
+            accountName:
+              type: "string"
+              example: "Personal checking account"
+            balance:
+              type: "number"
+              format: "float"
+              example: 5143.91
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            $ref: "#/definitions/MessageResponse"        
+        "400":
+          description: "invalid data response"
+          schema:
+            $ref: "#/definitions/MessageResponse"
+definitions:
+  BankAccount:
+    type: "object"
+    properties:
+      id: 
+        type: "integer"
+        format: "int64"
+        example: 1
+      userId:
+        type: "integer"
+        format: "integer64"
+        example: 12
+      accountType:
+        type: "string"
+        enum: 
+          - "CHECKING"
+          - "SAVINGS"
+          - "RETIREMENT"
+          - "OTHER"
+        example: "CHECKING"
+      accountName:
+        type: string
+        example: "My Checking Account"
+      balance:
+        type: "number"
+        format: "float"
+        example: 5143.91
+      status:
+        type: "string"
+        example: "ACTIVE"
+  Transaction:
+    type: "object"
+    properties:
+      id: 
+        type: "integer"
+        format: "int64"
+        example: 1
+      userId:
+        type: "integer"
+        format: "integer64"
+        example: 12
+      bankAccountId:
+        type: "integer"
+        format: "integer64"
+        example: 123
+      transactionType:
+        type: "string"
+        enum: 
+          - "DEPOSIT"
+          - "WITHDRAWL"
+        example: "WITHDRAWL"
+      transactionAmount:
+        type: "number"
+        format: "float"
+        example: 5143.91
+      transactionDesc:
+        type: "string"
+        example: "Starbucks morning coffee, with croissant"
+      transactionDate:
+        type: "string"
+        format: "date"
+        example: "2022-05-10"
+  MessageResponse:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+        example: "Some message here!"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
