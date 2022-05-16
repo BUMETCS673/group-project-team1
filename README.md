@@ -54,4 +54,3 @@ language I have used before are as follows:
 - R
 - SQL
 - Python
->>>>>>> f6e7740fb3442861d20fa685530fc8d7fde358b7
