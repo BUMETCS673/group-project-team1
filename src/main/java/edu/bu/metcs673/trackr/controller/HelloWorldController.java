@@ -1,15 +1,13 @@
-package com.trackr.controller;
+package edu.bu.metcs673.trackr.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.trackr.constants.CommonConstants;
-import com.trackr.domain.User;
-import com.trackr.service.UserService;
+import edu.bu.metcs673.trackr.constants.CommonConstants;
+import edu.bu.metcs673.trackr.domain.User;
+import edu.bu.metcs673.trackr.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 

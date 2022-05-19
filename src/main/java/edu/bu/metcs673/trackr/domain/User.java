@@ -1,4 +1,4 @@
-package com.trackr.domain;
+package edu.bu.metcs673.trackr.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
