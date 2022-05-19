@@ -1,4 +1,4 @@
-package com.trackr.config;
+package edu.bu.metcs673.trackr.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

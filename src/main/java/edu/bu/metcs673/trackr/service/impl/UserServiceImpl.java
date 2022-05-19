@@ -1,13 +1,13 @@
-package com.trackr.service.impl;
+package edu.bu.metcs673.trackr.service.impl;
 
 import java.util.List;
 
+import edu.bu.metcs673.trackr.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.trackr.domain.User;
-import com.trackr.repo.UserRepository;
-import com.trackr.service.UserService;
+import edu.bu.metcs673.trackr.domain.User;
+import edu.bu.metcs673.trackr.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 

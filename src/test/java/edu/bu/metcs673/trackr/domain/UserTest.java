@@ -1,4 +1,4 @@
-package com.trackr.domain;
+package edu.bu.metcs673.trackr.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
