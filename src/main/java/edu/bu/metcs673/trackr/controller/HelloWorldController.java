@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.bu.metcs673.trackr.constants.CommonConstants;
+import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.domain.User;
 import edu.bu.metcs673.trackr.service.UserService;
 

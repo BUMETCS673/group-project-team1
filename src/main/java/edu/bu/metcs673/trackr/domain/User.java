@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
@@ -31,12 +33,12 @@ public class User {
 	private long id;
 
 	// code below defines different columns in the table (USERNAME, PASSWORD, EMAIL)
-	@Column
+	@Column(nullable = false, length = 50)
 	private String username;
 
-	@Column
+	@Column(nullable = false, length = 100)
 	private String password;
 
-	@Column
+	@Column(nullable = false, length = 100)
 	private String email;
 }

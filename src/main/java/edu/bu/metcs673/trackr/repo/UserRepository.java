@@ -6,12 +6,21 @@ import org.springframework.stereotype.Repository;
 import edu.bu.metcs673.trackr.domain.User;
 
 /**
- * Directly interfaces with the "USERS" table in the H2 repository, using the JPA library.
+ * Directly interfaces with the "USERS" table in the H2 repository, using the
+ * JPA library.
+ * 
  * @author Tim Flucker
  *
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, Long> {
 
-	public User findById(long id);
+	/**
+	 * Custom JPA query that checks to see if a record with the provided 'username'
+	 * already exists in the DB.
+	 * 
+	 * @param username
+	 * @return boolean
+	 */
+	public boolean existsByUsername(String username);
 }
