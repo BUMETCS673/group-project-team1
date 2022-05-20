@@ -18,11 +18,12 @@ import lombok.NoArgsConstructor;
  * @author Tim Flucker
  *
  */
+
 @Entity
-@Table(name = "USERS")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "USERS")
 public class User {
 
 	// defines the id column, used as a unique identifier
