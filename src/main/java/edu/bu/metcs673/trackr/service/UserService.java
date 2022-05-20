@@ -19,8 +19,7 @@ import edu.bu.metcs673.trackr.domain.User;
 @Component
 public interface UserService {
 
-	// TODO: REMOVE these methods, they are for testing purposes only (HelloWorldController)
-	public List<User> retrieveAllUsers();
+	// TODO: REMOVE this method, it is used for testing purposes only (HelloWorldController)
 	public User findUserById(long id);
 
 	/**

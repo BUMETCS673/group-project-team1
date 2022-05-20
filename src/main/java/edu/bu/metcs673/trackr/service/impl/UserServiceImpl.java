@@ -33,12 +33,6 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Override
-	public List<User> retrieveAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public User findUserById(long id) {
 		log.info("Searching for record id: " + id);
 		User user = userRepository.findById(id).get();
@@ -54,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
 		// saves new User record in DB
 		userRepository.save(userInput);
-
+		
 		// return response entity with a success response
 		return new ResponseEntity<GenericApiResponse>(
 				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS), HttpStatus.ACCEPTED);

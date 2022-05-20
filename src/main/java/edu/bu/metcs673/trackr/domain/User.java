@@ -2,6 +2,8 @@ package edu.bu.metcs673.trackr.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -30,6 +32,7 @@ public class User {
 
 	// defines the id column, used as a unique identifier
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	// code below defines different columns in the table (USERNAME, PASSWORD, EMAIL)
