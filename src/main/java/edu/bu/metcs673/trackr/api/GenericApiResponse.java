@@ -1,8 +1,11 @@
 package edu.bu.metcs673.trackr.api;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import javax.validation.constraints.NotNull;
 
 import edu.bu.metcs673.trackr.common.CommonConstants;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,18 +17,33 @@ import lombok.Data;
  *
  */
 @Data
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class GenericApiResponse {
 
+	@NotNull
 	private String status;
-	private Date date;
+	@NotNull
+	private LocalDate date;
+	@NotNull
 	private String message;
 
+	/**
+	 * Factory method to create a successful response with the provided message.
+	 * 
+	 * @param message
+	 * @return
+	 */
 	public static GenericApiResponse successResponse(String message) {
-		return new GenericApiResponse(CommonConstants.SUCCESS, new Date(), message);
+		return new GenericApiResponse(CommonConstants.SUCCESS, LocalDate.now(), message);
 	}
 
+	/**
+	 * Factory method to create an error response with the provided message.
+	 * 
+	 * @param message
+	 * @return
+	 */
 	public static GenericApiResponse errorResponse(String message) {
-		return new GenericApiResponse(CommonConstants.ERROR, new Date(), message);
+		return new GenericApiResponse(CommonConstants.ERROR, LocalDate.now(), message);
 	}
 }

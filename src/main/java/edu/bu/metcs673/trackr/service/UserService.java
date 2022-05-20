@@ -1,8 +1,5 @@
 package edu.bu.metcs673.trackr.service;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
@@ -19,7 +16,12 @@ import edu.bu.metcs673.trackr.domain.User;
 @Component
 public interface UserService {
 
-	// TODO: REMOVE this method, it is used for testing purposes only (HelloWorldController)
+	/**
+	 * Used to verify the association between the User and the Bank Account.
+	 * 
+	 * @param id
+	 * @return User
+	 */
 	public User findUserById(long id);
 
 	/**
@@ -27,11 +29,9 @@ public interface UserService {
 	 * These parameters are validated and if the validations fail, then no record is
 	 * saved and an error is returned.
 	 * 
-	 * @param username
-	 * @param password
-	 * @param email
-	 * @return 
+	 * @param userInput
+	 * @return GenericApiResponse
 	 */
-	public ResponseEntity<GenericApiResponse> createUser(User userInput);
+	public GenericApiResponse createUser(User userInput);
 
 }

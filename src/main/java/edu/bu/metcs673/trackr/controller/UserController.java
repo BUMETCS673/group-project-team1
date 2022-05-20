@@ -1,6 +1,9 @@
 package edu.bu.metcs673.trackr.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,15 +22,15 @@ import edu.bu.metcs673.trackr.service.UserService;
  *
  */
 @Controller
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
-	@PostMapping("/create")
-	public ResponseEntity<GenericApiResponse> createUser(@RequestBody User userInput) {
+	@PostMapping
+	public ResponseEntity<GenericApiResponse> createUser(@Valid @RequestBody User userInput) {
 
-		return userService.createUser(userInput);
+		return new ResponseEntity<GenericApiResponse>(userService.createUser(userInput), HttpStatus.ACCEPTED);
 	}
 }
