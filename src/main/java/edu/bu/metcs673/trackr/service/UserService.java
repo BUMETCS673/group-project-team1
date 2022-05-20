@@ -1,9 +1,8 @@
 package edu.bu.metcs673.trackr.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.domain.User;
 
 /**
@@ -17,10 +16,22 @@ import edu.bu.metcs673.trackr.domain.User;
 @Component
 public interface UserService {
 
-	public List<User> retrieveAllUsers();
-
+	/**
+	 * Used to verify the association between the User and the Bank Account.
+	 * 
+	 * @param id
+	 * @return User
+	 */
 	public User findUserById(long id);
 
-	public void createUser(String username, String password, String email);
+	/**
+	 * Creates a new record in the USERS table with the provided method parameters.
+	 * These parameters are validated and if the validations fail, then no record is
+	 * saved and an error is returned.
+	 * 
+	 * @param userInput
+	 * @return GenericApiResponse
+	 */
+	public GenericApiResponse createUser(User userInput);
 
 }
