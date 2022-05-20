@@ -2,6 +2,7 @@ package edu.bu.metcs673.trackr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -13,8 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  *
  */
 @SpringBootApplication
-@EnableJpaRepositories("com.trackr.repo")
-@ComponentScan("com.trackr")
+@EnableJpaRepositories(basePackages = "edu.bu.metcs673.trackr")
+@EntityScan("edu.bu.metcs673.trackr.domain")
 public class TrackrApp {
 
 	public static void main(String[] args) {
