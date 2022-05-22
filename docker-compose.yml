@@ -1,0 +1,9 @@
+version: '3.9'
+
+services:
+  trackr:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
