@@ -1,56 +1,120 @@
-# Team 1 
+# Trackr
 
-### Timothy Flucker
+## Overview
+Trackr is a simple app which allows users to track transaction against their bank account,
+so they can better understand their spending behaviours. The application is built using the
+Spring Boot Java framework.
 
-Hello my name is Timothy Flucker and I am a software developer consultant at Deloitte.  I have 8 years of software development experience in an Agile-Scrum team based environment.  I have been part of the full software developemnt lifecycle and I have experience designing, developing, testing, and deploying code.  I have also participated in creating and updating project artifacts and project documentation. I am located in Washington DC with my wife Sydney and my dog Lincoln (4 year old German Shepard and Staffordshire Terrier mix). I have experience with the following programming languages and technologies:
- - Java 1.8 and Java 11
- - JavaScript / JQuery
- - Python
- - HTML5 + CSS3
- - Oracle SQL
- - PostgreSQL
- - Spring Boot Framework
- - Node.js
- - Git
- - Docker
- - Jenkins
+## Setup
+Developers have to install the following software to configure their local environment.
+Assume the latest version if none specified.
+- Java SDK 1.8
+- Maven
+- Docker
+- Postman
+- IntelliJ IDE
+- Lombok IntelliJ Plugin
+- Heroku CLI
 
-### Xiaobing Hou
+## Run with IDE
+In order to run the application in IntelliJ IDE for the first time simply create a new run configuration
+by right-clicking on the main method in the application class. For subsequent runs you simply click the run 
+configuration created the first time. If you lose your configuration you can simply recreate it.
 
-Hi my name is Xiaobing Hou. I am from China and I am a online student. I have no experience for software development. I have finished three classes (CS521, CS526, and CS622) and my former major is air conditioning. I am located in Golden, Colorado with my wife who's major is Chemical Engineering. 
+![run-ide](docs/run-ide.png)
 
-The following is my programing languages:
+## Run in the Console
+If you want to run the application in the console for experimenting then you first need
+to build the application Uber JAR which will package all the dependencies. You use the following
+Java command and specifying the previously built application Uber JAR as follows.
 
-- Java 17
-- JavaScript / JQuery
-- Python
-- HTML5 + CSS3
-- Node.js
-- Git
+### Build
+You simply run `mvn clean install`  in the application root directory to build the application locally.
 
-### Jean Dorancy
-Hello I'm Jean Dorancy and I have been a Software Engineer for the past six years. I have worked on range of different applications.
-- APIs and microservices with the lightweight Dropwizard framework and one project with Spring Boot. 
-- Stream (Kafka) processing with Apache Storm, Akka Actors and Akka Streams (including simple Kafka consumers).
-- Web with Play Framework, PHP, and React JS, Webpack JS for frontend.
-- Batch with the powerful Spark framework.
-- Emails templates processing with Node JS and Grunt JS.
-- And others.
+### Run
+Keep in mind this should be used for experimenting only and if you need to run in the application
+in production other JVM args are needed in the following command.
+![run-in-console](docs/run-in-console.png)
 
-I have recently been deploying on Google Cloud Platform especially on Dataproc clusters and Kubernetes (GKE) although couple years 
-ago it was VMs (now outdated)! I'm familiar with SQL Server primarily from professional experience while I have used PostgreSQL and MySQL in side projects
-years back. I have also recently worked with Memcached, Redis, Elasticsearch, Solr, HBase and Aerospike for storage/cache solutions.
-Some DevOps tools that I have used includes Docker, Jenkins, Airflow, Buildkite, Git, Kibana etc. On personal note, I'm married and father of one boy.
-We live in the greater Boston area in MA.
+## Run in Docker
+This application is deployed using a Docker container on the Heroku Platform. The best way to ensure what works locally will
+***always*** work when deployed is to build and run your changes in the container locally.
+Inspect the `Dockerfile` which declares how build and run the application in the container.
+The same definitions are used when building and running the container locally.
 
+### Build 
+Build the application container locally using `docker-compose build`. This essentially has two steps.
+Build the application source using a maven Docker image to create the application JAR. Next, run the application
+Uber JAR with another container. The running container is a headless JRE which basically has
+the minimum to run a JAR as a console application and none of the Java graphics libraries.
 
-### Weijie Liang
-Hello my name is Weijie Liang. I am a BU student majoring Computer Science with concentration of Data Analysis. I have only had basic development experience 
-during my undergraduate years. The class I have finished are CS544,CS555,CS566,CS575,CS579,CS622. I am Located in Boston as an On-Campus Student. The programming 
-language I have used before are as follows:
+![docker-compose-build](docs/docker-compose-build.png)
 
-- C
-- Java / J2EE / Android
-- R
-- SQL
-- Python
+### Run
+Run the application container locally using `docker-compose up`. This is going to launch the application locally by using the 
+`entrypoint.sh` script. All the configuration in that script will be applied. One important note is to make sure
+the application is already running on the port 8080 otherwise it will fail to start.
+
+![docker-compose-up](docs/docker-compose-up.png)
+
+When done you can use `control c` to stop the app and issue `docker-compose down` to remove Docker resources.
+
+![docker-compose-down](docs/docker-compose-down.png)
+
+# Deploy
+The application is deployed on Heroku Cloud Platform which is very simple to use and especially a great fit for student projects.
+There are two environment configured: 
+- Development: The team can deploy any branch and experiment.
+- Production: This is the customer facing site. We only deploy the main branch to this environment at the end of an iteration. We also deploy fixes to this environment.
+
+## Configure Deployment with Git
+
+### Heroku CLI
+The first step before attempting to deploy is to install the Heroku CLI tool and authenticate. In order to do follow the instructions
+in the [Heroku DevCenter](https://devcenter.heroku.com/articles/heroku-cli).
+
+## Development
+Trackr Development URL: https://trackr-dev.herokuapp.com/
+
+Follow these instructions to setup deployment for development:
+
+Authenticate with the CLI
+
+`$ heroku login`
+
+Checkout the development branch in the trackr repository.
+
+`$ git checkout development`
+
+Add the development application as the remote for development.
+
+`$ git remote add development https://git.heroku.com/trackr-dev.git`
+
+Configure your Heroku stack to container.
+
+`$ heroku stack:set container `
+
+Deploy a local branch to the development environment to experiment.
+Here I'm deploying my branch `docker` to the development environment by pushing it
+to the `main` branch of the remote repository. Here, don't confuse the remote `main`
+branch of the app with our application `main` branch.
+
+`$ git push development docker:main`
+
+![push-to-dev](docs/push-to-dev.png)
+
+After the application has been deployed visit the dev site to see it live. Use the Postman
+collection development to test the endpoints.
+
+## Production
+[TODO]
+
+## Logging
+One important aspect of deploying an application is being able to view the logs to diagnose issues.
+Heroku provides a simple command you can use to stream logs locally.
+
+`$ heroku logs --tail `
+
+![logs](docs/logs.png)
+
+Please refer to [Heroku Dev Center](https://devcenter.heroku.com/articles/logging) to learn more about logging.
