@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.domain.User;
+import edu.bu.metcs673.trackr.domain.TrackrUser;
 
 @SpringBootTest
-public class UserServiceImplTest {
+public class TrackrUserServiceImplTest {
 
 	@Autowired
-	private UserServiceImpl serviceImpl;
+	private TrackrUserServiceImpl serviceImpl;
 
 	@Test
 	public void testDuplicateUsername() {
-		User testUser = new User(0L, "testy", "mcTesterson", "tflucker", "myCoolPassword", "testEmail@email.com");
+		TrackrUser testUser = new TrackrUser(0L, "testy", "mcTesterson", "tflucker", "myCoolPassword", "testEmail@email.com");
 		assertThrows(TrackrInputValidationException.class, () -> serviceImpl.validateParameters(testUser));
 	}
 

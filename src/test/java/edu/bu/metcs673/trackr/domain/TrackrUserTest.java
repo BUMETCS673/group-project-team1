@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
-public class UserTest {
+public class TrackrUserTest {
 
 	public static final String TEST_FIRST_NAME = "John";
 	public static final String TEST_LAST_NAME = "Doe";
@@ -15,7 +15,7 @@ public class UserTest {
 
 	@Test
 	public void getterSetterTest() {
-		User user = new User();
+		TrackrUser user = new TrackrUser();
 
 		// verify that blank constructor sets default values (null)
 		assertNull(user.getFirstName());
@@ -40,7 +40,7 @@ public class UserTest {
 	
 	@Test
 	public void emptyConstructorTest() {
-		User user = new User();
+		TrackrUser user = new TrackrUser();
 
 		// verify that blank constructor sets default values (null)
 		assertNull(user.getFirstName());
@@ -52,7 +52,7 @@ public class UserTest {
 	
 	@Test
 	public void allArgsConstructorTest() {
-		User user = new User(1L,TEST_FIRST_NAME, TEST_LAST_NAME, TEST_USERNAME, TEST_PASSWORD, TEST_EMAIL);
+		TrackrUser user = new TrackrUser(1L,TEST_FIRST_NAME, TEST_LAST_NAME, TEST_USERNAME, TEST_PASSWORD, TEST_EMAIL);
 		
 		// verify that all fields are set from the constructor
 		assertEquals(TEST_FIRST_NAME, user.getFirstName());
