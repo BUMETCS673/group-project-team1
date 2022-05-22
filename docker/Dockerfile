@@ -12,7 +12,9 @@ RUN mkdir -p /usr/app/src
 COPY . /usr/app/src
 
 RUN pwd
-RUN ls -ls
+RUN ls -ls /usr/app/src
+RUN cd /usr/app/src
+RUN pwd
 
 # Set the working directory
 WORKDIR /usr/app/src
