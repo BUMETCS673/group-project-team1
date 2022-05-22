@@ -61,7 +61,7 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 		TrackrUser user = userRepository.save(userInput);
 
 		String token = jwtUtil.generateToken(user.getUsername());
-		
+
 		// return response entity with a success response
 		return token;
 	}
@@ -81,6 +81,11 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 
 	}
 
+	/**
+	 * Used by the UserDetailsService when the JWT filter logic is occurring.
+	 * Searches the USERS database table based on the provided username and then
+	 * creates a Spring Security 'User' object based on that information.
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		TrackrUser trackrUser = userRepository.findByUsername(username);
@@ -90,7 +95,7 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 		}
 		return new User(username, trackrUser.getPassword(),
 				Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
- 
+
 	}
 
 }

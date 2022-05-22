@@ -12,6 +12,9 @@ import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,6 +63,7 @@ public class TrackrUser {
 	@Column(nullable = false, length = 200)
 	@NotBlank(message = CommonConstants.BLANK_PASSWORD)
 	@Size(max = 200, message = CommonConstants.INVALID_PASSWORD_LENGTH)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
 	@Column(nullable = false, length = 100)
