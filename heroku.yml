@@ -1,5 +1,5 @@
 build:
   docker:
     trackr: Dockerfile
-  run:
-    trackr: ./entrypoint.sh
+run:
+  trackr: ./entrypoint.sh
