@@ -11,6 +11,9 @@ RUN mkdir -p /usr/app/src
 # Copy app code to container destination directory previously created
 COPY . /usr/app/src
 
+RUN pwd
+RUN ls -ls
+
 # Set the working directory
 WORKDIR /usr/app/src
 
