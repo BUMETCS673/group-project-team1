@@ -1,5 +1,7 @@
 package edu.bu.metcs673.trackr.common;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Contains all static strings to increase re-usability.
  * 
@@ -33,8 +35,20 @@ public class CommonConstants {
 	public static final String DUPLICATE_USERNAME = "Invalid USERNAME value. Please use another value.";
 	public static final String INVALID_EMAIL_FORMAT = "Email has an invalid format. Please try again.";
 
-	
-	
 	// Success messages
-	public static final String CREATE_USER_SUCCESS = "Successfully created a new user!";
+	public static final String CREATE_USER_SUCCESS = "Successfully created a new user!  Token value: ";
+
+	// enum used for Account Status
+	public static enum ACCOUNT_STATUS {
+		ACTIVE, INACTIVE;
+
+		public boolean contains(String status) {
+			for (ACCOUNT_STATUS acctStatus : ACCOUNT_STATUS.values()) {
+				if (StringUtils.equals(acctStatus.toString(), status)) {
+					return true;
+				}
+			}
+			return false;
+		}
+	};
 }
