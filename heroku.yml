@@ -1,5 +1,3 @@
 build:
   docker:
-    trackr: Dockerfile
-run:
-  trackr: ./entrypoint.sh
+    web: Dockerfile
