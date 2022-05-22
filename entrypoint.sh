@@ -1,2 +1,2 @@
 #!/bin/bash
-exec java -Xms1024m -Xmx1024m -jar "/usr/app/bin/trackr.jar"
+exec java -Xms128m -Xm468xm -jar "/usr/app/bin/trackr.jar"
