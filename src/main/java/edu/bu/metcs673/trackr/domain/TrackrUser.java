@@ -21,7 +21,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Define a User object, defining it as an Entity related to a table called
+ * Define a Trackr object, defining it as an Entity related to a table called
  * "USERS" in the H2 database. Other annotations (Data, NoArgsConstructor,
  * AllArgsConstructor) are related to Lombok and generally save developers from
  * writing a lot of repetitive code.

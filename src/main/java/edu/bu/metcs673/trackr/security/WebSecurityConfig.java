@@ -10,14 +10,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
 
 /**
  * Created to specify the spring-security behavior for authorization and
- * authentication.
+ * authentication related to the JWT tokens
+ * 
+ * Reference:
+ * https://medium.com/geekculture/implementing-json-web-token-jwt-authentication-using-spring-security-detailed-walkthrough-1ac480a8d970
  * 
  * @author Tim Flucker
  *
@@ -33,15 +35,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private JwtFilter filter;
 
 	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	@Bean
 	@Override
 	public AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManagerBean();
 	}
 
+	/**
+	 * Configures traffic through the application to expose one endpoint that
+	 * everyone can access, then implementing an authentication entry point for all
+	 * other API URLs. Configures the session as well to be STATELESS (best
+	 * practice).
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
@@ -51,8 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED"))
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+		// this will enable the frames for the H2 console
 		http.headers().frameOptions().disable();
 
+		// specifies when JWT filer is called in relation to other filters
 		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 	}
 

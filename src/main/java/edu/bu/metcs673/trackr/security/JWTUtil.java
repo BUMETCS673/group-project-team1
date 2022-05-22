@@ -10,6 +10,16 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+/**
+ * Utility class that generates a JWT token, or validates it during the
+ * authentication process.
+ * 
+ * Reference:
+ * https://medium.com/geekculture/implementing-json-web-token-jwt-authentication-using-spring-security-detailed-walkthrough-1ac480a8d970
+ * 
+ * @author Tim Flucker
+ *
+ */
 @Component
 public class JWTUtil {
 

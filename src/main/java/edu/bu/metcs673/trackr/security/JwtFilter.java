@@ -19,8 +19,20 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
 
+/**
+ * Filter class that runs before actual API logic is processed. Checks for a JWT
+ * token and tries to verify it. Successfully verification will pass the request
+ * to its respective controller, while unsuccessful verification will return an
+ * unathorized response to the user.
+ * 
+ * Reference:
+ * https://medium.com/geekculture/implementing-json-web-token-jwt-authentication-using-spring-security-detailed-walkthrough-1ac480a8d970
+ * 
+ * @author Tim Flucker
+ *
+ */
 @Component
-public class JwtFilter extends OncePerRequestFilter{
+public class JwtFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private TrackrUserServiceImpl userServiceImpl;
@@ -28,10 +40,17 @@ public class JwtFilter extends OncePerRequestFilter{
 	@Autowired
 	private JWTUtil jwtUtil;
 
+	/**
+	 * Filter method that checks for the JWT authorization, if it finds a JWT bearer
+	 * token then verification will take place, otherwise an access denied error is
+	 * returned.
+	 */
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		String authHeader = request.getHeader("Authorization");
 
+		// if request has an Authorization header which is a Bearer token (JWT) then attempt to verify it
 		if (authHeader != null && !authHeader.isEmpty() && authHeader.startsWith("Bearer ")) {
 			String jwt = authHeader.substring(7);
 			if (jwt == null || StringUtils.isBlank(jwt)) {
@@ -39,24 +58,27 @@ public class JwtFilter extends OncePerRequestFilter{
 			} else {
 				try {
 
+					// validate token and return the username contained within
 					String username = jwtUtil.validateTokenAndRetrieveSubject(jwt);
-					if(!StringUtils.isBlank(username)) {
+					if (!StringUtils.isBlank(username)) {
 						UserDetails userDetails = userServiceImpl.loadUserByUsername(username);
 
-						UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username,
-								userDetails.getPassword(), userDetails.getAuthorities());
+						// create token using the username and password gathered from the JWT token
+						UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+								username, userDetails.getPassword(), userDetails.getAuthorities());
 
+						// set authentication for API request
 						if (SecurityContextHolder.getContext().getAuthentication() == null) {
 							SecurityContextHolder.getContext().setAuthentication(authToken);
 						}
-					} 					
+					}
 
 				} catch (JWTVerificationException e) {
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
 				}
 			}
 		}
-		
+
 		chain.doFilter(request, response);
 	}
 }
