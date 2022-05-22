@@ -2,8 +2,6 @@ package edu.bu.metcs673.trackr.service.impl;
 
 import java.util.Collections;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -19,7 +17,6 @@ import edu.bu.metcs673.trackr.domain.TrackrUser;
 import edu.bu.metcs673.trackr.repo.TrackrUserRepository;
 import edu.bu.metcs673.trackr.security.JWTUtil;
 import edu.bu.metcs673.trackr.service.TrackrUserService;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Defines logic of the "UserService" methods. Calls methods in the
@@ -29,15 +26,11 @@ import lombok.extern.slf4j.Slf4j;
  * @author Tim Flucker
  *
  */
-@Slf4j
 @Service
 public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsService {
 
 	@Autowired
 	private TrackrUserRepository userRepository;
-
-//	@Autowired
-//	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private JWTUtil jwtUtil;

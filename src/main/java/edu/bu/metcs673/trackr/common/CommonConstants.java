@@ -34,9 +34,14 @@ public class CommonConstants {
 	// custom validation error messages
 	public static final String DUPLICATE_USERNAME = "Invalid USERNAME value. Please use another value.";
 	public static final String INVALID_EMAIL_FORMAT = "Email has an invalid format. Please try again.";
+	
 	// Success messages
 	public static final String CREATE_USER_SUCCESS = "Successfully created a new user!  Token value: ";
-
+	public static final String NEW_JWT_TOKEN = "New JWT Token: ";
+	
+	
+	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials ...";
+	
 	// enum used for Account Status
 	public static enum ACCOUNT_STATUS {
 		ACTIVE, INACTIVE;

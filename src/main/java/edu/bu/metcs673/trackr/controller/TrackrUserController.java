@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,9 +45,12 @@ public class TrackrUserController {
 	private AuthenticationManager authenticationManager;
 
 	/**
+	 * Using provided request body, creates a new record in the USERS table. Request
+	 * body is validated, and an encrypted password value is saved. Returns a
+	 * success message with a JWT token.
 	 * 
 	 * @param userInput
-	 * @return
+	 * @return GenericApiResponse
 	 */
 	@PostMapping
 	public ResponseEntity<GenericApiResponse> createUser(@Valid @RequestBody TrackrUser userInput) {
@@ -60,15 +60,15 @@ public class TrackrUserController {
 				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS + token), HttpStatus.OK);
 	}
 
-	@GetMapping
-	public ResponseEntity<TrackrUser> getUserInfo() {
-		String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		return new ResponseEntity<TrackrUser>(userService.findByUsername(username), HttpStatus.OK);
-	}
-
+	/**
+	 * Using the provided valid request body, authenicate the user and if
+	 * credentials are correct, then provide a new JWT token for other API use.
+	 * 
+	 * @param userLogin
+	 * @return
+	 */
 	@PostMapping("/retrieveToken")
-	public String retrieveToken(@RequestBody TrackrUser userLogin) {
+	public ResponseEntity<GenericApiResponse> retrieveToken(@Valid @RequestBody TrackrUser userLogin) {
 
 		try {
 			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
@@ -78,10 +78,13 @@ public class TrackrUserController {
 
 			String token = jwtUtil.generateToken(userLogin.getUsername());
 
-			return token;
+			return new ResponseEntity<GenericApiResponse>(
+					GenericApiResponse.successResponse(CommonConstants.NEW_JWT_TOKEN + token), HttpStatus.OK);
+
 		} catch (AuthenticationException e) {
 			log.error("Invalid Login Credentials ...");
-			throw new RuntimeException();
+			return new ResponseEntity<GenericApiResponse>(
+					GenericApiResponse.errorResponse(CommonConstants.INVALID_CREDENTIALS), HttpStatus.UNAUTHORIZED);
 		}
 
 	}

@@ -2,7 +2,6 @@ package edu.bu.metcs673.trackr.service;
 
 import org.springframework.stereotype.Component;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
 
 /**
