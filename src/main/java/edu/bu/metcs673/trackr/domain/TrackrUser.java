@@ -10,6 +10,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.validation.annotation.Validated;
+
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +32,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
-public class User {
+@Validated
+public class TrackrUser {
 
 	// defines the id column, used as a unique identifier
 	@Id
@@ -56,12 +59,13 @@ public class User {
 	// extra column size is to account for hashed value
 	@Column(nullable = false, length = 200)
 	@NotBlank(message = CommonConstants.BLANK_PASSWORD)
-	@Size(min = 1, max = 20, message = CommonConstants.INVALID_PASSWORD_LENGTH)
+	@Size(max = 200, message = CommonConstants.INVALID_PASSWORD_LENGTH)
 	private String password;
 
 	@Column(nullable = false, length = 100)
 	@NotBlank(message = CommonConstants.BLANK_EMAIL)
-	@Size(min = 1, max = 50, message = CommonConstants.INVALID_EMAIL_LENGTH)
+	@Size(max = 50, message = CommonConstants.INVALID_EMAIL_LENGTH)
 	@Email(regexp = CommonConstants.EMAIL_REGEX, message = CommonConstants.INVALID_EMAIL_FORMAT)
 	private String email;
+	
 }

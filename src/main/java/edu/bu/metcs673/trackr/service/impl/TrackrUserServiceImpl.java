@@ -1,14 +1,24 @@
 package edu.bu.metcs673.trackr.service.impl;
 
+import java.util.Collections;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.domain.User;
-import edu.bu.metcs673.trackr.repo.UserRepository;
-import edu.bu.metcs673.trackr.service.UserService;
+import edu.bu.metcs673.trackr.domain.TrackrUser;
+import edu.bu.metcs673.trackr.repo.TrackrUserRepository;
+import edu.bu.metcs673.trackr.security.old.JWTUtil;
+import edu.bu.metcs673.trackr.service.TrackrUserService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,30 +31,46 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
-public class UserServiceImpl implements UserService {
+public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private TrackrUserRepository userRepository;
+
+//	@Autowired
+//	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private JWTUtil jwtUtil;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
-	public User findUserById(long id) {
-		log.info("Searching for record id: " + id);
-		User user = userRepository.findById(id).get();
-		return user;
+	public TrackrUser findUserById(long id) {
+		return userRepository.findById(id).get();
 	}
 
 	@Override
-	public GenericApiResponse createUser(User userInput) {
+	public TrackrUser findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public String createUser(TrackrUser userInput) {
 		// validate parameters
 		validateParameters(userInput);
 
-		// TODO: hash value for password field to increase security
+		// encrypt the provided password value, update User object
+		String encodedPwd = bCryptPasswordEncoder.encode(userInput.getPassword());
+		userInput.setPassword(encodedPwd);
 
 		// saves new User record in DB
-		userRepository.save(userInput);
+		TrackrUser user = userRepository.save(userInput);
 
+		String token = jwtUtil.generateToken(user.getUsername());
+		
 		// return response entity with a success response
-		return GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS);
+		return token;
 	}
 
 	/**
@@ -53,13 +79,25 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @param userInput
 	 */
-	public void validateParameters(User userInput) {
+	public void validateParameters(TrackrUser userInput) {
 
 		// check that username is unique
 		if (userRepository.existsByUsername(userInput.getUsername())) {
 			throw new TrackrInputValidationException(CommonConstants.DUPLICATE_USERNAME);
 		}
 
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		TrackrUser trackrUser = userRepository.findByUsername(username);
+
+		if (trackrUser == null) {
+			throw new UsernameNotFoundException("Count not findUser with username: " + username);
+		}
+		return new User(username, trackrUser.getPassword(),
+				Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+ 
 	}
 
 }

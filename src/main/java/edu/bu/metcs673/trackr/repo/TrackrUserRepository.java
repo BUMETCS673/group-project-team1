@@ -3,7 +3,7 @@ package edu.bu.metcs673.trackr.repo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import edu.bu.metcs673.trackr.domain.User;
+import edu.bu.metcs673.trackr.domain.TrackrUser;
 
 /**
  * Directly interfaces with the "USERS" table in the H2 repository, using the
@@ -13,7 +13,7 @@ import edu.bu.metcs673.trackr.domain.User;
  *
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface TrackrUserRepository extends JpaRepository<TrackrUser, Long> {
 
 	/**
 	 * Custom JPA query that checks to see if a record with the provided 'username'
@@ -23,4 +23,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 * @return boolean
 	 */
 	public boolean existsByUsername(String username);
+
+	/**
+	 * Custom JPA query that finds a user by its 'username' value.
+	 * 
+	 * @param username
+	 * @return
+	 */
+	public TrackrUser findByUsername(String username);
 }
