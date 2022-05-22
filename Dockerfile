@@ -11,11 +11,6 @@ RUN mkdir -p /usr/app/src
 # Copy app code to container destination directory previously created
 COPY . /usr/app/src
 
-RUN pwd
-RUN ls -ls /usr/app/src
-RUN cd /usr/app/src
-RUN pwd
-
 # Set the working directory
 WORKDIR /usr/app/src
 
@@ -33,7 +28,7 @@ RUN mkdir -p /usr/app/bin
 
 # Copy app Uber JAR from previous stage and entrypoint script
 COPY --from=0 /usr/app/src/target/trackr-1.0-SNAPSHOT.jar /usr/app/bin/trackr.jar
-COPY ./docker/entrypoint.sh /usr/app/bin
+COPY entrypoint.sh /usr/app/bin
 
 # Set the working directory
 WORKDIR /usr/app/bin
