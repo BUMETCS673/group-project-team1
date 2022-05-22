@@ -74,6 +74,8 @@ The first step before attempting to deploy is to install the Heroku CLI tool and
 in the [Heroku DevCenter](https://devcenter.heroku.com/articles/heroku-cli).
 
 ## Development
+Trackr Development URL: https://trackr-dev.herokuapp.com/
+
 Follow these instructions to setup deployment for development:
 
 Authenticate with the CLI
@@ -93,10 +95,26 @@ Configure your Heroku stack to container.
 `$ heroku stack:set container `
 
 Deploy a local branch to the development environment to experiment.
+Here I'm deploying my branch `docker` to the development environment by pushing it
+to the `main` branch of the remote repository. Here, don't confuse the remote `main`
+branch of the app with our application `main` branch.
 
-`$ `
+`$ git push development docker:main`
 
+![push-to-dev](docs/push-to-dev.png)
+
+After the application has been deployed visit the dev site to see it live. Use the Postman
+collection development to test the endpoints.
 
 ## Production
+[TODO]
 
 ## Logging
+One important aspect of deploying an application is being able to view the logs to diagnose issues.
+Heroku provides a simple command you can use to stream logs locally.
+
+`$ heroku logs --tail `
+
+![logs](docs/logs.png)
+
+Please refer to [Heroku Dev Center](https://devcenter.heroku.com/articles/logging) to learn more about logging.
