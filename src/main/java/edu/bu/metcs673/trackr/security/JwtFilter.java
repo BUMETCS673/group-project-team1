@@ -60,7 +60,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 					// validate token and return the username contained within
 					String username = jwtUtil.validateTokenAndRetrieveSubject(jwt);
-					if (!StringUtils.isBlank(username)) {
+					if (StringUtils.isNotBlank(username)) {
 						UserDetails userDetails = userServiceImpl.loadUserByUsername(username);
 
 						// create token using the username and password gathered from the JWT token

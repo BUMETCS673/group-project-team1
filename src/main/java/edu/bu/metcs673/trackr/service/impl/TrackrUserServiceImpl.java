@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
@@ -49,16 +50,16 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 	}
 
 	@Override
-	public String createUser(TrackrUser userInput) {
+	public String createUser(TrackrUserDTO userInput) {
 		// validate parameters
 		validateParameters(userInput);
 
 		// encrypt the provided password value, update User object
 		String encodedPwd = bCryptPasswordEncoder.encode(userInput.getPassword());
-		userInput.setPassword(encodedPwd);
 
 		// saves new User record in DB
-		TrackrUser user = userRepository.save(userInput);
+		TrackrUser user = userRepository.save(new TrackrUser(0L, userInput.getFirstName(), userInput.getLastName(),
+				userInput.getUsername(), encodedPwd, userInput.getEmail()));
 
 		String token = jwtUtil.generateToken(user.getUsername());
 
@@ -72,7 +73,7 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 	 * 
 	 * @param userInput
 	 */
-	public void validateParameters(TrackrUser userInput) {
+	public void validateParameters(TrackrUserDTO userInput) {
 
 		// check that username is unique
 		if (userRepository.existsByUsername(userInput.getUsername())) {

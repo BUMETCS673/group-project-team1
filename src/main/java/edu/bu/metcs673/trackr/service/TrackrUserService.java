@@ -2,6 +2,7 @@ package edu.bu.metcs673.trackr.service;
 
 import org.springframework.stereotype.Component;
 
+import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
 
 /**
@@ -40,6 +41,6 @@ public interface TrackrUserService {
 	 * @param userInput
 	 * @return String
 	 */
-	public String createUser(TrackrUser userInput);
+	public String createUser(TrackrUserDTO userInput);
 
 }
