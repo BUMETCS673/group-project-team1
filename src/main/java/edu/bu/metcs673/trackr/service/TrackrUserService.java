@@ -2,8 +2,8 @@ package edu.bu.metcs673.trackr.service;
 
 import org.springframework.stereotype.Component;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.domain.User;
+import edu.bu.metcs673.trackr.api.TrackrUserDTO;
+import edu.bu.metcs673.trackr.domain.TrackrUser;
 
 /**
  * Interface which defines methods which will be implemented in the
@@ -14,7 +14,7 @@ import edu.bu.metcs673.trackr.domain.User;
  *
  */
 @Component
-public interface UserService {
+public interface TrackrUserService {
 
 	/**
 	 * Used to verify the association between the User and the Bank Account.
@@ -22,7 +22,16 @@ public interface UserService {
 	 * @param id
 	 * @return User
 	 */
-	public User findUserById(long id);
+	public TrackrUser findUserById(long id);
+
+	/**
+	 * Used by the JWT Filter to find a user by the provided username to
+	 * authenticate the request.
+	 * 
+	 * @param username
+	 * @return
+	 */
+	public TrackrUser findByUsername(String username);
 
 	/**
 	 * Creates a new record in the USERS table with the provided method parameters.
@@ -30,8 +39,8 @@ public interface UserService {
 	 * saved and an error is returned.
 	 * 
 	 * @param userInput
-	 * @return GenericApiResponse
+	 * @return String
 	 */
-	public GenericApiResponse createUser(User userInput);
+	public String createUser(TrackrUserDTO userInput);
 
 }

@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,8 +35,8 @@ public class ExceptionController {
 	 * @param request
 	 * @return
 	 */
-	@ExceptionHandler(value = TrackrInputValidationException.class)
-	protected ResponseEntity<GenericApiResponse> handleValidationExceptions(TrackrInputValidationException exception,
+	@ExceptionHandler(value = {TrackrInputValidationException.class, HttpMessageNotReadableException.class})
+	protected ResponseEntity<GenericApiResponse> handleValidationExceptions(Exception exception,
 			WebRequest request) {
 		return new ResponseEntity<GenericApiResponse>(GenericApiResponse.errorResponse(exception.getMessage()),
 				HttpStatus.BAD_REQUEST);
@@ -64,4 +65,5 @@ public class ExceptionController {
 		return new ResponseEntity<GenericApiResponse>(GenericApiResponse.errorResponse(errorMap.toString()),
 				HttpStatus.BAD_REQUEST);
 	}
+
 }

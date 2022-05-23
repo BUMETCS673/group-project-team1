@@ -10,13 +10,18 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.validation.annotation.Validated;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Define a User object, defining it as an Entity related to a table called
+ * Define a Trackr object, defining it as an Entity related to a table called
  * "USERS" in the H2 database. Other annotations (Data, NoArgsConstructor,
  * AllArgsConstructor) are related to Lombok and generally save developers from
  * writing a lot of repetitive code.
@@ -30,7 +35,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
-public class User {
+@Validated
+public class TrackrUser {
 
 	// defines the id column, used as a unique identifier
 	@Id
@@ -56,12 +62,14 @@ public class User {
 	// extra column size is to account for hashed value
 	@Column(nullable = false, length = 200)
 	@NotBlank(message = CommonConstants.BLANK_PASSWORD)
-	@Size(min = 1, max = 20, message = CommonConstants.INVALID_PASSWORD_LENGTH)
+	@Size(max = 200, message = CommonConstants.INVALID_PASSWORD_LENGTH)
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
 	@Column(nullable = false, length = 100)
 	@NotBlank(message = CommonConstants.BLANK_EMAIL)
-	@Size(min = 1, max = 50, message = CommonConstants.INVALID_EMAIL_LENGTH)
+	@Size(max = 50, message = CommonConstants.INVALID_EMAIL_LENGTH)
 	@Email(regexp = CommonConstants.EMAIL_REGEX, message = CommonConstants.INVALID_EMAIL_FORMAT)
 	private String email;
+	
 }

@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.domain.User;
 
 @SpringBootTest
-public class UserServiceImplTest {
+public class TrackrUserServiceImplTest {
 
 	@Autowired
-	private UserServiceImpl serviceImpl;
+	private TrackrUserServiceImpl serviceImpl;
 
 	@Test
 	public void testDuplicateUsername() {
-		User testUser = new User(0L, "testy", "mcTesterson", "tflucker", "myCoolPassword", "testEmail@email.com");
+		TrackrUserDTO testUser = new TrackrUserDTO("testy", "mcTesterson", "tflucker", "myCoolPassword", "testEmail@email.com");
 		assertThrows(TrackrInputValidationException.class, () -> serviceImpl.validateParameters(testUser));
 	}
 
