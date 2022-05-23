@@ -1,7 +1,5 @@
 package edu.bu.metcs673.trackr.common;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * Contains all static strings to increase re-usability.
  * 
@@ -27,6 +25,7 @@ public class CommonConstants {
 
 	// Bank Account fields
 	public static final String BLANK_ACCOUNT_TYPE = "Account Type is a required field.";
+	public static final String BLANK_BALANCE = "Balance is a required field.";
 
 	// length validation error messages - User
 	public static final String INVALID_FIRST_NAME_LENGTH = "First Name must be less than 100 characters.";
