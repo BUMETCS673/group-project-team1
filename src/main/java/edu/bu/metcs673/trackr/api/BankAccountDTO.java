@@ -6,6 +6,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
+import org.springframework.validation.annotation.Validated;
+
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.domain.BankAccount;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Validated
 public class BankAccountDTO {
 
 	@NotNull(message = CommonConstants.BLANK_ACCOUNT_TYPE)
