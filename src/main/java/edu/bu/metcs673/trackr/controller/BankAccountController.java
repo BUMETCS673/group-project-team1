@@ -1,7 +1,10 @@
 package edu.bu.metcs673.trackr.controller;
 
-import javax.validation.Valid;
-
+import edu.bu.metcs673.trackr.api.BankAccountDTO;
+import edu.bu.metcs673.trackr.domain.BankAccount;
+import edu.bu.metcs673.trackr.domain.TrackrUser;
+import edu.bu.metcs673.trackr.service.BankAccountService;
+import edu.bu.metcs673.trackr.service.TrackrUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.bu.metcs673.trackr.api.BankAccountDTO;
-import edu.bu.metcs673.trackr.domain.BankAccount;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
-import edu.bu.metcs673.trackr.service.BankAccountService;
-import edu.bu.metcs673.trackr.service.TrackrUserService;
+import javax.validation.Valid;
 
 @Validated
 @RestController

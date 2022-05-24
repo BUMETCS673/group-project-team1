@@ -1,13 +1,12 @@
 package edu.bu.metcs673.trackr.api;
 
-import java.time.LocalDate;
-
-import javax.validation.constraints.NotNull;
-
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 /**
  * Simple object used to contain success and error responses to return

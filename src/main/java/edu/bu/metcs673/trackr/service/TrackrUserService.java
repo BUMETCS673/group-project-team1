@@ -1,9 +1,8 @@
 package edu.bu.metcs673.trackr.service;
 
-import org.springframework.stereotype.Component;
-
 import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
+import org.springframework.stereotype.Component;
 
 /**
  * Interface which defines methods which will be implemented in the

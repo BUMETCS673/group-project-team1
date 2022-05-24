@@ -1,7 +1,9 @@
 package edu.bu.metcs673.trackr.service.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import edu.bu.metcs673.trackr.api.BankAccountDTO;
+import edu.bu.metcs673.trackr.domain.BankAccount;
+import edu.bu.metcs673.trackr.domain.TrackrUser;
+import edu.bu.metcs673.trackr.repo.BankAccountRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -9,10 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import edu.bu.metcs673.trackr.api.BankAccountDTO;
-import edu.bu.metcs673.trackr.domain.BankAccount;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
-import edu.bu.metcs673.trackr.repo.BankAccountRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 public class BankAccountServiceImplTest {

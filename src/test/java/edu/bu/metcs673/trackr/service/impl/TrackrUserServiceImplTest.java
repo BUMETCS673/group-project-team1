@@ -1,13 +1,12 @@
 package edu.bu.metcs673.trackr.service.impl;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import edu.bu.metcs673.trackr.api.TrackrUserDTO;
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import edu.bu.metcs673.trackr.api.TrackrUserDTO;
-import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class TrackrUserServiceImplTest {

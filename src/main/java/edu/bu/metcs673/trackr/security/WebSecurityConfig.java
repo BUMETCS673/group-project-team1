@@ -1,7 +1,6 @@
 package edu.bu.metcs673.trackr.security;
 
-import javax.servlet.http.HttpServletResponse;
-
+import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created to specify the spring-security behavior for authorization and

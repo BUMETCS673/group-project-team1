@@ -1,18 +1,16 @@
 package edu.bu.metcs673.trackr.controller;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.stream.Stream;
-
-import javax.validation.ConstraintViolationException;
-
+import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import edu.bu.metcs673.trackr.api.TrackrUserDTO;
+import javax.validation.ConstraintViolationException;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class TrackrUserControllerTest {

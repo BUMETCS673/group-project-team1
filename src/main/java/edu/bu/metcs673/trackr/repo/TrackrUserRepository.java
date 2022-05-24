@@ -1,9 +1,8 @@
 package edu.bu.metcs673.trackr.repo;
 
+import edu.bu.metcs673.trackr.domain.TrackrUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import edu.bu.metcs673.trackr.domain.TrackrUser;
 
 /**
  * Directly interfaces with the "USERS" table in the H2 repository, using the

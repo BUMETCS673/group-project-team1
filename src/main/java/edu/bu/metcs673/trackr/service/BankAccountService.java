@@ -1,12 +1,9 @@
 package edu.bu.metcs673.trackr.service;
 
-import org.springframework.stereotype.Component;
-
 import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.domain.BankAccount;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 @Component
 public interface BankAccountService {
