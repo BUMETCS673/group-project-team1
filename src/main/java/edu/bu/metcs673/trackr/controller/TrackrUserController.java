@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +22,6 @@ import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.security.JWTUtil;
 import edu.bu.metcs673.trackr.service.TrackrUserService;
-import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
 
 /**
@@ -31,7 +32,6 @@ import net.minidev.json.JSONObject;
  * @author Tim Flucker
  *
  */
-@Slf4j
 @Validated
 @RestController
 @RequestMapping("/api/v1/users")
@@ -78,9 +78,9 @@ public class TrackrUserController {
 			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
 					userLogin.getUsername(), userLogin.getPassword());
 
-			authenticationManager.authenticate(authInputToken);
+			Authentication auth = authenticationManager.authenticate(authInputToken);
 
-			String token = jwtUtil.generateToken(userLogin.getUsername());
+			String token = jwtUtil.generateToken(((UserDetails) auth.getPrincipal()).getUsername());
 
 			JSONObject tokenObj = createTokenObject(token);
 
@@ -88,7 +88,6 @@ public class TrackrUserController {
 					GenericApiResponse.successResponse(CommonConstants.NEW_JWT_TOKEN, tokenObj), HttpStatus.OK);
 
 		} catch (AuthenticationException e) {
-			log.error("Invalid Login Credentials ...");
 			return new ResponseEntity<GenericApiResponse>(
 					GenericApiResponse.errorResponse(CommonConstants.INVALID_CREDENTIALS), HttpStatus.UNAUTHORIZED);
 		}
