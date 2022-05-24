@@ -30,7 +30,7 @@ public class GenericApiResponse {
 	@NotNull
 	private String message;
 
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_EMPTY)
 	private Object additionalData;
 
 	/**
@@ -52,6 +52,6 @@ public class GenericApiResponse {
 	 * @return
 	 */
 	public static GenericApiResponse errorResponse(String message, Object... obj) {
-		return new GenericApiResponse(CommonConstants.ERROR, LocalDate.now(), message, null);
+		return new GenericApiResponse(CommonConstants.ERROR, LocalDate.now(), message, obj);
 	}
 }
