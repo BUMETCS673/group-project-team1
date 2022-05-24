@@ -1,0 +1,26 @@
+{
+  "name": "bu-met-cs-673-trackr",
+  "version": "0.1.0",
+  "description": "Simple web application for tracking bank account transactions.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:BUMETCS673/group-project-team1.git"
+  },
+  "dependencies": {
+    "npm": "8.10.0",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "rest": "2.0.0"
+  },
+  "scripts": {
+    "watch": "webpack watch"
+  },
+  "devDependencies": {
+    "@babel/core": "7.18.0",
+    "@babel/preset-env": "7.18.0",
+    "@babel/preset-react": "7.17.12",
+    "babel-loader": "8.2.5",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
+  }
+}

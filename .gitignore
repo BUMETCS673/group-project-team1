@@ -43,3 +43,8 @@ atlassian-ide-plugin.xml
 
 # VS Code
 .vscode/
+
+# Node modules and built assets
+package-lock.json
+node_modules/
+src/main/resources/static/built/
