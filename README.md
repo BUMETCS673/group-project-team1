@@ -15,6 +15,10 @@ Assume the latest version if none specified.
 - IntelliJ IDE
 - Lombok IntelliJ Plugin
 - Heroku CLI
+- Node
+- NPM
+- Webpack
+- Webpack CLI
 
 ## Run with IDE
 In order to run the application in IntelliJ IDE for the first time simply create a new run configuration
@@ -60,6 +64,63 @@ the application is already running on the port 8080 otherwise it will fail to st
 When done you can use `control c` to stop the app and issue `docker-compose down` to remove Docker resources.
 
 ![docker-compose-down](docs/docker-compose-down.png)
+
+# Frontend
+The project frontend is being implemented with ReactJS as a single page application. The homepage will load the bundle JS 
+code which will include all the dependencies (such as React, etc.) and the code developed to interact with the backend. Only a single template
+is needed it's located on this path `src/main/resources/templates/index.html`. This template is rendered by the backend `FrontendController`.
+
+## Webpack
+Webpack is a bundler tool which essentially allows us to package all the JS code (develop and package dependencies) into a **single file** which we call
+`bundle.js` in this project. When the homepage is rendered in the browser the HTML contains instruction to download this file hence loading the frontend.
+Webpack is configured using the file `webpack.config.js`. Below this what the HTML template looks like. It's quite simple on purpose since
+the pages will be developed with React and JSX. Think of the `bundle.js` file equivalent to an Uber JAR in Java output by a build tool such as Maven etc.
+````html
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Trackr</title>
+</head>
+<body>
+
+<div id="react"></div>
+
+<script src="built/bundle.js"></script> // Load JS for the app
+
+</body>
+</html>
+````
+Obviously before we can use Webpack we have to install it in the environment. After you have installed Node and NPM 
+discussed below install Webpack and Webpack CLI as follows.
+```
+npm install -g webpack webpack-cli
+```
+
+## Node and NPM
+Node and NPM have to be installed in the developer local environment in order to be able to download frontend dependencies.
+Similar to the Maven Project Object Model (POM) there is a file called `package.json` which defines all dependencies and versions used
+in the frontend. Assuming the environment already have Node and NPM installed then run the following command to install
+the dependencies.
+```
+RUN npm install
+```
+
+## Workflow
+Now that all the frontend dependencies are installed let's talk about the workflow.
+JS code will be developed under the folder `src/main/js`. We can have nested folders under that path
+to organize frontend components. After running webpack the bundle will be created under the folder `src/main/resources/static/built`.
+Notice is this folder is not under version control as it's similar to the `target` folder contains build artifacts.
+
+- Develop the Java code for the feature.
+- Develop the JS code for the feature.
+- Run `webpack` to build the frontend code a single time.
+- Build and run the application with the IDE and load the index page in a browser.
+- Use hot reloading feature to edit JS code and view the result immediately by running `webpack watch`. This will rebuild all
+your changes the moment you **save** your JS file.
+- Alternatively you can also build the project Docker container which is going to run all those steps
+with `docker-compose build`. Note I haven't experimented with hot reloading inside the container.
+
 
 # Deploy
 The application is deployed on Heroku Cloud Platform which is very simple to use and especially a great fit for student projects.
