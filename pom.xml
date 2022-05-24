@@ -108,9 +108,6 @@
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
 				<version>${frontend-plugin.version}</version>
-				<configuration>
-					<installDirectory>target</installDirectory>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
