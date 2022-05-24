@@ -16,7 +16,6 @@
 		<javax.version>2.2</javax.version>
 		<java.version>1.8</java.version>
 		<jwt.version>3.19.2</jwt.version>
-		<frontend-plugin.version>1.12.1</frontend-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -104,11 +103,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>${frontend-plugin.version}</version>
-			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

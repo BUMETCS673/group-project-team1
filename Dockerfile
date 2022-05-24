@@ -14,6 +14,18 @@ COPY . /usr/app/src
 # Set the working directory
 WORKDIR /usr/app/src
 
+# Install NodeJS, NPM
+RUN apt-get update
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+
+# Install Webpack, Webpack CLI global then all the dependencies in package.json
+RUN npm install -g webpack webpack-cli
+RUN npm install
+
+# Build the project JS code and bundle them under static/built/bundle.js to be included in the Uber JAR
+RUN webpack
+
 # Build app Uber JAR with maven
 RUN mvn clean install
 

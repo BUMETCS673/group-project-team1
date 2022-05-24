@@ -21,7 +21,6 @@
     "@babel/preset-react": "7.17.12",
     "babel-loader": "8.2.5",
     "webpack": "^5.72.1",
-    "webpack-cli": "^4.9.2",
-    "webpack-sources": "3.2.3"
+    "webpack-cli": "^4.9.2"
   }
 }
