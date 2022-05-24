@@ -21,6 +21,7 @@ import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.security.JWTUtil;
 import edu.bu.metcs673.trackr.service.TrackrUserService;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 
 /**
  * Controller for Users Management. Contains a 'Create' API for new users to
@@ -57,8 +58,10 @@ public class TrackrUserController {
 	public ResponseEntity<GenericApiResponse> createUser(@Valid @RequestBody TrackrUserDTO userInput) {
 		String token = userService.createUser(userInput);
 
+		JSONObject tokenObj = createTokenObject(token);
+
 		return new ResponseEntity<GenericApiResponse>(
-				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS + token), HttpStatus.OK);
+				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS, tokenObj), HttpStatus.OK);
 	}
 
 	/**
@@ -68,7 +71,7 @@ public class TrackrUserController {
 	 * @param userLogin
 	 * @return
 	 */
-	@PostMapping("/retrieveToken")
+	@PostMapping("/retrieve-token")
 	public ResponseEntity<GenericApiResponse> retrieveToken(@Valid @RequestBody TokenRetrievalDTO userLogin) {
 
 		try {
@@ -79,8 +82,10 @@ public class TrackrUserController {
 
 			String token = jwtUtil.generateToken(userLogin.getUsername());
 
+			JSONObject tokenObj = createTokenObject(token);
+
 			return new ResponseEntity<GenericApiResponse>(
-					GenericApiResponse.successResponse(CommonConstants.NEW_JWT_TOKEN + token), HttpStatus.OK);
+					GenericApiResponse.successResponse(CommonConstants.NEW_JWT_TOKEN, tokenObj), HttpStatus.OK);
 
 		} catch (AuthenticationException e) {
 			log.error("Invalid Login Credentials ...");
@@ -88,5 +93,18 @@ public class TrackrUserController {
 					GenericApiResponse.errorResponse(CommonConstants.INVALID_CREDENTIALS), HttpStatus.UNAUTHORIZED);
 		}
 
+	}
+
+	/**
+	 * Helper method to present the JWT Token value to the user in a more organized
+	 * way.
+	 * 
+	 * @param token
+	 * @return
+	 */
+	private static JSONObject createTokenObject(String token) {
+		JSONObject tokenObj = new JSONObject();
+		tokenObj.put("jwtToken", token);
+		return tokenObj;
 	}
 }
