@@ -6,6 +6,14 @@ import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.domain.BankAccount;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
 
+/**
+ * Interface which defines methods which will be implemented in the
+ * "BankAccountServiceImpl". This interface is reusable, so other classes could
+ * extend this if they wanted / needed to.
+ * 
+ * @author Tim Flucker
+ *
+ */
 @Component
 public interface BankAccountService {
 
@@ -15,7 +23,32 @@ public interface BankAccountService {
 	 * their default values.
 	 * 
 	 * @param bankAccountInput
-	 * @return
+	 * @return BankAccount
 	 */
 	public BankAccount createBankAccount(BankAccountDTO bankAccountInput, TrackrUser user);
+
+	/**
+	 * Modifies a BankAccount record with the provided id, if the provide TrackrUser
+	 * is the same one who created the record. Value in the BankAccountDTO will
+	 * overwrite existing values.
+	 * 
+	 * @param bankAccountInput
+	 * @param user
+	 * @param id
+	 * @return BankAccount
+	 */
+	public BankAccount modifyBankAccount(BankAccountDTO bankAccountInput, TrackrUser user, long id);
+
+	/**
+	 * Updates a status in a BankAccount record with the provided id, if the
+	 * provided TrackrUser is the same associated to the record. Sets
+	 * 'accountStatus' to INACTIVE which prevents new transactions from being
+	 * associated to the BankAccount record. 
+	 * 
+	 * @param user
+	 * @param id
+	 * @return
+	 */
+	public void deactivateBankAccount(TrackrUser user, long id);
+
 }

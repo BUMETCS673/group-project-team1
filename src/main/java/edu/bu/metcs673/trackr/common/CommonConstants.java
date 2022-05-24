@@ -41,11 +41,19 @@ public class CommonConstants {
 	public static final String DUPLICATE_USERNAME = "Invalid USERNAME value. Please use another value.";
 	public static final String INVALID_EMAIL_FORMAT = "Email has an invalid format. Please try again.";
 	public static final String INVALID_BALANCE_VALUE = "Balance must be a positive number or zero.";
+	public static final String VALIDATION_ERRORS = "Invalid values detected in request body. Please review the errors and modify your request accordingly.";
 
+	// security-related messages
+	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials";
+	public static final String UNAUTHORIZED_ACCESS = "You do not have access to the specified resource.";
+	public static final String INVALID_TOKEN = "Invalid Token value.";
+
+	
 	// Success messages
-	public static final String CREATE_USER_SUCCESS = "Successfully created a new user!  Token value: ";
-	public static final String NEW_JWT_TOKEN = "New JWT Token: ";
+	public static final String CREATE_USER_SUCCESS = "Successfully created a new user! Please use the JWT token below to authenticate your API requests.";
+	public static final String NEW_JWT_TOKEN = "Successfully created new JWT token!";
 
-	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials ...";
+
+	public static final String DEACTIVATE_BANK_ACCOUNT = "Successfully deactivated Bank Account with id: {0}";
 
 }

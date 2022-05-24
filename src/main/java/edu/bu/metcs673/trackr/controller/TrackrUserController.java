@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.api.TokenRetrievalDTO;
 import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
 import edu.bu.metcs673.trackr.security.JWTUtil;
 import edu.bu.metcs673.trackr.service.TrackrUserService;
-import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 
 /**
  * Controller for Users Management. Contains a 'Create' API for new users to
@@ -30,7 +32,6 @@ import lombok.extern.slf4j.Slf4j;
  * @author Tim Flucker
  *
  */
-@Slf4j
 @Validated
 @RestController
 @RequestMapping("/api/v1/users")
@@ -57,8 +58,10 @@ public class TrackrUserController {
 	public ResponseEntity<GenericApiResponse> createUser(@Valid @RequestBody TrackrUserDTO userInput) {
 		String token = userService.createUser(userInput);
 
+		JSONObject tokenObj = createTokenObject(token);
+
 		return new ResponseEntity<GenericApiResponse>(
-				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS + token), HttpStatus.OK);
+				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS, tokenObj), HttpStatus.OK);
 	}
 
 	/**
@@ -68,25 +71,39 @@ public class TrackrUserController {
 	 * @param userLogin
 	 * @return
 	 */
-	@PostMapping("/retrieveToken")
-	public ResponseEntity<GenericApiResponse> retrieveToken(@Valid @RequestBody TrackrUser userLogin) {
+	@PostMapping("/retrieve-token")
+	public ResponseEntity<GenericApiResponse> retrieveToken(@Valid @RequestBody TokenRetrievalDTO userLogin) {
 
 		try {
 			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
 					userLogin.getUsername(), userLogin.getPassword());
 
-			authenticationManager.authenticate(authInputToken);
+			Authentication auth = authenticationManager.authenticate(authInputToken);
 
-			String token = jwtUtil.generateToken(userLogin.getUsername());
+			String token = jwtUtil.generateToken(((UserDetails) auth.getPrincipal()).getUsername());
+
+			JSONObject tokenObj = createTokenObject(token);
 
 			return new ResponseEntity<GenericApiResponse>(
-					GenericApiResponse.successResponse(CommonConstants.NEW_JWT_TOKEN + token), HttpStatus.OK);
+					GenericApiResponse.successResponse(CommonConstants.NEW_JWT_TOKEN, tokenObj), HttpStatus.OK);
 
 		} catch (AuthenticationException e) {
-			log.error("Invalid Login Credentials ...");
 			return new ResponseEntity<GenericApiResponse>(
 					GenericApiResponse.errorResponse(CommonConstants.INVALID_CREDENTIALS), HttpStatus.UNAUTHORIZED);
 		}
 
+	}
+
+	/**
+	 * Helper method to present the JWT Token value to the user in a more organized
+	 * way.
+	 * 
+	 * @param token
+	 * @return
+	 */
+	private static JSONObject createTokenObject(String token) {
+		JSONObject tokenObj = new JSONObject();
+		tokenObj.put("jwtToken", token);
+		return tokenObj;
 	}
 }
