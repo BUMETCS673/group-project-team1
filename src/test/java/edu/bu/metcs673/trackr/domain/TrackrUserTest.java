@@ -1,9 +1,24 @@
 package edu.bu.metcs673.trackr.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.Set;
+import java.util.stream.Stream;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 
 public class TrackrUserTest {
 
@@ -13,6 +28,15 @@ public class TrackrUserTest {
 	public static final String TEST_PASSWORD = "password";
 	public static final String TEST_EMAIL = "johnDoe@email.com";
 
+
+	private static Validator validator;
+
+	@BeforeAll
+	public static void setup() {
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		validator = factory.getValidator();
+	}
+	
 	@Test
 	public void getterSetterTest() {
 		TrackrUser user = new TrackrUser();
@@ -60,6 +84,61 @@ public class TrackrUserTest {
 		assertEquals(TEST_USERNAME, user.getUsername());
 		assertEquals(TEST_PASSWORD, user.getPassword());
 		assertEquals(TEST_EMAIL, user.getEmail());
+	}
+	
+	@ParameterizedTest
+	@MethodSource("generateTestData")
+	public void testAnnotationBasedValidations(TrackrUserDTO userDTO) {
+
+		Set<ConstraintViolation<TrackrUserDTO>> violations = validator.validate(userDTO);
+		assertFalse(violations.isEmpty());
+	}
+
+	/**
+	 * Creates different objects to be used in the parameterized test. Used to test
+	 * the 'validate' method.
+	 * 
+	 * @return
+	 */
+	private static Stream<Arguments> generateTestData() {
+		return Stream.of(Arguments.of(
+				// null and empty tests
+				new TrackrUserDTO()),
+				Arguments.of(
+						new TrackrUserDTO(null, "mcTesterson", "tester00", "myCoolPassword", "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", null, "tester01", "myCoolPassword", "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", null, "myCoolPassword", "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester02", null, "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester03", "myCoolPassword", null)),
+				Arguments.of(new TrackrUserDTO("", "", "", "", "")),
+				Arguments.of(new TrackrUserDTO("", "mcTesterson", "tester04", "myCoolPassword", "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", "", "tester05", "myCoolPassword", "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "", "myCoolPassword", "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester06", "", "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester07", "myCoolPassword", "")),
+
+				// length tests
+				Arguments.of(new TrackrUserDTO(
+						"testyasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfasdfasdfsadfasdfasdf",
+						"mcTesterson", "tester08", "myCoolPassword", "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy",
+						"mcTestersonasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsadf",
+						"tester09", "myCoolPassword", ")#(*$)@(##@()*")),
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson",
+						"tester00asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf",
+						"myCoolPassword", "testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester10",
+						"myCoolPasswordasdfasdfasdfasdfasdfasdfasdfasdfkljglkashvpawdvkjbaskjvhpweifpoiewnfshdvuashdpvoijasdkvnpas988hvjoaiwjegdafsdfasi2bgpviasjlvdjnlwkbfsjdbaoidngkksjadbhp9asdjoasdgasdfasdfashdjkshkvajhskljdvhlaskdjfhlkahjdsf",
+						"testEmail@email.com")),
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester11", "myCoolPassword",
+						"testEasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfmail@emasdfasdfasdfasasdfasdfsdfasdfasdfasdfasdfdfasdfasail.com")),
+
+				// bad email format
+				Arguments.of(
+						new TrackrUserDTO("testy", "mcTesterson", "tester12", "myCoolPassword", "#@$@#$!@$!@*^&*!@^#"))
+
+		);
+
 	}
 
 }
