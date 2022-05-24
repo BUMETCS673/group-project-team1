@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.api.TokenRetrievalDTO;
 import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
 import edu.bu.metcs673.trackr.security.JWTUtil;
 import edu.bu.metcs673.trackr.service.TrackrUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -69,7 +69,7 @@ public class TrackrUserController {
 	 * @return
 	 */
 	@PostMapping("/retrieveToken")
-	public ResponseEntity<GenericApiResponse> retrieveToken(@Valid @RequestBody TrackrUser userLogin) {
+	public ResponseEntity<GenericApiResponse> retrieveToken(@Valid @RequestBody TokenRetrievalDTO userLogin) {
 
 		try {
 			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
