@@ -11,6 +11,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
+            {
                 test: path.join(__dirname, '.'),
                 exclude: /(node_modules)/,
                 use: [{
