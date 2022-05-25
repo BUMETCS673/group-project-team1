@@ -60,4 +60,14 @@ public interface TransactionService {
      * @date 05/23/2022
      */
     public List<Transaction> findAllTraByBankAccountId(long bankAccountId);
+
+    /**
+     * The purpose of this method is to invalid a transaction
+     *
+     * @param transaction this is a Transaction object
+     * @return Transaction
+     * @author Xiaobing Hou
+     * @date 05/25/2022
+     */
+    public Transaction deleteTransaction(Transaction transaction);
 }

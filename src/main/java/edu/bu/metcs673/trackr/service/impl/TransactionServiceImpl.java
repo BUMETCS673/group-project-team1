@@ -91,4 +91,19 @@ public class TransactionServiceImpl implements TransactionService {
     public List<Transaction> findAllTraByBankAccountId(long bankAccountId) {
         return transactionRepository.findAllTraByBankAccountId(bankAccountId);
     }
+
+    /**
+     * The purpose of this method is to invalid a transaction
+     *
+     * @param transaction this is a Transaction object
+     * @return Transaction
+     * @author Xiaobing Hou
+     * @date 05/25/2022
+     */
+    @Override
+    public Transaction deleteTransaction(Transaction transaction) {
+        transaction.setStatus(Transaction.TRANSACTION_STATUS.INVALID);
+        transactionRepository.save(transaction);
+        return transaction;
+    }
 }
