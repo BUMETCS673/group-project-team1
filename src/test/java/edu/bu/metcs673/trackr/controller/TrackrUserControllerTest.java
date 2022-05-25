@@ -1,7 +1,10 @@
 package edu.bu.metcs673.trackr.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.api.TrackrUserDTO;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.service.TrackrUserService;
+import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,10 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.api.TrackrUserDTO;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.service.TrackrUserService;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 public class TrackrUserControllerTest {
@@ -29,16 +29,25 @@ public class TrackrUserControllerTest {
 
 	@Test
 	public void userAnnotationValidationTest() {
-
 		TrackrUserDTO testUser = new TrackrUserDTO("test", "Tester", "tTester", "blahblah", "test@email.com");
 		Mockito.when(userService.createUser(testUser)).thenReturn(MOCK_TOKEN_VAL);
 
-		ResponseEntity<GenericApiResponse> mockResponse = new ResponseEntity<GenericApiResponse>(
-				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS + MOCK_TOKEN_VAL),
+		JSONObject extra = TrackrUserController.createTokenObject(MOCK_TOKEN_VAL);
+		ResponseEntity<GenericApiResponse> expected = new ResponseEntity<>(
+				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS, extra),
 				HttpStatus.OK);
 
-		assertEquals(controller.createUser(testUser), mockResponse);
+		ResponseEntity<GenericApiResponse> actual = controller.createUser(testUser);
 
+		// Field by field comparison ignoring the extra field since it's not evaluated correctly being a raw object
+		assertThat(actual)
+				.usingRecursiveComparison()
+				.ignoringFields("additionalData")
+				.isEqualTo(expected);
+
+		// Explicit check the extra field
+		assertThat(actual.getBody().getAdditionalData())
+				.usingRecursiveComparison()
+				.isEqualTo(expected.getBody().getAdditionalData());
 	}
-
 }
