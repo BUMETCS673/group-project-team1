@@ -2,7 +2,8 @@ name: Docker Image CI
 
 on:
   push:
-    branches: []
+    branches:
+      - '**'        # matches every branch
   pull_request:
     branches:
       - '**'        # matches every branch
