@@ -51,7 +51,4 @@ public interface BankAccountService {
 	 */
 	public void deactivateBankAccount(TrackrUser user, long id);
 
-
-	//Code by Xiaobing Hou. YOu can delete or change this part
-	public BankAccount findBankAccountByIdAndUserId(long id,long userId);
 }

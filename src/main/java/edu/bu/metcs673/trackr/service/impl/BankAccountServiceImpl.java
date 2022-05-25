@@ -78,17 +78,4 @@ public class BankAccountServiceImpl implements BankAccountService {
 		return bankAccount;
 	}
 
-
-	//Code by Xiaobing Hou. YOu can delete or change this part
-	@Override
-	public BankAccount findBankAccountByIdAndUserId(long id, long userId) {
-
-		BankAccount bankAccount;
-		if ((bankAccount = bankAccountRepository.findBankAccountByIdAndUserId(id, userId)) != null) {
-			return bankAccount;
-		}
-		throw new TrackrInputValidationException(CommonConstants.INVALID_BANK_ACCOUNT_ID);
-
-	}
-
 }
