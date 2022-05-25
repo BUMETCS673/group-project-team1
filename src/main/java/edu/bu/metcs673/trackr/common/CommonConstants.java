@@ -67,4 +67,9 @@ public class CommonConstants {
 
 	public static final String DEACTIVATE_BANK_ACCOUNT = "Successfully deactivated Bank Account with id: {0}";
 
+	public static final String MODIFY_TRANSACTION = "Successfully modify the transaction with transaction id: {0}.";
+	public static final String CREATE_TRANSACTION = "Successfully create a transaction with transaction id: {0}";
+	public static final String FIND_ALL_TRANSACTION = "Successfully find all transaction with bank account id: {0}.";
+	public static final String FIND_TRANSACTION = "Successfully find the transaction with transaction id: {0}.";
+
 }
