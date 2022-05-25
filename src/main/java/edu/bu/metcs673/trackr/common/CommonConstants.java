@@ -27,6 +27,11 @@ public class CommonConstants {
 	public static final String BLANK_ACCOUNT_TYPE = "Account Type is a required field.";
 	public static final String BLANK_BALANCE = "Balance is a required field.";
 
+	// Transaction fields
+	public static final String TRANSACTION_MONEY = "Money Type is a required field.";
+	public static final String TRANSACTION_TIME = "Time is a required field.";
+	public static final String TRANSACTION_COU = "Counterparty is a required field.";
+
 	// length validation error messages - User
 	public static final String INVALID_FIRST_NAME_LENGTH = "First Name must be less than 100 characters.";
 	public static final String INVALID_LAST_NAME_LENGTH = "Last Name must be less than 100 characters.";
@@ -37,11 +42,17 @@ public class CommonConstants {
 	// length validation error messages - BankAccount
 	public static final String INVALID_ACCOUNT_DESC_LENGTH = "Account Description must be less than 255 characters.";
 
+	// length validation error messages - Transaction
+	public static final String INVALID_TRANSACTION_COU_LENGTH = "Counterparty must be less than 100 characters.";
+	public static final String INVALID_TRANSACTION_TD_LENGTH = "Transaction Description must be less than 225 characters.";
+
 	// custom validation error messages
 	public static final String DUPLICATE_USERNAME = "Invalid USERNAME value. Please use another value.";
 	public static final String INVALID_EMAIL_FORMAT = "Email has an invalid format. Please try again.";
 	public static final String INVALID_BALANCE_VALUE = "Balance must be a positive number or zero.";
 	public static final String VALIDATION_ERRORS = "Invalid values detected in request body. Please review the errors and modify your request accordingly.";
+	public static final String INVALID_BANK_ACCOUNT_ID = "Invalid bank account id. Please use another value.";
+	public static final String INVALID_TRANSACTION_ID = "Invalid transaction id. Please use another value.";
 
 	// security-related messages
 	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials";
