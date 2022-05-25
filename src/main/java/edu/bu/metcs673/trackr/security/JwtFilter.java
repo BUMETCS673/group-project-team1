@@ -1,20 +1,26 @@
 package edu.bu.metcs673.trackr.security;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.auth0.jwt.exceptions.JWTVerificationException;
+
+import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
 
 /**
  * Filter class that runs before actual API logic is processed. Checks for a JWT
@@ -33,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private TrackrUserServiceImpl userServiceImpl;
-
+	
 	@Autowired
 	private JWTUtil jwtUtil;
 
@@ -58,20 +64,25 @@ public class JwtFilter extends OncePerRequestFilter {
 					// validate token and return the username contained within
 					String username = jwtUtil.validateTokenAndRetrieveSubject(jwt);
 					if (StringUtils.isNotBlank(username)) {
+//						TrackrUser userDetails = userRepository.findByUsername(username);
 						UserDetails userDetails = userServiceImpl.loadUserByUsername(username);
 
+						
 						// create token using the username and password gathered from the JWT token
 						UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-								username, userDetails.getPassword(), userDetails.getAuthorities());
+								username, userDetails.getPassword(), new ArrayList<>());
 
+						authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+						
 						// set authentication for API request
 						if (SecurityContextHolder.getContext().getAuthentication() == null) {
 							SecurityContextHolder.getContext().setAuthentication(authToken);
 						}
 					}
 
-				} catch (JWTVerificationException e) {
+				} catch (JWTVerificationException | UsernameNotFoundException e) {
 					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
+					return;
 				}
 			}
 		}

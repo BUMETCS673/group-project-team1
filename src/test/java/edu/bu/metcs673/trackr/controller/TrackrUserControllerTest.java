@@ -1,74 +1,44 @@
 package edu.bu.metcs673.trackr.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.api.TrackrUserDTO;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.service.TrackrUserService;
 
-import javax.validation.ConstraintViolationException;
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class TrackrUserControllerTest {
 
-	@Autowired
-	TrackrUserController controller = new TrackrUserController();
+	public static final String MOCK_TOKEN_VAL = "SOME_COOL_TOKEN_VAL";
 
-	@ParameterizedTest
-	@MethodSource("generateTestUsers")
-	public void userAnnotationValidationTest(TrackrUserDTO testUser) {
+	@Mock
+	private TrackrUserService userService;
 
-		assertThrows(ConstraintViolationException.class, () -> controller.createUser(testUser));
-	}
+	@InjectMocks
+	private TrackrUserController controller = new TrackrUserController();
 
-	/**
-	 * Creates different objects to be used in the parameterized test. Used to test
-	 * the 'validate' method.
-	 * 
-	 * @return
-	 */
-	private static Stream<Arguments> generateTestUsers() {
-		return Stream.of(Arguments.of(
-				// null and empty tests
-				new TrackrUserDTO()),
-				Arguments.of(new TrackrUserDTO(null, "mcTesterson", "tester00", "myCoolPassword",
-						"testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", null, "tester01", "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", null, "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester02", null, "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester03", "myCoolPassword", null)),
-				Arguments.of(new TrackrUserDTO("", "", "", "", "")),
-				Arguments.of(new TrackrUserDTO("", "mcTesterson", "tester04", "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "", "tester05", "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "", "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester06", "", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester07", "myCoolPassword", "")),
+	@Test
+	public void userAnnotationValidationTest() {
 
-				// length tests
-				Arguments.of(new TrackrUserDTO(
-						"testyasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfasdfasdfsadfasdfasdf",
-						"mcTesterson", "tester08", "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy",
-						"mcTestersonasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsadf",
-						"tester09", "myCoolPassword", ")#(*$)@(##@()*")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson",
-						"tester00asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf",
-						"myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester10",
-						"myCoolPasswordasdfasdfasdfasdfasdfasdfasdfasdfkljglkashvpawdvkjbaskjvhpweifpoiewnfshdvuashdpvoijasdkvnpas988hvjoaiwjegdafsdfasi2bgpviasjlvdjnlwkbfsjdbaoidngkksjadbhp9asdjoasdgasdfasdfashdjkshkvajhskljdvhlaskdjfhlkahjdsf",
-						"testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester11", "myCoolPassword",
-						"testEasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfmail@emasdfasdfasdfasasdfasdfsdfasdfasdfasdfasdfdfasdfasail.com")),
+		TrackrUserDTO testUser = new TrackrUserDTO("test", "Tester", "tTester", "blahblah", "test@email.com");
+		Mockito.when(userService.createUser(testUser)).thenReturn(MOCK_TOKEN_VAL);
 
-				// bad email format
-				Arguments.of(
-						new TrackrUserDTO("testy", "mcTesterson", "tester12", "myCoolPassword", "#@$@#$!@$!@*^&*!@^#"))
+		ResponseEntity<GenericApiResponse> mockResponse = new ResponseEntity<GenericApiResponse>(
+				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS + MOCK_TOKEN_VAL),
+				HttpStatus.OK);
 
-		);
+		assertEquals(controller.createUser(testUser), mockResponse);
 
 	}
+
 }

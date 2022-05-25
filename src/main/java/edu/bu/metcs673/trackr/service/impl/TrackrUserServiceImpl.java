@@ -87,11 +87,12 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 	 * creates a Spring Security 'User' object based on that information.
 	 */
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) {
+
 		TrackrUser trackrUser = userRepository.findByUsername(username);
 
 		if (trackrUser == null) {
-			throw new UsernameNotFoundException("Count not findUser with username: " + username);
+			throw new UsernameNotFoundException(CommonConstants.INVALID_TOKEN);
 		}
 		return new User(username, trackrUser.getPassword(),
 				Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
