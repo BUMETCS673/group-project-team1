@@ -1,3 +1,9 @@
+/**
+ * Application home page which also renders the registration form. All presentation no logic.
+ *
+ * @author Jean Dorancy
+ */
+
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";

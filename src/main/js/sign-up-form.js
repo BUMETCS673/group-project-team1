@@ -1,3 +1,9 @@
+/**
+ * The signup form built using Formik for form element and Yup for validation.
+ *
+ * @author Jean Dorancy
+ */
+
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button, FormGroup, FormLabel } from "react-bootstrap";
@@ -92,7 +98,7 @@ const SignUpForm = (props) => {
         </FormGroup>
 
         <Button type="submit" className="form-control btn-primary mt-md-2">
-          <h5>Sign Up</h5>
+          <h5>SignUp!</h5>
         </Button>
       </Form>
     </Formik>

@@ -1,3 +1,9 @@
+/**
+ * Home container to manage state and logic for the home page.
+ *
+ * @author Jean Dorancy
+ */
+
 import React from "react";
 import Home from "./home";
 

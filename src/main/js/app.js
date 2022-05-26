@@ -1,3 +1,10 @@
+/**
+ * Frontend application entrypoint which renders inside the HTML element "react" from index.html.
+ * Define routes using React Router for other pages.
+ *
+ * @author Jean Dorancy
+ */
+
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Routes } from "react-router";

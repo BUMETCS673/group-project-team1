@@ -1,3 +1,9 @@
+/**
+ * Application layout component which defines the navigation bar for all pages.
+ *
+ * @author Jean Dorancy
+ */
+
 import React from "react";
 import { Outlet } from "react-router";
 import Container from "react-bootstrap/Container";

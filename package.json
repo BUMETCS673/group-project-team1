@@ -7,6 +7,7 @@
     "url": "git@github.com:BUMETCS673/group-project-team1.git"
   },
   "dependencies": {
+    "axios": "0.27.2",
     "bootstrap": "5.1.3",
     "formik": "2.2.9",
     "npm": "8.10.0",
@@ -15,7 +16,6 @@
     "react-dom": "18.1.0",
     "react-router": "6.3.0",
     "react-router-dom": "6.3.0",
-    "rest": "2.0.0",
     "yup": "0.32.11"
   },
   "scripts": {
