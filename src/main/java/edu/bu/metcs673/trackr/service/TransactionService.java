@@ -19,37 +19,55 @@ import java.util.List;
 public interface TransactionService {
 
     /**
-     * Creates a new transaction using the provided object, associate to the bank account
-     * making the request. Fields not provided by the user will be filled in with
-     * their default values.
+     * The purpose of this method is to create a transaction in a bank account by
+     * 'transactionInput' and 'bankAccount' value.
      *
-     * @param transactionInput
-     * @return
+     * @param transactionInput this is a TransactionDTO object which gotten from the request body
+     * @param bankAccount      this is a bank account object which you will insert a transaction into
+     * @return Transaction
+     * @author Xiaobing Hou
+     * @date 05/23/2022
      */
     public Transaction createTransaction(TransactionDTO transactionInput, BankAccount bankAccount);
 
     /**
-     * Creates a new transaction using the provided object, associate to the bank account
-     * making the request. Fields not provided by the user will be filled in with
-     * their default values.
+     * The purpose of this method is to find a special transaction by 'transactionId' and 'bankAccountId' value.
      *
-     * @param transactionId
-     * @param bankAccountId
-     * @return
+     * @param transactionId this is transaction id
+     * @param bankAccountId This is the id of the corresponding bank account
+     * @return Transaction
+     * @author Xiaobing Hou
+     * @date 05/23/2022
      */
     public Transaction findTraByIdAndBankAccountId(long transactionId, long bankAccountId);
 
     /**
-     * Creates a new transaction using the provided object, associate to the bank account
-     * making the request. Fields not provided by the user will be filled in with
-     * their default values.
+     * The purpose of this method is to modify a special transaction record by 'transaction' and 'transactionInput' value.
      *
-     * @param transaction
-     * @param transactionInput
-     * @return
+     * @param transaction      this is a Transaction object
+     * @param transactionInput This is a TransactionDTO object
+     * @date 05/23/2022
      */
     public Transaction modifyTransaction(Transaction transaction, TransactionDTO transactionInput);
 
 
+    /**
+     * The purpose of this method is to fina all the transaction of a bank account
+     *
+     * @param bankAccountId this is bank account id
+     * @return Transaction
+     * @author Xiaobing Hou
+     * @date 05/23/2022
+     */
     public List<Transaction> findAllTraByBankAccountId(long bankAccountId);
+
+    /**
+     * The purpose of this method is to invalid a transaction
+     *
+     * @param transaction this is a Transaction object
+     * @return Transaction
+     * @author Xiaobing Hou
+     * @date 05/25/2022
+     */
+    public Transaction deleteTransaction(Transaction transaction);
 }

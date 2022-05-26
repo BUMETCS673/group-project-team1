@@ -95,13 +95,12 @@ public class TrackrUserController {
 	}
 
 	/**
-	 * Helper method to present the JWT Token value to the user in a more organized
-	 * way.
+	 * Helper method to present the JWT Token value to the user in a more organized way.
 	 * 
-	 * @param token
-	 * @return
+	 * @param token JSON Web Token string
+	 * @return A JSON object
 	 */
-	private static JSONObject createTokenObject(String token) {
+	 static JSONObject createTokenObject(String token) {
 		JSONObject tokenObj = new JSONObject();
 		tokenObj.put("jwtToken", token);
 		return tokenObj;
