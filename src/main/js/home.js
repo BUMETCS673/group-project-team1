@@ -7,7 +7,7 @@ const Home = (props) => {
   return (
     <Container>
       <Row>
-        <Col sm={7} className="mt-md-4">
+        <Col sm={8} className="mt-md-4">
           <h1>Let's figure out together where your money goes.</h1>
           <img
             alt="Trackr"
@@ -15,8 +15,7 @@ const Home = (props) => {
             className="rounded mx-auto d-block"
           />
         </Col>
-        <Col sm={5} className="mt-md-4">
-          <h2>Sign Up</h2>
+        <Col sm={4} className="mt-md-4">
           <SignUpForm handleSignUpFormSubmit={props.handleSignUpFormSubmit} />
         </Col>
       </Row>
