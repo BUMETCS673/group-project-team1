@@ -5,7 +5,7 @@
  * @author Jean Dorancy
  */
 
-import React from "react";
+import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -14,19 +14,19 @@ import Layout from "./layout";
 import Login from "./login";
 import "bootstrap/dist/css/bootstrap.css";
 
-class App extends React.Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomeContainer />} />
-            <Route path="login" element={<Login />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    );
-  }
-}
+const App = () => {
+  const [alert, setAlert] = useState({ show: false });
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout setAlert={setAlert} alert={alert} />}>
+          <Route index element={<HomeContainer setAlert={setAlert} />} />
+          <Route path="login" element={<Login />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
 createRoot(document.getElementById("react")).render(<App />);

@@ -6,10 +6,10 @@
 
 import React from "react";
 import { Outlet } from "react-router";
-import Container from "react-bootstrap/Container";
-import { Navbar, Nav } from "react-bootstrap";
+import { Container, Navbar, Nav, Alert } from "react-bootstrap";
 
-const Layout = () => {
+const Layout = (props) => {
+  console.log("layout", props.alert);
   return (
     <Container>
       <Navbar bg="light" expand="lg">
@@ -24,6 +24,18 @@ const Layout = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <Container className="mt-md-2">
+        {props.alert.show && (
+          <Alert
+            key={props.alert.variant}
+            variant={props.alert.variant}
+            onClose={() => props.setAlert({ show: false })}
+            dismissible
+          >
+            {props.alert.message}
+          </Alert>
+        )}
+      </Container>
       <Outlet />
     </Container>
   );

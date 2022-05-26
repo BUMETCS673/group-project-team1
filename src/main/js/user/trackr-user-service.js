@@ -3,6 +3,22 @@
  *
  * @author Jean Dorancy
  */
-const TrackrUserService = () => {};
+
+import axios from "axios";
+
+const PATH = "/api/v1/users";
+
+class TrackrUserService {
+  /**
+   * Create a user.
+   *
+   * @param user User object with all the attributes.
+   *
+   * @returns {Promise<AxiosResponse<any>>} Promise
+   */
+  create = (user) => {
+    return axios.post(PATH, user);
+  };
+}
 
 export default TrackrUserService;

@@ -6,18 +6,35 @@
 
 import React from "react";
 import Home from "./home";
+import { useNavigate } from "react-router";
+import TrackrUserService from "./user/trackr-user-service";
 
-const HomeContainer = () => {
+const HomeContainer = (props) => {
+  const service = new TrackrUserService();
+  const navigate = useNavigate();
+
   /**
    * Handle submit of the signup form by sending it to the backend.
    *
-   * @param values Submit form values
+   * @param user Submit form values
    */
-  const handleSignUpFormSubmit = (values) => {
-    setTimeout(() => {
-      alert("Alert from contain component!");
-      alert(JSON.stringify(values, null, 2));
-    }, 400);
+  const handleSignUpFormSubmit = (user) => {
+    service
+      .create(user)
+      .then(function (response) {
+        navigate("/login", { replace: true });
+        props.setAlert({
+          show: true,
+          variant: "success",
+          message: "Account successfully created!",
+        });
+        setTimeout(() => props.setAlert({ show: false }), 2000);
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+        // Error message
+      });
   };
 
   return <Home handleSignUpFormSubmit={handleSignUpFormSubmit} />;
