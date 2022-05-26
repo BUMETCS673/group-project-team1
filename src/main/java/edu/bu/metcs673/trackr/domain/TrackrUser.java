@@ -62,7 +62,7 @@ public class TrackrUser {
 	// extra column size is to account for hashed value
 	@Column(nullable = false, length = 200)
 	@NotBlank(message = CommonConstants.BLANK_PASSWORD)
-	@Size(max = 200, message = CommonConstants.INVALID_PASSWORD_LENGTH)
+	@Size(min = 6, max = 200, message = CommonConstants.INVALID_PASSWORD_LENGTH)
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 

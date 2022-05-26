@@ -6,8 +6,8 @@ const Login = () => {
     return (
         <Container>
             <Row>
-                <Col sm={8} className="mt-md-5">
-                    <h1>Login</h1>
+                <Col sm={8}>
+                    <h1>Coming soon...</h1>
                 </Col>
             </Row>
         </Container>
