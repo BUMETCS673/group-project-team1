@@ -19,7 +19,9 @@
     "yup": "0.32.11"
   },
   "scripts": {
-    "watch": "webpack watch"
+    "watch": "webpack watch",
+    "format": "prettier --write \"src/main/js/**\"",
+    "sniff": "prettier --check \"src/main/js/**\""
   },
   "devDependencies": {
     "@babel/core": "7.18.0",
@@ -27,6 +29,7 @@
     "@babel/preset-react": "7.17.12",
     "babel-loader": "8.2.5",
     "css-loader": "6.7.1",
+    "prettier": "2.6.2",
     "style-loader": "3.3.1",
     "webpack": "5.72.1",
     "webpack-cli": "4.9.2"
