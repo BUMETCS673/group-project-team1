@@ -525,7 +525,7 @@
                             "counterparty":"Walxiao-Mart",
                             "money":50000.3,
                             "time":"05/21-19:53"
-                    },
+                        },
 					"options": {
 						"raw": {
 							"language": "json"
