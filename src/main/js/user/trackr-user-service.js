@@ -13,11 +13,20 @@ class TrackrUserService {
    * Create a user.
    *
    * @param user User object with all the attributes.
-   *
    * @returns {Promise<AxiosResponse<any>>} Promise
    */
   create = (user) => {
     return axios.post(PATH, user);
+  };
+
+  /**
+   * Get JWT token by sending user login.
+   *
+   * @param login User login credentials
+   * @returns {Promise<AxiosResponse<any>>} Promise
+   */
+  getToken = (login) => {
+    return axios.post(`${PATH}/retrieve-token`, login);
   };
 }
 

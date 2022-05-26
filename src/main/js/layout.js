@@ -9,7 +9,6 @@ import { Outlet } from "react-router";
 import { Container, Navbar, Nav, Alert } from "react-bootstrap";
 
 const Layout = (props) => {
-  console.log("layout", props.alert);
   return (
     <Container>
       <Navbar bg="light" expand="lg">

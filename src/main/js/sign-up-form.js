@@ -98,7 +98,7 @@ const SignUpForm = (props) => {
         </FormGroup>
 
         <Button type="submit" className="form-control btn-primary mt-md-2">
-          <h5>SignUp!</h5>
+          <h5>Sign Up!</h5>
         </Button>
       </Form>
     </Formik>

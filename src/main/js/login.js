@@ -7,13 +7,14 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
+import LoginForm from "./login-form";
 
-const Login = () => {
+const Login = (props) => {
   return (
-    <Container>
+    <Container className="mt-md-5">
       <Row>
-        <Col sm={8}>
-          <h1>Coming soon...</h1>
+        <Col sm={4} className="mx-auto">
+          <LoginForm handleLoginSubmit={props.handleLoginSubmit} />
         </Col>
       </Row>
     </Container>
