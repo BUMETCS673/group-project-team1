@@ -243,20 +243,32 @@ There are two environment configured:
 The first step before attempting to deploy is to install the Heroku CLI tool and authenticate. In order to do follow the instructions
 in the [Heroku DevCenter](https://devcenter.heroku.com/articles/heroku-cli).
 
+### Heroku Web UI.
+You can deploy a branch to development using Heroku Web UI with the following instruction.
+- Navigate to the Dev App on Heroku: https://dashboard.heroku.com/apps/trackr-dev/deploy/github
+- Go down to **Manual deploy**
+- Select your branch from the **Choose a branch to deploy** dropdown
+- Click **Deploy Branch**
+- Et voila! Your code is route to run in development (assuming your build succeeds).
+
+![deploy-a-branch](docs/deploy-a-branch.png)
+
 ## Development
 Trackr Development URL: https://trackr-dev.herokuapp.com/
+GitHub integration is enabled for the development application and by default when a change is merged into **development** the application
+will **auto deploy** main to development.
 
-Follow these instructions to setup deployment for development:
+Follow these instructions to setup deployment for development.
 
 Authenticate with the CLI
 
 `$ heroku login`
 
-Checkout the development branch in the trackr repository.
+Checkout the **development** branch in the trackr repository.
 
 `$ git checkout development`
 
-Add the development application as the remote for development.
+Add the **development** application as the remote for development.
 
 `$ git remote add development https://git.heroku.com/trackr-dev.git`
 
@@ -277,7 +289,33 @@ After the application has been deployed visit the dev site to see it live. Use t
 collection development to test the endpoints.
 
 ## Production
-[TODO]
+Trackr Production URL: https://trackr-prod.herokuapp.com/
+GitHub integration is enabled for the production application and by default when a change is merged into **main** the application
+will **auto deploy** main to production.
+
+Follow these instructions to setup deployment for production.
+
+Authenticate with the CLI
+
+`$ heroku login`
+
+Checkout the **main** branch in the trackr repository.
+
+`$ git checkout main`
+
+Add the **production** application as the remote for production.
+
+`$ git remote add production https://git.heroku.com/trackr-prod.git`
+
+Configure your Heroku stack to container. If you did setup development already then you need to specify which remote in this command.
+
+`$ heroku stack:set container --remote production`
+
+
+Deploy **main** to production.
+`$ git push production main:main`
+
+Note: You can in theory deploy a branch to production but, it's not a good practice. **We will only deploy main to production.**
 
 ## Logging
 One important aspect of deploying an application is being able to view the logs to diagnose issues.
