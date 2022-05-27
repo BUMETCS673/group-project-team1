@@ -2,11 +2,11 @@
 
 ## Overview
 Trackr is a simple app which allows users to track transaction against their bank account,
-so they can better understand their spending behaviours. The application is built using the
-Spring Boot Java framework.
+so they can better understand their spending behaviours. The application is built using
+Spring Boot and React.
 
 ## Setup
-Developers have to install the following software to configure their local environment.
+Developers have to install the following software to configure their local environments.
 Assume the latest version if none specified.
 - Java SDK 1.8
 - Maven
@@ -19,6 +19,7 @@ Assume the latest version if none specified.
 - NPM
 - Webpack
 - Webpack CLI
+- Chrome Live Reload Extension
 
 ## Run with IDE
 In order to run the application in IntelliJ IDE for the first time simply create a new run configuration
@@ -33,12 +34,23 @@ to build the application Uber JAR which will package all the dependencies. You u
 Java command and specifying the previously built application Uber JAR as follows.
 
 ### Build
-You simply run `mvn clean install`  in the application root directory to build the application locally.
+You simply run `mvn clean install` in the application root directory to build the application locally.
 
 ### Run
 Keep in mind this should be used for experimenting only and if you need to run in the application
 in production other JVM args are needed in the following command.
+
+``` java -jar target/trackr-1.0-SNAPSHOT.jar```
+
 ![run-in-console](docs/run-in-console.png)
+
+### Run with Develop Tools
+In order to leverage features such as **hot reload** which are very handy when developing you need to run the application with developer tools. This applies for both the backend and the frontend. Open two (2) terminal windows and navigate to the application root directory for each. Use the following command to run backend and frontend build continuously so when you save your file and refresh the page you are working on in your browse you can see your changes.
+- Backend: `mvn spring-boot:run`
+- Frontend: `webpack watch`
+Finally, in order for everything to work you need to install Google Chrome LiveReload extension tool an enable it. Please find it here: https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en
+
+
 
 ## Run in Docker
 This application is deployed using a Docker container on the Heroku Platform. The best way to ensure what works locally will
