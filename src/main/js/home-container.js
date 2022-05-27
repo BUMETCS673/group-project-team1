@@ -32,12 +32,12 @@ const HomeContainer = (props) => {
         console.log(response);
       })
       .catch(function (error) {
-          props.setAlert({
-              show: true,
-              variant: "danger",
-              message: `${error.response.data.message}`,
-          });
-          setTimeout(() => props.setAlert({ show: false }), 2000);
+        props.setAlert({
+          show: true,
+          variant: "danger",
+          message: `${error.response.data.message}`,
+        });
+        setTimeout(() => props.setAlert({ show: false }), 2000);
       });
   };
 
