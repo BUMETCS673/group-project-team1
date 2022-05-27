@@ -1,9 +1,12 @@
 name: JS Code Sniff
 
 on:
+
   push:
+
     branches:
       - '**'        # matches every branch
+
     paths:
       - 'src/main/js/**.js' # JS paths
 
