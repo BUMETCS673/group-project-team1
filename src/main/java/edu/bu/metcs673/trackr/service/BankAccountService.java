@@ -68,4 +68,8 @@ public interface BankAccountService {
     public List<BankAccount> findAllBankAccount();
 
 
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

@@ -24,7 +24,7 @@ import edu.bu.metcs673.trackr.repo.BankAccountRepository;
 /**
  * Used to test methods in the BankAccountServiceImpl class. Uses Mockito to
  * fake calls to the database so that business logic can be tested.
- * 
+ *
  * @author Tim Flucker
  *
  */
@@ -96,9 +96,9 @@ public class BankAccountServiceImplTest {
 		assertThrows(TrackrInputValidationException.class,
 				() -> accountServiceImpl.modifyBankAccount(bankAcctDTO, TEST_USER, 0L));
 	}
-	
+
 	// no test for deactivateBankAccount_success because method returns void
-	
+
 	@Test
 	public void deactivateBankAccount_failure() {
 		BankAccount mockAccount = new BankAccount(0L, OTHER_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
@@ -120,4 +120,8 @@ public class BankAccountServiceImplTest {
 		assertEquals(mockAccount, bankAccount);
 
 	}
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

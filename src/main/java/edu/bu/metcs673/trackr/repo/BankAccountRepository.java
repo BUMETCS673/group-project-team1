@@ -29,4 +29,8 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
 
     public BankAccount findBankAccountByUserId(long userId);
 
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

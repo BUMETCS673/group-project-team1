@@ -113,4 +113,8 @@ public class BankAccountServiceImpl implements BankAccountService {
     public  List<BankAccount> findAllBankAccount() {
         return bankAccountRepository.findAll();
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

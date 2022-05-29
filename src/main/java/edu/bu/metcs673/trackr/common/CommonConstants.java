@@ -2,7 +2,7 @@ package edu.bu.metcs673.trackr.common;
 
 /**
  * Contains all static strings to increase re-usability.
- * 
+ *
  * @author Tim Flucker
  *
  */
@@ -60,7 +60,7 @@ public class CommonConstants {
 	public static final String UNAUTHORIZED_ACCESS = "You do not have access to the specified resource.";
 	public static final String INVALID_TOKEN = "Invalid Token value.";
 
-	
+
 	// Success messages
 	public static final String CREATE_USER_SUCCESS = "Successfully created a new user! Please use the JWT token below to authenticate your API requests.";
 	public static final String NEW_JWT_TOKEN = "Successfully created new JWT token!";
