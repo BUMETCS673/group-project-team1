@@ -6,6 +6,8 @@ import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.domain.BankAccount;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
 
+import java.util.List;
+
 /**
  * Interface which defines methods which will be implemented in the
  * "BankAccountServiceImpl". This interface is reusable, so other classes could
@@ -60,5 +62,10 @@ public interface BankAccountService {
      * @author Xiaobing Hou
      */
     public BankAccount findBankAccountByIdAndUserId(long id, long userId);
+
+    public BankAccount findBankAccountByUserId(long userId);
+
+    public List<BankAccount> findAllBankAccount();
+
 
 }

@@ -1,6 +1,7 @@
 package edu.bu.metcs673.trackr.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
 import edu.bu.metcs673.trackr.api.BankAccountDTO;
@@ -11,6 +12,8 @@ import edu.bu.metcs673.trackr.domain.BankAccount.ACCOUNT_STATUS;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
 import edu.bu.metcs673.trackr.repo.BankAccountRepository;
 import edu.bu.metcs673.trackr.service.BankAccountService;
+
+import java.util.List;
 
 /**
  * Defines logic for the "BankAccountService" methods. Calls methods in the
@@ -97,4 +100,17 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     }
 
+    @Override
+    public BankAccount findBankAccountByUserId(long userId) {
+        BankAccount bankAccount = bankAccountRepository.findBankAccountByUserId(userId);
+        if (bankAccount != null) {
+            return bankAccount;
+        }
+        throw new TrackrInputValidationException(CommonConstants.INVALID_USER_ID);
+    }
+
+    @Override
+    public  List<BankAccount> findAllBankAccount() {
+        return bankAccountRepository.findAll();
+    }
 }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Optional;
 
+import edu.bu.metcs673.trackr.domain.Transaction;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -109,4 +110,14 @@ public class BankAccountServiceImplTest {
 				() -> accountServiceImpl.deactivateBankAccount(TEST_USER, 0L));
 	}
 
+	@Test
+	public void findBankAccountByUserIdTest() {
+		BankAccount mockAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
+				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
+
+		Mockito.when(accountRepository.findBankAccountByUserId(0L)).thenReturn(mockAccount);
+		BankAccount bankAccount = accountServiceImpl.findBankAccountByUserId(0L);
+		assertEquals(mockAccount, bankAccount);
+
+	}
 }

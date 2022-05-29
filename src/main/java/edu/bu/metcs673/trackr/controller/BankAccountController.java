@@ -1,21 +1,18 @@
 package edu.bu.metcs673.trackr.controller;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 import javax.validation.Valid;
 
+import edu.bu.metcs673.trackr.api.GenericApiResponse1;
+import edu.bu.metcs673.trackr.domain.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
@@ -85,6 +82,30 @@ public class BankAccountController {
         return new ResponseEntity<GenericApiResponse>(
                 GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.DEACTIVATE_BANK_ACCOUNT, String.valueOf(id))),
+                HttpStatus.OK);
+    }
+    @GetMapping("/find/{userId}/{bankAccountId}")
+    public ResponseEntity<GenericApiResponse1<BankAccount>> findBankAccountById(@PathVariable(value = "userId") long userId,
+                                                                                @PathVariable(value = "bankAccountId") long bankAccountId) {
+
+        BankAccount bankAccount = bankAccountService.findBankAccountByUserId(userId);
+
+        return new ResponseEntity<>(
+                GenericApiResponse1.successResponse(
+                        MessageFormat.format(CommonConstants.FIND_BANKACCOUNT, String.valueOf(userId)),
+                        bankAccount),
+                HttpStatus.OK);
+
+    }
+    @GetMapping("/findAll/AllBankAccount")
+    public ResponseEntity<GenericApiResponse1<List<BankAccount>>> findAllBankAccount() {
+
+        List<BankAccount> bankaccount = bankAccountService.findAllBankAccount();
+
+        return new ResponseEntity<>(
+                GenericApiResponse1.successResponse(
+                        MessageFormat.format(CommonConstants.FIND_ALL_BANKACCOUNT,String.valueOf(bankaccount)),
+                        bankaccount),
                 HttpStatus.OK);
     }
 }

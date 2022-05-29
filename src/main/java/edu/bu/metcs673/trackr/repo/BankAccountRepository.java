@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import edu.bu.metcs673.trackr.domain.BankAccount;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Directly interfaces with the "BANK_ACCOUNT" table in the H2 repository, using the
  * JPA library.
@@ -24,4 +26,7 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
      * @date 05/23/2022
      */
     public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId);
+
+    public BankAccount findBankAccountByUserId(long userId);
+
 }
