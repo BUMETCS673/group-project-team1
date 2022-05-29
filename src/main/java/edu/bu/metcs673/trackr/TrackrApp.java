@@ -27,5 +27,4 @@ public class TrackrApp {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
 }
