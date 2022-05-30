@@ -387,12 +387,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": {
-                        "bankAccountId":5,
-                        "counterparty":"Wal-Mart",
-                        "money":15.6,
-                        "time":"05/21-19:53"
-                    },
+					"raw": "{\n\t\"bankAccountId\": 5,\n    \"counterparty\": \"Wal-Mart\",\n    \"money\": 15.6,\n    \"time\": \"05/21-19:53\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -520,12 +515,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": {
-                            "bankAccountId":5,
-                            "counterparty":"Walxiao-Mart",
-                            "money":50000.3,
-                            "time":"05/21-19:53"
-                        },
+					"raw": "{\n\t\"bankAccountId\": 5,\n    \"counterparty\": \"Walxiao-Mart\",\n    \"money\": 50000.3,\n    \"time\": \"05/21-19:53\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
