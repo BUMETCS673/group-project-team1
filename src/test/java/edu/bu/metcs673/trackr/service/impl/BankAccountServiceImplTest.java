@@ -113,8 +113,8 @@ public class BankAccountServiceImplTest {
 		BankAccount mockAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
 				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
 
-		Mockito.when(accountRepository.findBankAccountByUserId(0L,0L)).thenReturn(mockAccount);
-		BankAccount bankAccount = accountServiceImpl.findBankAccountByUserId(0L,0L);
+		Mockito.when(accountRepository.findByIdAndUserId(0L,0L)).thenReturn(mockAccount);
+		BankAccount bankAccount = accountServiceImpl.findByBankAccountIdAndUserId(0L,0L);
 		assertEquals(mockAccount, bankAccount);
 
 	}

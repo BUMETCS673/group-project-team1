@@ -61,9 +61,7 @@ public interface BankAccountService {
      * @return Transaction
      * @author Xiaobing Hou
      */
-    public BankAccount findBankAccountByIdAndUserId(long id, long userId);
-
-    public BankAccount findBankAccountByUserId(long account, long userId);
+    public BankAccount findByBankAccountIdAndUserId(long id, long userId);
 
     public List<BankAccount> findAllBankAccount(long userId);
 

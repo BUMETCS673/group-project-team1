@@ -82,15 +82,14 @@ public class BankAccountServiceImpl implements BankAccountService {
     /**
      * The purpose of this method is to find a special bank account by its 'id' and 'userId' value.
      *
-     * @param id this is transaction id
+     * @param bankAccountId this is transaction id
      * @param userId this is user id
      * @return BankAccount
      * @author Xiaobing Hou
      */
     @Override
-    public BankAccount findBankAccountByIdAndUserId(long id, long userId) {
-
-        BankAccount bankAccount = bankAccountRepository.findBankAccountByIdAndUserId(id, userId);
+    public BankAccount findByBankAccountIdAndUserId(long bankAccountId, long userId) {
+        BankAccount bankAccount = bankAccountRepository.findByIdAndUserId(bankAccountId, userId);
         if (bankAccount != null) {
             return bankAccount;
         }
@@ -99,16 +98,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public BankAccount findBankAccountByUserId(long account, long userId) {
-        BankAccount bankAccount = bankAccountRepository.findBankAccountByUserId(account,userId);
-        if (bankAccount != null) {
-            return bankAccount;
-        }
-        throw new TrackrInputValidationException(CommonConstants.INVALID_USER_ID);
-    }
-
-    @Override
     public  List<BankAccount> findAllBankAccount(long userId) {
-        return (List<BankAccount>) bankAccountRepository.findAllBankAccount(userId);
+        return bankAccountRepository.findAllByUserId(userId);
     }
 }
