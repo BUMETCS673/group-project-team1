@@ -1,9 +1,5 @@
 package edu.bu.metcs673.trackr.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ExpressionException;
-import org.springframework.stereotype.Service;
-
 import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
@@ -12,6 +8,8 @@ import edu.bu.metcs673.trackr.domain.BankAccount.ACCOUNT_STATUS;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
 import edu.bu.metcs673.trackr.repo.BankAccountRepository;
 import edu.bu.metcs673.trackr.service.BankAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -101,8 +99,8 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public BankAccount findBankAccountByUserId(long userId) {
-        BankAccount bankAccount = bankAccountRepository.findBankAccountByUserId(userId);
+    public BankAccount findBankAccountByUserId(long account, long userId) {
+        BankAccount bankAccount = bankAccountRepository.findBankAccountByUserId(account,userId);
         if (bankAccount != null) {
             return bankAccount;
         }
@@ -110,7 +108,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public  List<BankAccount> findAllBankAccount() {
-        return bankAccountRepository.findAll();
+    public  List<BankAccount> findAllBankAccount(long userId) {
+        return (List<BankAccount>) bankAccountRepository.findAllBankAccount(userId);
     }
 }

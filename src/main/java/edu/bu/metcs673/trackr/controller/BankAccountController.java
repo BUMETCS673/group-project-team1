@@ -1,26 +1,30 @@
 package edu.bu.metcs673.trackr.controller;
 
-import java.text.MessageFormat;
-import java.util.List;
-
-import javax.validation.Valid;
-
-import edu.bu.metcs673.trackr.api.GenericApiResponse1;
-import edu.bu.metcs673.trackr.domain.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
 import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.api.GenericApiResponse1;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.domain.BankAccount;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
 import edu.bu.metcs673.trackr.service.BankAccountService;
 import edu.bu.metcs673.trackr.service.TrackrUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * Controller for Bank Account Management. Contains APIs for CRUD (create, read,
@@ -88,7 +92,7 @@ public class BankAccountController {
     public ResponseEntity<GenericApiResponse1<BankAccount>> findBankAccountById(@PathVariable(value = "userId") long userId,
                                                                                 @PathVariable(value = "bankAccountId") long bankAccountId) {
 
-        BankAccount bankAccount = bankAccountService.findBankAccountByUserId(userId);
+        BankAccount bankAccount = bankAccountService.findBankAccountByUserId(bankAccountId,userId);
 
         return new ResponseEntity<>(
                 GenericApiResponse1.successResponse(
@@ -97,10 +101,10 @@ public class BankAccountController {
                 HttpStatus.OK);
 
     }
-    @GetMapping("/findAll/AllBankAccount")
-    public ResponseEntity<GenericApiResponse1<List<BankAccount>>> findAllBankAccount() {
+    @GetMapping("/findAll/{userID}")
+    public ResponseEntity<GenericApiResponse1<List<BankAccount>>> findAllBankAccount(@PathVariable(value = "userID")long userID) {
 
-        List<BankAccount> bankaccount = bankAccountService.findAllBankAccount();
+        List<BankAccount> bankaccount = bankAccountService.findAllBankAccount(userID);
 
         return new ResponseEntity<>(
                 GenericApiResponse1.successResponse(

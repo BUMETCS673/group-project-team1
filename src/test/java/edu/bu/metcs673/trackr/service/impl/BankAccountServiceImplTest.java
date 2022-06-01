@@ -1,12 +1,11 @@
 package edu.bu.metcs673.trackr.service.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.Optional;
-
-import edu.bu.metcs673.trackr.domain.Transaction;
+import edu.bu.metcs673.trackr.api.BankAccountDTO;
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import edu.bu.metcs673.trackr.domain.BankAccount;
+import edu.bu.metcs673.trackr.domain.BankAccount.ACCOUNT_TYPE;
+import edu.bu.metcs673.trackr.domain.TrackrUser;
+import edu.bu.metcs673.trackr.repo.BankAccountRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,12 +13,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import edu.bu.metcs673.trackr.api.BankAccountDTO;
-import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.domain.BankAccount;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
-import edu.bu.metcs673.trackr.domain.BankAccount.ACCOUNT_TYPE;
-import edu.bu.metcs673.trackr.repo.BankAccountRepository;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Used to test methods in the BankAccountServiceImpl class. Uses Mockito to
@@ -115,8 +113,8 @@ public class BankAccountServiceImplTest {
 		BankAccount mockAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
 				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
 
-		Mockito.when(accountRepository.findBankAccountByUserId(0L)).thenReturn(mockAccount);
-		BankAccount bankAccount = accountServiceImpl.findBankAccountByUserId(0L);
+		Mockito.when(accountRepository.findBankAccountByUserId(0L,0L)).thenReturn(mockAccount);
+		BankAccount bankAccount = accountServiceImpl.findBankAccountByUserId(0L,0L);
 		assertEquals(mockAccount, bankAccount);
 
 	}
