@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "15bf62c8-9358-453a-a619-44fdbbde4c4e",
+		"_postman_id": "faa9f3f7-560f-44ca-9fde-3854a051f4a4",
 		"name": "BU CS 673 Group Project",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21092474"
 	},
 	"item": [
 		{
@@ -362,9 +363,9 @@
 				}
 			},
 			"response": []
-		}
+		},
 		{
-			"name": "Create transaction",
+			"name": "Modify transaction",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -377,22 +378,52 @@
 					]
 				},
 				"method": "POST",
-				"header": [
-					{
-                            "key": "Content-Type",
-                            "name": "Content-Type",
-                            "value": "application/json",
-                            "type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": {
-                        "bankAccountId":5,
-                        "counterparty":"Wal-Mart",
-                        "money":15.6,
-                        "time":"05/21-19:53"
-                    },
+					"raw": "{\r\n    \"bankAccountId\":5,\r\n    \"counterparty\":\"Wal121xiao-Mart\",\r\n    \"money\":10000.3,\r\n    \"time\":\"05/21-19:53\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/transaction/modify/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transaction",
+						"modify",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create transaction",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTMzNzMyNzIsInVzZXJuYW1lIjoidGVzdFVzZXIyIn0.0qVt5LL0DVu2xQzdt4_o--8TGK2MROARsB1Kf2mrsis",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bankAccountId\":5,\r\n    \"counterparty\":\"Wal-Mart\",\r\n    \"money\":15.6,\r\n    \"time\":\"05/21-19:53\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -414,143 +445,8 @@
 				}
 			},
 			"response": []
-		}
+		},
 		{
-			"name": "Find transaction by id",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MzAwMzIsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.H1GCt0N7p7oTMjRk349U0Ssqgl0zopV6OEcibQyCQ00",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/find/1/5",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"transaction"
-						"find"
-						"1"
-						"5"
-					]
-				}
-			},
-			"response": []
-		}
-        {
-			"name": "Find all transaction by Bank account id",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MzAwMzIsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.H1GCt0N7p7oTMjRk349U0Ssqgl0zopV6OEcibQyCQ00",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/findAll/5",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"transaction"
-						"findAll"
-						"5"
-					]
-				}
-			},
-			"response": []
-		}
-        {
-			"name": "Modify transaction",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MzAwMzIsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.H1GCt0N7p7oTMjRk349U0Ssqgl0zopV6OEcibQyCQ00",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": {
-                            "bankAccountId":5,
-                            "counterparty":"Walxiao-Mart",
-                            "money":50000.3,
-                            "time":"05/21-19:53"
-                        },
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/modify/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"transaction"
-						"modify"
-						"1"
-					]
-				}
-			},
-			"response": []
-		}
-        {
 			"name": "Void transaction",
 			"request": {
 				"auth": {
@@ -558,20 +454,13 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MzAwMzIsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.H1GCt0N7p7oTMjRk349U0Ssqgl0zopV6OEcibQyCQ00",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MzMxNzMsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.2n29Lc-8bpKuG4xgNb7Itt084kjArdqEhTMJi5e4Ik8",
 							"type": "string"
 						}
 					]
 				},
 				"method": "DELETE",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "http://localhost:8080/api/v1/transaction/delete/1/5",
 					"protocol": "http",
@@ -582,9 +471,76 @@
 					"path": [
 						"api",
 						"v1",
-						"transaction"
-						"delete"
-						"1"
+						"transaction",
+						"delete",
+						"1",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get transaction by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0Mjc0NjUsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.d84XnHqCEaOM2lO4CFDQD7PimnliMy_jWfhmiSlMjY4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/transaction/find/1/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transaction",
+						"find",
+						"1",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all transaction",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MzMxNzMsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.2n29Lc-8bpKuG4xgNb7Itt084kjArdqEhTMJi5e4Ik8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/transaction/findAll/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transaction",
+						"findAll",
 						"5"
 					]
 				}
