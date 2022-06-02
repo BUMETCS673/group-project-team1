@@ -109,7 +109,7 @@ public class BankAccountServiceImplTest {
 	}
 
 	@Test
-	public void findBankAccountByUserIdTest() {
+	public void findBankAccountByUserIdTest_success() {
 		BankAccount mockAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
 				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
 
@@ -117,5 +117,11 @@ public class BankAccountServiceImplTest {
 		BankAccount bankAccount = accountServiceImpl.findByBankAccountIdAndUserId(0L,0L);
 		assertEquals(mockAccount, bankAccount);
 
+	}
+
+	@Test
+	public void findBankAccountByUserIdTest_failure() {
+		Mockito.when(accountRepository.findByIdAndUserId(0L,0L)).thenReturn(null);
+		assertThrows(TrackrInputValidationException.class,()->accountServiceImpl.findByBankAccountIdAndUserId(0L,0L));
 	}
 }
