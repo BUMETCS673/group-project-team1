@@ -1,11 +1,10 @@
-package edu.bu.metcs673.trackr.service;
-
-import edu.bu.metcs673.trackr.api.TransactionDTO;
-import edu.bu.metcs673.trackr.domain.BankAccount;
-import edu.bu.metcs673.trackr.domain.Transaction;
-import org.springframework.stereotype.Component;
+package edu.bu.metcs673.trackr.transaction;
 
 import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
 
 /**
  * Interface which defines methods which will be implemented in the

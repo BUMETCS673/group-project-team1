@@ -1,14 +1,24 @@
-package edu.bu.metcs673.trackr.domain;
+package edu.bu.metcs673.trackr.transaction;
 
-import edu.bu.metcs673.trackr.api.TransactionDTO;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.apache.commons.lang3.StringUtils;
+
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @Entity
 @Data

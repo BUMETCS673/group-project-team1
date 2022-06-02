@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
+import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 
 /**
  * Created to specify the spring-security behavior for authorization and

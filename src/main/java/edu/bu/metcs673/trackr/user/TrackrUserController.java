@@ -1,4 +1,4 @@
-package edu.bu.metcs673.trackr.controller;
+package edu.bu.metcs673.trackr.user;
 
 import javax.validation.Valid;
 
@@ -17,11 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.api.TokenRetrievalDTO;
-import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.security.JWTUtil;
-import edu.bu.metcs673.trackr.service.TrackrUserService;
 import net.minidev.json.JSONObject;
 
 /**
@@ -100,7 +97,7 @@ public class TrackrUserController {
 	 * @param token JSON Web Token string
 	 * @return A JSON object
 	 */
-	 static JSONObject createTokenObject(String token) {
+	 public static JSONObject createTokenObject(String token) {
 		JSONObject tokenObj = new JSONObject();
 		tokenObj.put("jwtToken", token);
 		return tokenObj;

@@ -1,4 +1,4 @@
-package edu.bu.metcs673.trackr.domain;
+package edu.bu.metcs673.trackr.bankaccount;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
 
 import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.user.TrackrUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package edu.bu.metcs673.trackr.service.impl;
+package edu.bu.metcs673.trackr.user;
 
 import java.util.Collections;
 
@@ -11,13 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
-import edu.bu.metcs673.trackr.repo.TrackrUserRepository;
 import edu.bu.metcs673.trackr.security.JWTUtil;
-import edu.bu.metcs673.trackr.service.TrackrUserService;
 
 /**
  * Defines logic of the "UserService" methods. Calls methods in the

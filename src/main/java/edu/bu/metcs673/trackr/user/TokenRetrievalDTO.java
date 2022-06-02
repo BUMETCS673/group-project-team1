@@ -1,4 +1,4 @@
-package edu.bu.metcs673.trackr.api;
+package edu.bu.metcs673.trackr.user;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

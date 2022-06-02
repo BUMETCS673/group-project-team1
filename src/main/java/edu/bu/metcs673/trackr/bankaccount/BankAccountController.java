@@ -1,4 +1,4 @@
-package edu.bu.metcs673.trackr.controller;
+package edu.bu.metcs673.trackr.bankaccount;
 
 import java.text.MessageFormat;
 
@@ -17,13 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.domain.BankAccount;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
-import edu.bu.metcs673.trackr.service.BankAccountService;
-import edu.bu.metcs673.trackr.service.TrackrUserService;
+import edu.bu.metcs673.trackr.user.TrackrUser;
+import edu.bu.metcs673.trackr.user.TrackrUserService;
 
 /**
  * Controller for Bank Account Management. Contains APIs for CRUD (create, read,
