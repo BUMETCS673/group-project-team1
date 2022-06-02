@@ -1,4 +1,4 @@
-package edu.bu.metcs673.trackr.controller;
+package edu.bu.metcs673.trackr.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,4 +1,4 @@
-package edu.bu.metcs673.trackr.domain;
+package edu.bu.metcs673.trackr.transaction;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

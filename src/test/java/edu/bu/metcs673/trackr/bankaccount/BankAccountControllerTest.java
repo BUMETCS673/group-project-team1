@@ -1,4 +1,4 @@
-package edu.bu.metcs673.trackr.controller;
+package edu.bu.metcs673.trackr.bankaccount;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

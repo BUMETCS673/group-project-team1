@@ -1,4 +1,4 @@
-package edu.bu.metcs673.trackr.service.impl;
+package edu.bu.metcs673.trackr.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
