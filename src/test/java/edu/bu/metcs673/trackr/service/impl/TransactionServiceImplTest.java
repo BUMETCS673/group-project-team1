@@ -4,7 +4,6 @@ import edu.bu.metcs673.trackr.api.TransactionDTO;
 import edu.bu.metcs673.trackr.domain.BankAccount;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
 import edu.bu.metcs673.trackr.domain.Transaction;
-import edu.bu.metcs673.trackr.repo.BankAccountRepository;
 import edu.bu.metcs673.trackr.repo.TransactionRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
