@@ -65,7 +65,7 @@ public class Transaction {
 
 
     // enum used for the 'status' field in the Transaction object
-    public static enum TRANSACTION_STATUS {
+    public enum TRANSACTION_STATUS {
         VALID("valid", "This transaction is valid"),
         INVALID("invalid", "This transaction has been invalid");
 
