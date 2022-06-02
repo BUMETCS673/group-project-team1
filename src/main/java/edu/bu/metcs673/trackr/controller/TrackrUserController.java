@@ -1,5 +1,7 @@
 package edu.bu.metcs673.trackr.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +74,7 @@ public class TrackrUserController {
 	 * @return
 	 */
 	@PostMapping("/retrieve-token")
-	public ResponseEntity<GenericApiResponse> retrieveToken(@Valid @RequestBody TokenRetrievalDTO userLogin) {
+	public ResponseEntity<GenericApiResponse> retrieveToken(@Valid @RequestBody TokenRetrievalDTO userLogin, HttpServletResponse response) {
 
 		try {
 			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
@@ -83,6 +85,21 @@ public class TrackrUserController {
 			String token = jwtUtil.generateToken(((UserDetails) auth.getPrincipal()).getUsername());
 
 			JSONObject tokenObj = createTokenObject(token);
+
+			// Return the JWT to the browser as cookie
+			Cookie cookie = new Cookie("jwtToken", token);
+
+			// We set HttpOnly so that JavaScript cannot read it top prevent XSS attack
+			cookie.setHttpOnly(true);
+
+			// Set path to root so that it's available to the whole application domain
+			cookie.setPath("/");
+
+			// Set max age to be 15 minutes
+			cookie.setMaxAge(60 * 15);
+
+			// Add Servlet Response to return to browser
+			response.addCookie(cookie);
 
 			return new ResponseEntity<GenericApiResponse>(
 					GenericApiResponse.successResponse(CommonConstants.NEW_JWT_TOKEN, tokenObj), HttpStatus.OK);

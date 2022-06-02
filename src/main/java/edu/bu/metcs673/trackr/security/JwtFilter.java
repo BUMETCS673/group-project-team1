@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
+import org.springframework.web.util.WebUtils;
 
 /**
  * Filter class that runs before actual API logic is processed. Checks for a JWT
@@ -53,10 +55,19 @@ public class JwtFilter extends OncePerRequestFilter {
 			throws IOException, ServletException {
 		String authHeader = request.getHeader("Authorization");
 
+//		// If no header check the cookie
+//		if (token == null || StringUtils.isBlank(token)) {
+//			Cookie cookie = WebUtils.getCookie(request, "jwtToken");
+//			if (cookie != null) {
+//				token = cookie.getValue();
+//			}
+//		}
+
 		// if request has an Authorization header which is a Bearer token (JWT) then attempt to verify it
-		if (authHeader != null && !authHeader.isEmpty() && authHeader.startsWith("Bearer ")) {
+		if (authHeader != null && authHeader.startsWith("Bearer ")) {
 			String jwt = authHeader.substring(7);
-			if (jwt == null || StringUtils.isBlank(jwt)) {
+
+			if (StringUtils.isBlank(jwt)) {
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
 			} else {
 				try {
@@ -64,7 +75,6 @@ public class JwtFilter extends OncePerRequestFilter {
 					// validate token and return the username contained within
 					String username = jwtUtil.validateTokenAndRetrieveSubject(jwt);
 					if (StringUtils.isNotBlank(username)) {
-//						TrackrUser userDetails = userRepository.findByUsername(username);
 						UserDetails userDetails = userServiceImpl.loadUserByUsername(username);
 
 						
