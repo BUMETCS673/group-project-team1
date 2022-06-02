@@ -1,15 +1,19 @@
 package edu.bu.metcs673.trackr.domain;
 
-import edu.bu.metcs673.trackr.api.TransactionDTO;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import edu.bu.metcs673.trackr.transaction.Transaction;
+import edu.bu.metcs673.trackr.transaction.TransactionDTO;
+import edu.bu.metcs673.trackr.user.TrackrUser;
 
 /**
  * Used to test methods in the Transaction class.

@@ -1,14 +1,9 @@
 package edu.bu.metcs673.trackr.controller;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse1;
-import edu.bu.metcs673.trackr.api.TransactionDTO;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.domain.BankAccount;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
-import edu.bu.metcs673.trackr.domain.Transaction;
-import edu.bu.metcs673.trackr.service.BankAccountService;
-import edu.bu.metcs673.trackr.service.TrackrUserService;
-import edu.bu.metcs673.trackr.service.TransactionService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.text.MessageFormat;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,9 +16,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.text.MessageFormat;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import edu.bu.metcs673.trackr.api.GenericApiResponse1;
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import edu.bu.metcs673.trackr.bankaccount.BankAccountService;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.transaction.Transaction;
+import edu.bu.metcs673.trackr.transaction.TransactionController;
+import edu.bu.metcs673.trackr.transaction.TransactionDTO;
+import edu.bu.metcs673.trackr.transaction.TransactionService;
+import edu.bu.metcs673.trackr.user.TrackrUser;
+import edu.bu.metcs673.trackr.user.TrackrUserService;
 
 /**
  * Used to test methods in the TransactionController class. Uses Mockito to

@@ -1,10 +1,7 @@
 package edu.bu.metcs673.trackr.controller;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.api.TrackrUserDTO;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.service.TrackrUserService;
-import net.minidev.json.JSONObject;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,7 +11,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.user.TrackrUserController;
+import edu.bu.metcs673.trackr.user.TrackrUserDTO;
+import edu.bu.metcs673.trackr.user.TrackrUserService;
+import net.minidev.json.JSONObject;
 
 @ExtendWith(MockitoExtension.class)
 public class TrackrUserControllerTest {

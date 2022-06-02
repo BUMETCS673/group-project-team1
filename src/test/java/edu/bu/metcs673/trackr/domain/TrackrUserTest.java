@@ -18,7 +18,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import edu.bu.metcs673.trackr.api.TrackrUserDTO;
+import edu.bu.metcs673.trackr.user.TrackrUser;
+import edu.bu.metcs673.trackr.user.TrackrUserDTO;
 
 public class TrackrUserTest {
 

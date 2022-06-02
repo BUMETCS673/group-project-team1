@@ -1,11 +1,7 @@
 package edu.bu.metcs673.trackr.service.impl;
 
-import edu.bu.metcs673.trackr.api.TransactionDTO;
-import edu.bu.metcs673.trackr.domain.BankAccount;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
-import edu.bu.metcs673.trackr.domain.Transaction;
-import edu.bu.metcs673.trackr.repo.BankAccountRepository;
-import edu.bu.metcs673.trackr.repo.TransactionRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +9,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import edu.bu.metcs673.trackr.transaction.Transaction;
+import edu.bu.metcs673.trackr.transaction.TransactionDTO;
+import edu.bu.metcs673.trackr.transaction.TransactionRepository;
+import edu.bu.metcs673.trackr.transaction.TransactionServiceImpl;
+import edu.bu.metcs673.trackr.user.TrackrUser;
 
 /**
  * Used to test methods in the TransactionServiceImpl class. Uses Mockito to

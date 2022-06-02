@@ -18,7 +18,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import edu.bu.metcs673.trackr.api.BankAccountDTO;
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import edu.bu.metcs673.trackr.bankaccount.BankAccountDTO;
+import edu.bu.metcs673.trackr.user.TrackrUser;
 
 public class BankAccountTest {
 

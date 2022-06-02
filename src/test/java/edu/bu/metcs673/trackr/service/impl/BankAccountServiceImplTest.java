@@ -13,12 +13,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import edu.bu.metcs673.trackr.api.BankAccountDTO;
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import edu.bu.metcs673.trackr.bankaccount.BankAccount.ACCOUNT_TYPE;
+import edu.bu.metcs673.trackr.bankaccount.BankAccountDTO;
+import edu.bu.metcs673.trackr.bankaccount.BankAccountRepository;
+import edu.bu.metcs673.trackr.bankaccount.BankAccountServiceImpl;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.domain.BankAccount;
-import edu.bu.metcs673.trackr.domain.TrackrUser;
-import edu.bu.metcs673.trackr.domain.BankAccount.ACCOUNT_TYPE;
-import edu.bu.metcs673.trackr.repo.BankAccountRepository;
+import edu.bu.metcs673.trackr.user.TrackrUser;
 
 /**
  * Used to test methods in the BankAccountServiceImpl class. Uses Mockito to
