@@ -1,12 +1,14 @@
-name: CI
+name: JS Code Sniff
 
 on:
+
   push:
+
     branches:
       - '**'        # matches every branch
-  pull_request:
-    branches:
-      - '**'        # matches every branch
+
+    paths:
+      - 'src/main/js/**.js' # JS paths
 
 jobs:
 
