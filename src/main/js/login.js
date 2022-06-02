@@ -7,7 +7,7 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
-import LoginForm from "./login-form";
+import LoginForm from "./user/login-form";
 
 const Login = (props) => {
   return (
