@@ -22,13 +22,8 @@ const LoginContainer = (props) => {
     service
       .getToken(login)
       .then(function (response) {
+        sessionStorage.setItem("trackrToken", response.data.additionalData[0].jwtToken);
         navigate("/dashboard", { replace: true });
-        props.setAlert({
-          show: true,
-          variant: "success",
-          message: "Successfully authenticated!",
-        });
-        setTimeout(() => props.setAlert({ show: false }), 2000);
       })
       .catch(function (error) {
         props.setAlert({

@@ -54,7 +54,6 @@ public interface BankAccountService {
     /**
      * The purpose of this method is to find a special bank account by 'id' and 'userId' value.
      *
-     * @param id     this is bank account id
      * @param userId this is user id
      * @return Transaction
      * @author Xiaobing Hou

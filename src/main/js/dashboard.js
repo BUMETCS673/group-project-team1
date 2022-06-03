@@ -12,18 +12,16 @@ const Dashboard = (props) => {
   return (
     <Container className="mt-md-4" fluid>
       <Row>
-        <Col md={4}>
+        <Col md={5}>
           <Row className="shadow me-lg-1 bg-white rounded">
             <Row>
               <h3>Accounts</h3>
             </Row>
-            <Row>
-              <Col>hello</Col>
-              <Col>world</Col>
+            <Row id={"dashboard"}>
             </Row>
           </Row>
         </Col>
-        <Col md={8}>
+        <Col md={7}>
           <Row className="shadow bg-white rounded">
             <Row>
               <h3>Transactions</h3>
