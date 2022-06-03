@@ -22,7 +22,7 @@ const LoginContainer = (props) => {
     service
       .getToken(login)
       .then(function (response) {
-        navigate("/dashboard", { replace: true });
+        navigate("/", { replace: true }); // TODO: Finish the implementation by redirecting to dashboard
         props.setAlert({
           show: true,
           variant: "success",

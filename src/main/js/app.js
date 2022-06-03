@@ -12,7 +12,6 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Layout from "./layout";
 import HomeContainer from "./home-container";
 import LoginContainer from "./login-container";
-import DashboardContainer from "./dashboard-container";
 import "bootstrap/dist/css/bootstrap.css";
 
 const App = () => {
@@ -26,10 +25,6 @@ const App = () => {
           <Route
             path="login"
             element={<LoginContainer setAlert={setAlert} />}
-          />
-          <Route
-            path="dashboard"
-            element={<DashboardContainer setAlert={setAlert} />}
           />
         </Route>
       </Routes>

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Controller for Transactions Management. Contains 'Create', 'Find', 'Modify', and 'Delete' APIs
@@ -76,7 +77,8 @@ public class TransactionController {
     public ResponseEntity<GenericApiResponse1<Transaction>> findTransactionById(@PathVariable(value = "transactionId") long transactionId,
                                                                                 @PathVariable(value = "bankAccountId") long bankAccountId) {
 
-        Transaction transaction = getTransaction(bankAccountId, transactionId);
+        BankAccount bankAccount = getBankAccount(bankAccountId);
+        Transaction transaction = transactionService.findTraByIdAndBankAccountId(transactionId, bankAccount.getId());
 
         return new ResponseEntity<>(
                 GenericApiResponse1.successResponse(
@@ -121,7 +123,9 @@ public class TransactionController {
     public ResponseEntity<GenericApiResponse1<Transaction>> modifyTransaction(@PathVariable(value = "transactionId") long transactionId,
                                                                               @RequestBody TransactionDTO transactionInput) {
 
-        Transaction transaction = getTransaction(transactionInput.getBankAccountId(), transactionId);
+        ResponseEntity<GenericApiResponse1<Transaction>> response = findTransactionById(transactionId, transactionInput.getBankAccountId());
+
+        Transaction transaction = Objects.requireNonNull(response.getBody()).getAdditionalData();
         transaction = transactionService.modifyTransaction(transaction, transactionInput);
 
         return new ResponseEntity<>(
@@ -144,7 +148,9 @@ public class TransactionController {
     public ResponseEntity<GenericApiResponse1<Transaction>> deleteTransaction(@PathVariable(value = "transactionId") long transactionId,
                                                                               @PathVariable(value = "bankAccountId") long bankAccountId) {
 
-        Transaction transaction = getTransaction(bankAccountId, transactionId);
+        ResponseEntity<GenericApiResponse1<Transaction>> response = findTransactionById(transactionId, bankAccountId);
+
+        Transaction transaction = Objects.requireNonNull(response.getBody()).getAdditionalData();
         transaction = transactionService.deleteTransaction(transaction);
 
         return new ResponseEntity<>(
@@ -167,20 +173,6 @@ public class TransactionController {
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         TrackrUser user = trackrUserService.findByUsername(username);
         return bankAccountService.findByBankAccountIdAndUserId(bankAccountId, user.getId());
-    }
-
-    /**
-     * The purpose of this method is to get a transaction record by 'bankAccountId' and 'transactionId' value
-     *
-     * @param bankAccountId this is bank account id
-     * @param transactionId this is bank account id
-     * @return Transaction
-     * @author Xiaobing Hou
-     * @date 06/01/2022
-     */
-    public Transaction getTransaction(long bankAccountId, long transactionId) {
-        BankAccount bankAccount = getBankAccount(bankAccountId);
-        return transactionService.findTraByIdAndBankAccountId(transactionId, bankAccount.getId());
     }
 
 
