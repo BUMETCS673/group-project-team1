@@ -6,7 +6,8 @@
 
 import axios from "axios";
 
-const PATH = "/api/v1/users";
+const REGISTRATION_PATH = "/register";
+const LOGIN_PATH = "/login";
 
 class TrackrUserService {
   /**
@@ -16,7 +17,7 @@ class TrackrUserService {
    * @returns {Promise<AxiosResponse<any>>} Promise
    */
   create = (user) => {
-    return axios.post(PATH, user);
+    return axios.post(REGISTRATION_PATH, user);
   };
 
   /**
@@ -26,7 +27,7 @@ class TrackrUserService {
    * @returns {Promise<AxiosResponse<any>>} Promise
    */
   getToken = (login) => {
-    return axios.post(`${PATH}/retrieve-token`, login);
+    return axios.post(LOGIN_PATH, login);
   };
 }
 

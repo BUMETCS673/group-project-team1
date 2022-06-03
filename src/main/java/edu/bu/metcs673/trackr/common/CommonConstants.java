@@ -8,6 +8,11 @@ package edu.bu.metcs673.trackr.common;
  */
 public class CommonConstants {
 
+	// Cookie
+	public static final String JWT_COOKIE_NAME = "jwtToken";
+	public static final String JWT_COOKIE_PATH = "/";
+	public static final int JWT_COOKIE_MAX_AGE_MINUTES = 60 * 15; // 15 minutes
+
 	// static strings used in APIs
 	public static final String SUCCESS = "SUCCESS";
 	public static final String ERROR = "ERROR";
