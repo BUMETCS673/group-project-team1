@@ -7,7 +7,7 @@
 import React from "react";
 import Login from "./login";
 import { useNavigate } from "react-router";
-import TrackrUserService from "./user/trackr-user-service";
+import TrackrUserService from "../user/trackr-user-service";
 
 const LoginContainer = (props) => {
   const service = new TrackrUserService();
@@ -16,12 +16,13 @@ const LoginContainer = (props) => {
   /**
    * Handle submit of the login form by authenticating with the backend.
    *
-   * @param login Login form values
+   * @param credentials Login form values
    */
-  const handleLoginSubmit = (login) => {
+  const handleLoginSubmit = (credentials) => {
     service
-      .getToken(login)
+      .login(credentials)
       .then(function (response) {
+        TrackrUserService.authenticate();
         navigate("/dashboard", { replace: true });
         props.setAlert({
           show: true,
