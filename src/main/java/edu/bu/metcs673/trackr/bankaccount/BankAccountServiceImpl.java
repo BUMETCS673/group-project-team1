@@ -1,5 +1,7 @@
 package edu.bu.metcs673.trackr.bankaccount;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,15 +79,14 @@ public class BankAccountServiceImpl implements BankAccountService {
     /**
      * The purpose of this method is to find a special bank account by its 'id' and 'userId' value.
      *
-     * @param id this is transaction id
+     * @param bankAccountId this is transaction id
      * @param userId this is user id
      * @return BankAccount
      * @author Xiaobing Hou
      */
     @Override
-    public BankAccount findBankAccountByIdAndUserId(long id, long userId) {
-
-        BankAccount bankAccount = bankAccountRepository.findBankAccountByIdAndUserId(id, userId);
+    public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId) {
+        BankAccount bankAccount = bankAccountRepository.findByIdAndUserId(bankAccountId, userId);
         if (bankAccount != null) {
             return bankAccount;
         }
@@ -93,4 +94,8 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     }
 
+    @Override
+    public  List<BankAccount> findBankAccountsByUserId(long userId) {
+        return bankAccountRepository.findAllByUserId(userId);
+    }
 }

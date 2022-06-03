@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 
 import edu.bu.metcs673.trackr.user.TrackrUser;
 
+import java.util.List;
+
 /**
  * Interface which defines methods which will be implemented in the
  * "BankAccountServiceImpl". This interface is reusable, so other classes could
@@ -57,6 +59,7 @@ public interface BankAccountService {
      * @return Transaction
      * @author Xiaobing Hou
      */
-    public BankAccount findBankAccountByIdAndUserId(long id, long userId);
+    public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId);
 
+    public List<BankAccount> findBankAccountsByUserId(long userId);
 }

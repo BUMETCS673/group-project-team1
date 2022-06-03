@@ -1,5 +1,7 @@
 package edu.bu.metcs673.trackr.bankaccount;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,11 +17,13 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
     /**
      * Custom JPA query that uses 'bankAccountId' and 'userId' to gets the bank account object from the DB
      *
-     * @param bankAccountId this is bank account id
+     * @param id this is bank account id
      * @param userId        this is user id
      * @return BankAccount
      * @author Xiaobing Hou
      * @date 05/23/2022
      */
-    public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId);
+    public BankAccount findByIdAndUserId(long id, long userId);
+
+    public List<BankAccount> findAllByUserId(long userId);
 }
