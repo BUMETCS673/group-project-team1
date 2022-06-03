@@ -3,6 +3,7 @@ package edu.bu.metcs673.trackr.controller;
 import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.api.GenericApiResponse1;
+
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.domain.BankAccount;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
@@ -46,13 +47,9 @@ public class BankAccountController {
     @PostMapping("/bank-accounts")
     public ResponseEntity<BankAccount> createBankAccount(@Valid @RequestBody BankAccountDTO bankAccountInput) {
 
-        // pull username from JWT token, find corresponding user record
-        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        TrackrUser user = trackrUserService.findByUsername(username);
-
         // create a new bank account record associated to the user making the API
         // request.
-        BankAccount bankAccount = bankAccountService.createBankAccount(bankAccountInput, user);
+        BankAccount bankAccount = bankAccountService.createBankAccount(bankAccountInput, getUser());
 
         return new ResponseEntity<BankAccount>(bankAccount, HttpStatus.OK);
     }
@@ -61,33 +58,27 @@ public class BankAccountController {
     public ResponseEntity<BankAccount> modifyBankAccount(@Valid @RequestBody BankAccountDTO bankAccountInput,
                                                          @PathVariable(value = "id") long id) {
 
-        // pull username from JWT token, find corresponding user record
-        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        TrackrUser user = trackrUserService.findByUsername(username);
-
         // Modifies an existing bank account record associated to the user making the
         // API request.
-        BankAccount bankAccount = bankAccountService.modifyBankAccount(bankAccountInput, user, id);
+        BankAccount bankAccount = bankAccountService.modifyBankAccount(bankAccountInput, getUser(), id);
 
         return new ResponseEntity<BankAccount>(bankAccount, HttpStatus.OK);
     }
 
     @DeleteMapping("/bank-accounts/{id}")
     public ResponseEntity<GenericApiResponse> modifyBankAccount(@PathVariable(value = "id") long id) {
-        // pull username from JWT token, find corresponding user record
-        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        TrackrUser user = trackrUserService.findByUsername(username);
 
         // sets status in bank account record associated to the user making the API
         // request to "INACTIVE". This will prevent new transactions from being
         // associated to it.
-        bankAccountService.deactivateBankAccount(user, id);
+        bankAccountService.deactivateBankAccount(getUser(), id);
 
         return new ResponseEntity<GenericApiResponse>(
                 GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.DEACTIVATE_BANK_ACCOUNT, String.valueOf(id))),
                 HttpStatus.OK);
     }
+
     @GetMapping("/users/{userId}/bank-accounts/{bankAccountId}/")
     public ResponseEntity<GenericApiResponse1<BankAccount>> findBankAccount(
             @PathVariable(value = "bankAccountId") long bankAccountId,
@@ -113,5 +104,18 @@ public class BankAccountController {
                         MessageFormat.format(CommonConstants.FIND_ALL_BANKACCOUNT,String.valueOf(bankAccounts)),
                         bankAccounts),
                 HttpStatus.OK);
+
+
+    /**
+     * The purpose of this method is to get the current user
+     *
+     * @return TrackrUser
+     * @author Xiaobing Hou
+     * @date 06/01/2022
+     */
+    public TrackrUser getUser() {
+        // pull username from JWT token, find corresponding user record
+        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        return trackrUserService.findByUsername(username);
     }
 }
