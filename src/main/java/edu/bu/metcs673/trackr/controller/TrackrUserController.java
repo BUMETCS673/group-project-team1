@@ -1,20 +1,11 @@
 package edu.bu.metcs673.trackr.controller;
 
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_MAX_AGE_MINUTES;
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_PATH;
-
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.api.TokenRetrievalDTO;
 import edu.bu.metcs673.trackr.api.TrackrUserDTO;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.security.JWTUtil;
 import edu.bu.metcs673.trackr.service.TrackrUserService;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +19,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_MAX_AGE_MINUTES;
+import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
+import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_PATH;
 
 /**
  * Controller for Users Management. Contains a 'Create' API for new users to register with the
@@ -78,13 +77,13 @@ public class TrackrUserController {
             HttpServletResponse response) {
 
         try {
-            UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
-                    userLogin.getUsername(), userLogin.getPassword());
-
-            Authentication auth = authenticationManager.authenticate(authInputToken);
-
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userLogin.getUsername(),
+                            userLogin.getPassword()
+                    )
+            );
             String token = jwtUtil.generateToken(((UserDetails) auth.getPrincipal()).getUsername());
-
             JSONObject tokenObj = createTokenObject(token);
 
             // Return the JWT to the browser as cookie

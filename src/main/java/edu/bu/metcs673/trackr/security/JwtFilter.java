@@ -26,6 +26,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 /**
  * Filter class that runs before actual API logic is processed. Checks for a JWT token and tries to
@@ -64,7 +65,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // If we did get an Authorization header but, it was blank
             if (StringUtils.isBlank(jwt)) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
+                response.sendError(SC_UNAUTHORIZED, "Invalid JWT Token in Bearer Header");
                 return;
             }
         }
@@ -76,7 +77,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             // If we did get the JWT in the cookie but, it was blank
             if (StringUtils.isBlank(jwt)) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in the cookie");
+                response.sendError(SC_UNAUTHORIZED, "Invalid JWT Token in the cookie");
                 return;
             }
         }
@@ -104,18 +105,14 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 // Continue with the filter chain
                 chain.doFilter(request, response);
-                return;
             }
         } catch (JWTVerificationException | UsernameNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
+            response.sendError(SC_UNAUTHORIZED, "Invalid JWT Token");
         }
-
-        // If we were to reach here then we deny the request
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 
     /**
-     * Checks for the paths that filter should skip.
+     * Checks for the paths the filter should skip.
      * <a href="https://www.baeldung.com/spring-exclude-filter">Should Not Filter Tutorial</a>
      *
      * @param request Servlet request
