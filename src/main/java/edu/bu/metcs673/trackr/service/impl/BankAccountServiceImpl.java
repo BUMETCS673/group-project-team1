@@ -88,7 +88,7 @@ public class BankAccountServiceImpl implements BankAccountService {
      * @author Xiaobing Hou
      */
     @Override
-    public BankAccount findByBankAccountIdAndUserId(long bankAccountId, long userId) {
+    public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId) {
         BankAccount bankAccount = bankAccountRepository.findByIdAndUserId(bankAccountId, userId);
         if (bankAccount != null) {
             return bankAccount;
@@ -98,7 +98,7 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public  List<BankAccount> findAllBankAccount(long userId) {
+    public  List<BankAccount> findBankAccountsByUserId(long userId) {
         return bankAccountRepository.findAllByUserId(userId);
     }
 }

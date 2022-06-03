@@ -76,7 +76,7 @@ public class TransactionControllerTest {
 
         Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("testUser");
         Mockito.when(userService.findByUsername("testUser")).thenReturn(TEST_USER);
-        Mockito.when(bankAccountService.findByBankAccountIdAndUserId(1L, 1L)).thenReturn(TEST_BANK_ACCOUNT);
+        Mockito.when(bankAccountService.findBankAccountByIdAndUserId(1L, 1L)).thenReturn(TEST_BANK_ACCOUNT);
         Mockito.when(transactionService.createTransaction(transactionDTO, TEST_BANK_ACCOUNT)).thenReturn(mockTransaction);
 
         ResponseEntity<GenericApiResponse1<Transaction>> response = transactionController.createTransaction(transactionDTO);

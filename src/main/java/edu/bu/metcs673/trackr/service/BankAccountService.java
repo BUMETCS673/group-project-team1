@@ -63,7 +63,5 @@ public interface BankAccountService {
      */
     public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId);
 
-    public List<BankAccount> findAllBankAccount(long userId);
-
-
+    public List<BankAccount> findBankAccountsByUserId(long userId);
 }

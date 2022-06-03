@@ -3,7 +3,6 @@ package edu.bu.metcs673.trackr.controller;
 import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.api.GenericApiResponse1;
-
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.domain.BankAccount;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
@@ -35,7 +34,7 @@ import java.util.List;
  */
 @Validated
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/bank-accounts")
 public class BankAccountController {
 
     @Autowired
@@ -44,28 +43,29 @@ public class BankAccountController {
     @Autowired
     private TrackrUserService trackrUserService;
 
-    @PostMapping("/bank-accounts")
+    @PostMapping
     public ResponseEntity<BankAccount> createBankAccount(@Valid @RequestBody BankAccountDTO bankAccountInput) {
 
         // create a new bank account record associated to the user making the API
         // request.
         BankAccount bankAccount = bankAccountService.createBankAccount(bankAccountInput, getUser());
 
-        return new ResponseEntity<BankAccount>(bankAccount, HttpStatus.OK);
+        return new ResponseEntity<>(bankAccount, HttpStatus.OK);
     }
 
-    @PutMapping("/bank-accounts/{id}")
-    public ResponseEntity<BankAccount> modifyBankAccount(@Valid @RequestBody BankAccountDTO bankAccountInput,
-                                                         @PathVariable(value = "id") long id) {
+    @PutMapping("/{id}")
+    public ResponseEntity<BankAccount> modifyBankAccount(
+            @Valid @RequestBody BankAccountDTO bankAccountInput,
+            @PathVariable(value = "id") long id) {
 
         // Modifies an existing bank account record associated to the user making the
         // API request.
         BankAccount bankAccount = bankAccountService.modifyBankAccount(bankAccountInput, getUser(), id);
 
-        return new ResponseEntity<BankAccount>(bankAccount, HttpStatus.OK);
+        return new ResponseEntity<>(bankAccount, HttpStatus.OK);
     }
 
-    @DeleteMapping("/bank-accounts/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<GenericApiResponse> modifyBankAccount(@PathVariable(value = "id") long id) {
 
         // sets status in bank account record associated to the user making the API
@@ -73,18 +73,16 @@ public class BankAccountController {
         // associated to it.
         bankAccountService.deactivateBankAccount(getUser(), id);
 
-        return new ResponseEntity<GenericApiResponse>(
+        return new ResponseEntity<>(
                 GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.DEACTIVATE_BANK_ACCOUNT, String.valueOf(id))),
                 HttpStatus.OK);
     }
 
-    @GetMapping("/users/{userId}/bank-accounts/{bankAccountId}/")
-    public ResponseEntity<GenericApiResponse1<BankAccount>> findBankAccount(
-            @PathVariable(value = "bankAccountId") long bankAccountId,
-            @PathVariable(value = "userId") long userId
-    ) {
-        BankAccount bankAccount = bankAccountService.findByBankAccountIdAndUserId(bankAccountId, userId);
+    @GetMapping("/{id}/")
+    public ResponseEntity<GenericApiResponse1<BankAccount>> findBankAccount(@PathVariable(value = "id") long id) {
+        long userId = getUser().getId();
+        BankAccount bankAccount = bankAccountService.findBankAccountByIdAndUserId(id, userId);
         return new ResponseEntity<>(
                 GenericApiResponse1.successResponse(
                         MessageFormat.format(CommonConstants.FIND_BANKACCOUNT, String.valueOf(userId)),
@@ -92,19 +90,18 @@ public class BankAccountController {
                 ),
                 HttpStatus.OK
         );
-
     }
-    @GetMapping("/users/{userId}/bank-accounts")
-    public ResponseEntity<GenericApiResponse1<List<BankAccount>>> findAll(@PathVariable(value = "userId")long userID) {
 
-        List<BankAccount> bankAccounts = bankAccountService.findAllBankAccount(userID);
+    @GetMapping
+    public ResponseEntity<GenericApiResponse1<List<BankAccount>>> findAll() {
+        List<BankAccount> bankAccounts = bankAccountService.findBankAccountsByUserId(getUser().getId());
 
         return new ResponseEntity<>(
                 GenericApiResponse1.successResponse(
-                        MessageFormat.format(CommonConstants.FIND_ALL_BANKACCOUNT,String.valueOf(bankAccounts)),
+                        MessageFormat.format(CommonConstants.FIND_ALL_BANKACCOUNT, String.valueOf(bankAccounts)),
                         bankAccounts),
                 HttpStatus.OK);
-
+    }
 
     /**
      * The purpose of this method is to get the current user

@@ -166,7 +166,7 @@ public class TransactionController {
         // pull username from JWT token, find corresponding user record
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         TrackrUser user = trackrUserService.findByUsername(username);
-        return bankAccountService.findByBankAccountIdAndUserId(bankAccountId, user.getId());
+        return bankAccountService.findBankAccountByIdAndUserId(bankAccountId, user.getId());
     }
 
     /**
