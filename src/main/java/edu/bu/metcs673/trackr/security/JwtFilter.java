@@ -112,7 +112,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Checks for the paths the filter should skip.
+     * Checks for the paths the filter should skip. Avoid giving permission to range of pages.
      * <a href="https://www.baeldung.com/spring-exclude-filter">Should Not Filter Tutorial</a>
      *
      * @param request Servlet request
