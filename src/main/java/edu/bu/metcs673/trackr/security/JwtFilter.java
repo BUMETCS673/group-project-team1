@@ -37,52 +37,49 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
  * https://medium.com/geekculture/implementing-json-web-token-jwt-authentication-using-spring-security-detailed-walkthrough-1ac480a8d970
  *
  * @author Tim Flucker
+ * @author Jean Dorancy
  */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-
-    @Autowired
-    private TrackrUserServiceImpl userServiceImpl;
-
-    @Autowired
-    private JWTUtil jwtUtil;
+    private final TrackrUserServiceImpl userServiceImpl;
+    private final JWTUtil jwtUtil;
 
     /**
-     * Filter method that checks for the JWT authorization, if it finds a JWT bearer token then
-     * verification will take place, otherwise an access denied error is returned.
+     * JWT Filter constructor
+     *
+     * @param userServiceImpl User service
+     * @param jwtUtil         JWT Util
+     */
+    public JwtFilter(@Autowired TrackrUserServiceImpl userServiceImpl, @Autowired JWTUtil jwtUtil) {
+        this.userServiceImpl = userServiceImpl;
+        this.jwtUtil = jwtUtil;
+    }
+
+    /**
+     * Filter method that checks for the JWT authorization, if it finds a JWT then verification otherwise unauthorized.
+     * Note: There are certain paths that should skip the filter see {@link #shouldNotFilter(HttpServletRequest)}.
+     *
+     * @param request  Http Servlet Request
+     * @param response Http Servlet Response
+     * @param chain    Filter chain which has to be called in order apply subsequent filters
+     * @throws IOException      Checked exception
+     * @throws ServletException Checked exception
      */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-        String authHeader = Optional.ofNullable(request.getHeader("Authorization")).orElse("");
-        String jwt = "";
+        String jwt = getJwt(request);
 
-        // If the request has an Authorization header which is a Bearer token (JWT) then attempt to verify it
-        if (authHeader.startsWith("Bearer ")) {
-            jwt = authHeader.substring(7);
-
-            // If we did get an Authorization header but, it was blank
-            if (StringUtils.isBlank(jwt)) {
-                response.sendError(SC_UNAUTHORIZED, "Invalid JWT Token in Bearer Header");
-                return;
-            }
-        }
-
-        // If no header then check the cookie
+        // If the  token was present either in header or cookie but, it was a blank string.
         if (StringUtils.isBlank(jwt)) {
-            Cookie cookie = WebUtils.getCookie(request, JWT_COOKIE_NAME);
-            jwt = Optional.ofNullable(cookie).map(Cookie::getValue).orElse("");
-
-            // If we did get the JWT in the cookie but, it was blank
-            if (StringUtils.isBlank(jwt)) {
-                response.sendError(SC_UNAUTHORIZED, "Invalid JWT Token in the cookie");
-                return;
-            }
+            response.sendError(SC_UNAUTHORIZED, "Invalid JSON Web Token (JWT).");
+            return;
         }
 
         try {
+
             // Validate token and return the username contained within
             String username = jwtUtil.validateTokenAndRetrieveSubject(jwt);
             if (StringUtils.isNotBlank(username)) {
@@ -94,21 +91,20 @@ public class JwtFilter extends OncePerRequestFilter {
                         userDetails.getPassword(),
                         new ArrayList<>()
                 );
-
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 // Set authentication for API request
                 if (SecurityContextHolder.getContext().getAuthentication() == null) {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
-
-
-                // Continue with the filter chain
-                chain.doFilter(request, response);
             }
         } catch (JWTVerificationException | UsernameNotFoundException e) {
             response.sendError(SC_UNAUTHORIZED, "Invalid JWT Token");
+            return;
         }
+
+        // Continue with the filter chain
+        chain.doFilter(request, response);
     }
 
     /**
@@ -138,5 +134,29 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         return false;
+    }
+
+    /**
+     * Get the JWT from the request. It can come from a cookie or Http Authorization header.
+     *
+     * @param request Http request
+     * @return String
+     */
+    private String getJwt(HttpServletRequest request) {
+        String authHeader = Optional.ofNullable(request.getHeader("Authorization")).orElse("");
+        String jwt = "";
+
+        // If the request has an Authorization header which is a Bearer token (JWT) then attempt to verify it
+        if (authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+
+        // If no header then check the cookie
+        if (StringUtils.isBlank(jwt)) {
+            Cookie cookie = WebUtils.getCookie(request, JWT_COOKIE_NAME);
+            jwt = Optional.ofNullable(cookie).map(Cookie::getValue).orElse("");
+        }
+
+        return jwt;
     }
 }
