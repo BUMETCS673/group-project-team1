@@ -58,6 +58,7 @@ public class CommonConstants {
 	public static final String VALIDATION_ERRORS = "Invalid values detected in request body. Please review the errors and modify your request accordingly.";
 	public static final String INVALID_BANK_ACCOUNT_ID = "Invalid bank account id. Please use another value.";
 	public static final String INVALID_TRANSACTION_ID = "Invalid transaction id. Please use another value.";
+	public static final String INVALID_USER_ID = "Invalid user id. Please use another value.";
 
 	// security-related messages
 	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials";
@@ -77,5 +78,7 @@ public class CommonConstants {
 	public static final String FIND_ALL_TRANSACTION = "Successfully find all transaction with bank account id: {0}.";
 	public static final String FIND_TRANSACTION = "Successfully find the transaction with transaction id: {0}.";
 	public static final String INVALID_TRANSACTION = "Successfully invalid the transaction with transaction id: {0}.";
+	public static final String FIND_BANKACCOUNT = "Successfully find the bank account with userid: {0}.";
+	public static final String FIND_ALL_BANKACCOUNT = "Successfully find all bank account.";
 
 }

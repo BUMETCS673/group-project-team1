@@ -1,8 +1,5 @@
 package edu.bu.metcs673.trackr.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import edu.bu.metcs673.trackr.api.BankAccountDTO;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
@@ -11,6 +8,10 @@ import edu.bu.metcs673.trackr.domain.BankAccount.ACCOUNT_STATUS;
 import edu.bu.metcs673.trackr.domain.TrackrUser;
 import edu.bu.metcs673.trackr.repo.BankAccountRepository;
 import edu.bu.metcs673.trackr.service.BankAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Defines logic for the "BankAccountService" methods. Calls methods in the
@@ -81,15 +82,14 @@ public class BankAccountServiceImpl implements BankAccountService {
     /**
      * The purpose of this method is to find a special bank account by its 'id' and 'userId' value.
      *
-     * @param id this is transaction id
+     * @param bankAccountId this is transaction id
      * @param userId this is user id
      * @return BankAccount
      * @author Xiaobing Hou
      */
     @Override
-    public BankAccount findBankAccountByIdAndUserId(long id, long userId) {
-
-        BankAccount bankAccount = bankAccountRepository.findBankAccountByIdAndUserId(id, userId);
+    public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId) {
+        BankAccount bankAccount = bankAccountRepository.findByIdAndUserId(bankAccountId, userId);
         if (bankAccount != null) {
             return bankAccount;
         }
@@ -97,4 +97,8 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     }
 
+    @Override
+    public  List<BankAccount> findBankAccountsByUserId(long userId) {
+        return bankAccountRepository.findAllByUserId(userId);
+    }
 }
