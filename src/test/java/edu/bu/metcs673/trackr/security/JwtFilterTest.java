@@ -1,6 +1,6 @@
 package edu.bu.metcs673.trackr.security;
 
-import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
+import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
  * @author Jean Dorancy
  */
 public class JwtFilterTest {
-    private static final User USER =  new User("test", "test", Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+    private static final User USER = new User("test", "test", Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
     private final JWTUtil util = new JWTUtil("test");
     private final TrackrUserServiceImpl service = mock(TrackrUserServiceImpl.class);
     private JwtFilter filter;

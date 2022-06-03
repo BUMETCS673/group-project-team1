@@ -1,7 +1,7 @@
 package edu.bu.metcs673.trackr.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
+import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -70,6 +70,8 @@ public class JwtFilter extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain chain) throws IOException, ServletException {
+
+		// Fetch the token
         String jwt = getJwt(request);
 
         // If the  token was present either in header or cookie but, it was a blank string.

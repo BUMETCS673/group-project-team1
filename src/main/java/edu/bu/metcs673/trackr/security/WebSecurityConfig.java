@@ -1,6 +1,6 @@
 package edu.bu.metcs673.trackr.security;
 
-import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
+import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.servlet.http.HttpServletResponse;
 
 import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
