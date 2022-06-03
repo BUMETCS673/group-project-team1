@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "edu.bu.metcs673.trackr")
-@EntityScan("edu.bu.metcs673.trackr.domain")
+@EntityScan("edu.bu.metcs673.trackr")
 public class TrackrApp {
 
 	public static void main(String[] args) {

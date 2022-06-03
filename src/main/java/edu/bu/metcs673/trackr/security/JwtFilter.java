@@ -20,7 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
-import edu.bu.metcs673.trackr.service.impl.TrackrUserServiceImpl;
+import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 
 /**
  * Filter class that runs before actual API logic is processed. Checks for a JWT
