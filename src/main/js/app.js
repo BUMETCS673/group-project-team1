@@ -45,8 +45,7 @@ const App = () => {
               <ProtectedRoute
                 isAuthenticated={TrackrUserService.isAuthenticated()}
               />
-            }
-          >
+            }>
             <Route
               path="dashboard"
               element={<DashboardContainer setAlert={setAlert} />}

@@ -13,13 +13,17 @@ const Dashboard = (props) => {
     <Container className="mt-md-4" fluid>
       <Row>
         <Col md={4}>
-          <Row className="shadow me-lg-1 bg-white rounded">
+          <Row className="shadow me-lg-1 bg-white rounded" style={{
+            border:"1px solid #000"
+          }}>
             <Row>
-              <h3>Accounts</h3>
+              <h3 style={{
+                margin: "10px 0px 30px 0px"
+              }}>Accounts</h3>
             </Row>
-            <Row>
-              <Col>hello</Col>
-              <Col>world</Col>
+
+            <Row id={"dashboardAccounts"}>
+
             </Row>
           </Row>
         </Col>
