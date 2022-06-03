@@ -25,7 +25,7 @@ class AccountService {
             return config;
         })
 
-        return axios.get(`${PATH}`);
+        return axios.get(PATH);
 
     };
 }
