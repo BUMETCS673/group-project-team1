@@ -118,6 +118,7 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         List<Pattern> patterns = Arrays.asList(
+                Pattern.compile("/favicon.ico"), // Images from static assets
                 Pattern.compile("/images/.*"), // Images from static assets
                 Pattern.compile("/built/.*"), // Generate assets from Webpack build
                 Pattern.compile("/"), // Index page

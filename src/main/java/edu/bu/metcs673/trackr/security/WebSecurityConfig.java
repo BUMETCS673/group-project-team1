@@ -10,7 +10,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.http.HttpServletResponse;
+
 import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -69,8 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Configure logout
         http.logout(logout -> logout.logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
                 .invalidateHttpSession(true)
+                .logoutSuccessHandler((request, response, authentication) -> response.setStatus(SC_OK))
                 .deleteCookies(JWT_COOKIE_NAME)
         );
 

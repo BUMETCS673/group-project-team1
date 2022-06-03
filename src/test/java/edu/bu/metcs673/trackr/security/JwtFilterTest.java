@@ -44,6 +44,7 @@ public class JwtFilterTest {
 
     private static Stream<Arguments> shouldNotFilterUrls() {
         return Stream.of(
+                Arguments.of("/favicon.ico"),
                 Arguments.of("/images/logo.png"),
                 Arguments.of("/images/awesome.jpeg"),
                 Arguments.of("/images/any-other-images.extension"),
