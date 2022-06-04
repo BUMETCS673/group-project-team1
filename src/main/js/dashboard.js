@@ -7,19 +7,14 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
-import Account from "./account/account";
+import AccountPreview from "./account/account-preview";
 
 const Dashboard = (props) => {
   return (
     <Container className="mt-md-4" fluid>
       <Row>
         <Col md={4}>
-          <Row
-            className="shadow me-lg-1 bg-white rounded"
-            style={{
-              border: "1px solid #000",
-            }}
-          >
+          <Row className="shadow me-lg-1 bg-white rounded">
             <Row>
               <h3
                 style={{
@@ -30,7 +25,7 @@ const Dashboard = (props) => {
               </h3>
             </Row>
             <Row id={"dashboardAccounts"}>
-              <Account bankAccounts={props.bankAccounts} />
+              <AccountPreview bankAccounts={props.bankAccounts} />
             </Row>
           </Row>
         </Col>

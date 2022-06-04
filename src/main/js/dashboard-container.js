@@ -16,7 +16,7 @@ const DashboardContainer = (props) => {
     service
       .findAllBankAccount()
       .then(function (response) {
-        setBankAccounts(response.data.additionalData);
+        setBankAccounts(response.data.additionalData || []);
       })
       .catch(function (error) {
         props.setAlert({
