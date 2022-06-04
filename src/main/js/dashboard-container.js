@@ -11,21 +11,25 @@ import Account from "./account/account";
 import * as ReactDOM from "react-dom";
 
 const DashboardContainer = (props) => {
-    let service = new AccountService();
+  let service = new AccountService();
 
-    service.findAllBankAccount()
-        .then(function (response) {
-            ReactDOM.render(<Account bankAccount={response.data.additionalData}/>, document.getElementById("dashboardAccounts"));
-        })
-        .catch(function (error) {
-            props.setAlert({
-                show: true,
-                variant: "danger",
-                message: `${error.response.data.message}`,
-            });
-            setTimeout(() => props.setAlert({show: false}), 2000);
-        });
-    return <Dashboard/>;
+  service
+    .findAllBankAccount()
+    .then(function (response) {
+      ReactDOM.render(
+        <Account bankAccount={response.data.additionalData} />,
+        document.getElementById("dashboardAccounts")
+      );
+    })
+    .catch(function (error) {
+      props.setAlert({
+        show: true,
+        variant: "danger",
+        message: `${error.response.data.message}`,
+      });
+      setTimeout(() => props.setAlert({ show: false }), 2000);
+    });
+  return <Dashboard />;
 };
 
 export default DashboardContainer;
