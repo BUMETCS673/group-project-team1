@@ -6,17 +6,16 @@
 
 import React from "react";
 import Dashboard from "./dashboard";
-import {createRoot} from "react-dom/client";
 import AccountService from "./account/account-service";
 import Account from "./account/account";
+import * as ReactDOM from "react-dom";
 
 const DashboardContainer = (props) => {
     let service = new AccountService();
 
     service.findAllBankAccount()
         .then(function (response) {
-            createRoot(document.getElementById("dashboardAccounts"))
-                .render(<Account bankAccount={response.data.additionalData}/>);
+            ReactDOM.render(<Account bankAccount={response.data.additionalData}/>, document.getElementById("dashboardAccounts"));
         })
         .catch(function (error) {
             props.setAlert({

@@ -17,13 +17,6 @@ class AccountService {
      * @date 06/03/2022
      */
     findAllBankAccount = () => {
-        const token = sessionStorage.getItem('trackrToken')
-        console.log(token)
-
-        axios.interceptors.request.use(function (config) {
-            config.headers.Authorization = "Bearer " + token;
-            return config;
-        })
 
         return axios.get(PATH);
 

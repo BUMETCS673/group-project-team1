@@ -23,7 +23,6 @@ const LoginContainer = (props) => {
             .login(credentials)
             .then(function (response) {
                 TrackrUserService.authenticate();
-                sessionStorage.setItem("trackrToken", response.data.additionalData[0].jwtToken);
                 navigate("/dashboard", {replace: true});
                 props.setAlert({
                     show: true,

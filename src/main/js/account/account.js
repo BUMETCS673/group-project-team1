@@ -10,11 +10,6 @@ import {Table} from "react-bootstrap";
  */
 const Account = (props) => {
 
-    let total = 0;
-    for (let i = 0; i < props.bankAccount.length; i++) {
-        total = total + props.bankAccount[i].balance;
-    }
-    total = total.toFixed(2);
     return (
         <Container>
 
@@ -49,7 +44,7 @@ const Account = (props) => {
                         width: "70%"
                     }}><h5>Total Cash</h5>
                     </td>
-                    <td>{total}</td>
+                    <td>{getTotal(props)}</td>
                 </tr>
                 </tbody>
             </Table>
@@ -57,5 +52,21 @@ const Account = (props) => {
         </Container>
     );
 };
+
+/**
+ * The purpose of this method is to get the total
+ *
+ * @author Xiaobing Hou
+ * @date 06/03/2022
+ */
+function getTotal(props) {
+    let total = 0;
+    for (let i = 0; i < props.bankAccount.length; i++) {
+        total = total + props.bankAccount[i].balance;
+    }
+    total = total.toFixed(2);
+    return total;
+
+}
 
 export default Account;
