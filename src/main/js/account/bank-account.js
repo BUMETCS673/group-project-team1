@@ -15,16 +15,31 @@ const BankAccount = (props) => {
           <Col md={10}>
             <h5>{props.account.accountDescription}</h5>
           </Col>
-          <Col md={2} className="text-right">
-            <Link to="#" onClick={() => props.handleBankAccountEditClick(props.account.id)}>Edit</Link>
+          <Col md={1} className="text-end">
+            <Link
+              to="#"
+              onClick={() => props.handleBankAccountEditClick(props.account.id)}
+            >
+              Edit
+            </Link>
+          </Col>
+          <Col md={1} className="text-end">
+            <Link
+              to="#"
+              onClick={() =>
+                props.handleBankAccountDeleteClick(props.account.id)
+              }
+            >
+              Delete
+            </Link>
           </Col>
         </Row>
-        <Row>
-          <Col md={10} className="text-left">
+        <Row className="mt-md-4">
+          <Col md={8} className="text-start">
             {props.account.accountType} - {props.account.id}
           </Col>
-          <Col md={2} className="text-right">
-            ${props.account.balance}
+          <Col md={4} className="text-end">
+            <b>Balance:</b> ${props.account.balance}
           </Col>
         </Row>
       </Card.Body>

@@ -10,6 +10,8 @@ import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
 import edu.bu.metcs673.trackr.user.TrackrUser;
 
+import static edu.bu.metcs673.trackr.bankaccount.BankAccount.ACCOUNT_STATUS.ACTIVE;
+
 /**
  * Defines logic for the "BankAccountService" methods. Calls methods in the
  * bankAccountRepository to interact with the database.
@@ -29,7 +31,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         // as well
         BankAccount bankAccount = new BankAccount(0L, user, bankAccountInput.getAccountType(),
                 bankAccountInput.getAccountDescription(), bankAccountInput.getBalance(),
-                BankAccount.ACCOUNT_STATUS.ACTIVE);
+                ACTIVE);
 
         return bankAccountRepository.save(bankAccount);
     }
@@ -86,7 +88,7 @@ public class BankAccountServiceImpl implements BankAccountService {
      */
     @Override
     public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId) {
-        BankAccount bankAccount = bankAccountRepository.findByIdAndUserId(bankAccountId, userId);
+        BankAccount bankAccount = bankAccountRepository.findByIdAndUserIdAndStatus(bankAccountId, userId,  ACTIVE);
         if (bankAccount != null) {
             return bankAccount;
         }
@@ -96,6 +98,6 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public  List<BankAccount> findBankAccountsByUserId(long userId) {
-        return bankAccountRepository.findAllByUserId(userId);
+        return bankAccountRepository.findAllByUserIdAndStatus(userId, ACTIVE);
     }
 }
