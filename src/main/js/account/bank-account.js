@@ -16,7 +16,7 @@ const BankAccount = (props) => {
             <h5>{props.account.accountDescription}</h5>
           </Col>
           <Col md={2} className="text-right">
-            <Link to="#">Edit</Link>
+            <Link to="#" onClick={() => props.handleBankAccountEditClick(props.account.id)}>Edit</Link>
           </Col>
         </Row>
         <Row>

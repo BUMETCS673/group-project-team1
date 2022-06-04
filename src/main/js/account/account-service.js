@@ -13,12 +13,23 @@ class AccountService {
   /**
    * To get all bank accounts .
    *
+   * @returns {Promise<AxiosResponse<any>>} Promise
    * @author Xiaobing Hou
    * @date 06/03/2022
    */
   findAllBankAccount = () => {
     return axios.get(PATH);
   };
+
+  /**
+   * Find bank account by id
+   * @param id Bank account id
+   * @returns {Promise<AxiosResponse<any>>} Promise
+   */
+  findBankAccountById = (id) => {
+    return axios.get(`${PATH}/${id}`);
+  };
 }
+
 
 export default AccountService;
