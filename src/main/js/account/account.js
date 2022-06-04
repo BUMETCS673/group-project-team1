@@ -17,7 +17,8 @@ const Account = (props) => {
 
                 <Table key={index} style={{
                     margin: "10px 0px 10px 0px",
-                }}>
+                }}
+                >
                     <tbody>
                     <tr>
                         <td style={{
