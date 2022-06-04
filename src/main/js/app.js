@@ -51,15 +51,16 @@ const App = () => {
               path="dashboard"
               element={<DashboardContainer setAlert={setAlert} />}
             />
-            <Route
-              path="accounts"
-              element={<AccountContainer setAlert={setAlert} />}
-            />
+
             <Route
               path="profile"
               element={<ProfileContainer setAlert={setAlert} />}
             />
           </Route>
+          <Route
+            path="accounts"
+            element={<AccountContainer setAlert={setAlert} />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

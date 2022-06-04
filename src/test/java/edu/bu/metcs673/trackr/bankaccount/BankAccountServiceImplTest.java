@@ -111,7 +111,7 @@ public class BankAccountServiceImplTest {
 		BankAccount mockAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
 				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
 
-		Mockito.when(accountRepository.findByIdAndUserId(0L,0L)).thenReturn(mockAccount);
+		Mockito.when(accountRepository.findByIdAndUserIdAndStatus(0L,0L, BankAccount.ACCOUNT_STATUS.ACTIVE)).thenReturn(mockAccount);
 		BankAccount bankAccount = accountServiceImpl.findBankAccountByIdAndUserId(0L,0L);
 		assertEquals(mockAccount, bankAccount);
 
@@ -119,7 +119,7 @@ public class BankAccountServiceImplTest {
 
 	@Test
 	public void findBankAccountByUserIdTest_failure() {
-		Mockito.when(accountRepository.findByIdAndUserId(0L,0L)).thenReturn(null);
+		Mockito.when(accountRepository.findByIdAndUserIdAndStatus(0L,0L, BankAccount.ACCOUNT_STATUS.ACTIVE)).thenReturn(null);
 		assertThrows(TrackrInputValidationException.class,()->accountServiceImpl.findBankAccountByIdAndUserId(0L,0L));
 	}
 }

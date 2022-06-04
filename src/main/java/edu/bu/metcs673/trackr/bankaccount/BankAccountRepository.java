@@ -18,12 +18,19 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
      * Custom JPA query that uses 'bankAccountId' and 'userId' to gets the bank account object from the DB
      *
      * @param id this is bank account id
-     * @param userId        this is user id
+     * @param userId this is user id
+     * @param status Bank account status
      * @return BankAccount
      * @author Xiaobing Hou
-     * @date 05/23/2022
      */
-    public BankAccount findByIdAndUserId(long id, long userId);
+    public BankAccount findByIdAndUserIdAndStatus(long id, long userId, BankAccount.ACCOUNT_STATUS status);
 
-    public List<BankAccount> findAllByUserId(long userId);
+    /**
+     * Find all by user id and status.
+     *
+     * @param userId User id
+     * @param status bank account status
+     * @return List of accounts
+     */
+    public List<BankAccount> findAllByUserIdAndStatus(long userId, BankAccount.ACCOUNT_STATUS status);
 }
