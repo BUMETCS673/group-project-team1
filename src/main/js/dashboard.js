@@ -7,7 +7,7 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
-import Account from "./account/account"
+import Account from "./account/account";
 
 const Dashboard = (props) => {
   return (
@@ -30,7 +30,7 @@ const Dashboard = (props) => {
               </h3>
             </Row>
             <Row id={"dashboardAccounts"}>
-              <Account bankAccounts={props.bankAccounts}/>
+              <Account bankAccounts={props.bankAccounts} />
             </Row>
           </Row>
         </Col>
