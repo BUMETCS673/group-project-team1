@@ -7,6 +7,7 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
+import AccountPreview from "./account/account-preview";
 
 const Dashboard = (props) => {
   return (
@@ -15,11 +16,16 @@ const Dashboard = (props) => {
         <Col md={4}>
           <Row className="shadow me-lg-1 bg-white rounded">
             <Row>
-              <h3>Accounts</h3>
+              <h3
+                style={{
+                  margin: "10px 0px 30px 0px",
+                }}
+              >
+                Accounts
+              </h3>
             </Row>
-            <Row>
-              <Col>hello</Col>
-              <Col>world</Col>
+            <Row id={"dashboardAccounts"}>
+              <AccountPreview bankAccounts={props.bankAccounts} />
             </Row>
           </Row>
         </Col>

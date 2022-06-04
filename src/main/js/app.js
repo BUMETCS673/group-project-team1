@@ -57,10 +57,10 @@ const App = () => {
               element={<ProfileContainer setAlert={setAlert} />}
             />
           </Route>
-            <Route
-                path="accounts"
-                element={<AccountContainer setAlert={setAlert} />}
-            />
+          <Route
+            path="accounts"
+            element={<AccountContainer setAlert={setAlert} />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
