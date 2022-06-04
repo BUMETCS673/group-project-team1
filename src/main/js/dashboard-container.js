@@ -9,7 +9,7 @@ import Dashboard from "./dashboard";
 import AccountService from "./account/account-service";
 
 const DashboardContainer = (props) => {
-  let service = new AccountService();
+  const service = new AccountService();
   const [bankAccounts, setBankAccounts] = useState([]);
 
   useEffect(() => {
