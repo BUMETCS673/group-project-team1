@@ -13,57 +13,58 @@ const DEL_PATH = "delete";
 const EDIT_PATH = "modify";
 
 class TransactionService {
-    /**
-     * To get all transaction .
-     *
-     * @param bankAccountId
-     * @returns {Promise<AxiosResponse<any>>} Promise
-     * @author Xiaobing Hou
-     * @date 06/03/2022
-     */
-    findAllTransactionsByBankId = (bankAccountId) => {
-        return axios.get(`${PATH}/${FIND_ALL_PATH}/${bankAccountId}`);
-    };
+  /**
+   * To get all transaction .
+   *
+   * @param bankAccountId
+   * @returns {Promise<AxiosResponse<any>>} Promise
+   * @author Xiaobing Hou
+   * @date 06/03/2022
+   */
+  findAllTransactionsByBankId = (bankAccountId) => {
+    return axios.get(`${PATH}/${FIND_ALL_PATH}/${bankAccountId}`);
+  };
 
-    /**
-     * To del transaction .
-     *
-     * @returns {Promise<AxiosResponse<any>>} Promise
-     * @author Xiaobing Hou
-     * @date 06/03/2022
-     * @param transactionId
-     * @param bankAccountId
-     */
-    deleteTranByTranIdAndBankId = (transactionId, bankAccountId) => {
-        return axios.delete(`${PATH}/${DEL_PATH}/${transactionId}/${bankAccountId}`);
-    };
+  /**
+   * To del transaction .
+   *
+   * @returns {Promise<AxiosResponse<any>>} Promise
+   * @author Xiaobing Hou
+   * @date 06/03/2022
+   * @param transactionId
+   * @param bankAccountId
+   */
+  deleteTranByTranIdAndBankId = (transactionId, bankAccountId) => {
+    return axios.delete(
+      `${PATH}/${DEL_PATH}/${transactionId}/${bankAccountId}`
+    );
+  };
 
-    /**
-     * To edit transaction .
-     *
-     * @returns {Promise<AxiosResponse<any>>} Promise
-     * @author Xiaobing Hou
-     * @date 06/03/2022
-     * @param transactionId
-     * @param values
-     */
-    editTranByTranIdAndBankId = (transactionId, values) => {
-        return axios.post(`${PATH}/${EDIT_PATH}/${transactionId}`, values);
-    };
+  /**
+   * To edit transaction .
+   *
+   * @returns {Promise<AxiosResponse<any>>} Promise
+   * @author Xiaobing Hou
+   * @date 06/03/2022
+   * @param transactionId
+   * @param values
+   */
+  editTranByTranIdAndBankId = (transactionId, values) => {
+    return axios.post(`${PATH}/${EDIT_PATH}/${transactionId}`, values);
+  };
 
-    /**
-     * To add transaction .
-     *
-     * @returns {Promise<AxiosResponse<any>>} Promise
-     * @author Xiaobing Hou
-     * @date 06/03/2022
-     * @param transactionId
-     * @param values
-     */
-    addTransaction = (values) => {
-        return axios.post(PATH, values);
-    };
-
+  /**
+   * To add transaction .
+   *
+   * @returns {Promise<AxiosResponse<any>>} Promise
+   * @author Xiaobing Hou
+   * @date 06/03/2022
+   * @param transactionId
+   * @param values
+   */
+  addTransaction = (values) => {
+    return axios.post(PATH, values);
+  };
 }
 
 export default TransactionService;
