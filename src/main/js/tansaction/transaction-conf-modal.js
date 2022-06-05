@@ -20,9 +20,6 @@ const TransactionConfModal = ({
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Bank account Id:{" "}
-          {selectedTransaction ? selectedTransaction.bankAccount.id : "None"}
-          <br />
           Transaction Id:{" "}
           {selectedTransaction ? selectedTransaction.id : "None"}
         </Modal.Title>
