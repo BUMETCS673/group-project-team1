@@ -86,7 +86,7 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
     public List<Transaction> findAllTraByBankAccountId(long bankAccountId) {
-        return transactionRepository.findAllTraByBankAccountId(bankAccountId);
+        return transactionRepository.findAllTraByBankAccountIdAndStatus(bankAccountId, Transaction.TRANSACTION_STATUS.VALID);
     }
 
     /**
