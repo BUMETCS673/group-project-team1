@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import { Table } from "react-bootstrap";
+import { Col, ListGroup, Row } from "react-bootstrap";
 
 /**
  * The purpose of this method is to get the total
@@ -27,51 +27,42 @@ const getTotal = (bankAccounts) => {
  */
 const AccountPreview = (props) => {
   return (
-    <Container>
-      {props.bankAccounts.map((item) => (
-        <Table
-          key={item.id}
-          style={{
-            margin: "10px 0px 10px 0px",
-          }}
-        >
-          <tbody>
-            <tr>
-              <td
-                style={{
-                  width: "70%",
-                }}
-              >
+    <Container className="mt-md-4">
+      <ListGroup defaultActiveKey="#link1">
+        {props.bankAccounts.map((item) => (
+          <ListGroup.Item
+            key={item.id}
+            action
+            onClick={() => props.handleBankAccounts(item.id)}
+          >
+            <Row>
+              <Col className="text-start" md={8}>
                 {item.accountType}
-                <br />
-                <span>
-                  <font color={"gray"}>{item.accountDescription}</font>
-                </span>
-              </td>
-              <td>${item.balance}</td>
-            </tr>
-          </tbody>
-        </Table>
-      ))}
+              </Col>
 
-      <Table
-        style={{
-          margin: "20px 0px 50px 0px",
-        }}
-      >
-        <tbody>
-          <tr>
-            <td
-              style={{
-                width: "70%",
-              }}
-            >
+              <Col className="text-end" md={4}>
+                ${item.balance}
+              </Col>
+            </Row>
+
+            <Row>
+              <Col className="text-start" md={10}>
+                <font color={"gray"}>{item.accountDescription}</font>
+              </Col>
+            </Row>
+          </ListGroup.Item>
+        ))}
+        <ListGroup.Item>
+          <Row className="mt-md-4">
+            <Col className="text-start" md={5}>
               <h5>Total Cash</h5>
-            </td>
-            <td>${getTotal(props.bankAccounts)}</td>
-          </tr>
-        </tbody>
-      </Table>
+            </Col>
+            <Col className="text-end" md={7}>
+              ${getTotal(props.bankAccounts)}
+            </Col>
+          </Row>
+        </ListGroup.Item>
+      </ListGroup>
     </Container>
   );
 };
