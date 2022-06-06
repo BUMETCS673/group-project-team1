@@ -31,7 +31,7 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 /**
  * Filter class that runs before actual API logic is processed. Checks for a JWT token and tries to
  * verify it. Successfully verification will pass the request to its respective controller, while
- * unsuccessful verification will return an unathorized response to the user.
+ * unsuccessful verification will return an unauthorized response to the user.
  * <p>
  * Reference:
  * https://medium.com/geekculture/implementing-json-web-token-jwt-authentication-using-spring-security-detailed-walkthrough-1ac480a8d970
@@ -41,6 +41,15 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
  */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String BEARER_PREFIX = "Bearer ";
+    public static final String FAVICON_PATH = "/favicon.ico";
+    public static final String IMAGES_PATH = "/images/.*";
+    public static final String GENERATED_ASSETS_PATH = "/built/.*";
+    public static final String ROOT_PATH = "/";
+    public static final String REGISTER_PATH = "/register";
+    public static final String LOGIN_PATH = "/login";
+    public static final String LOGOUT_PATH = "/logout";
     private final TrackrUserServiceImpl userServiceImpl;
     private final JWTUtil jwtUtil;
 
@@ -71,7 +80,7 @@ public class JwtFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
-		// Fetch the token
+        // Fetch the token
         String jwt = getJwt(request);
 
         // If the  token was present either in header or cookie but, it was a blank string.
@@ -120,13 +129,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         List<Pattern> patterns = Arrays.asList(
-                Pattern.compile("/favicon.ico"), // Images from static assets
-                Pattern.compile("/images/.*"), // Images from static assets
-                Pattern.compile("/built/.*"), // Generate assets from Webpack build
-                Pattern.compile("/"), // Index page
-                Pattern.compile("/register"), // Registration page
-                Pattern.compile("/login"), // login page
-                Pattern.compile("/logout") // Logout page
+                Pattern.compile(FAVICON_PATH), // Images from static assets
+                Pattern.compile(IMAGES_PATH), // Images from static assets
+                Pattern.compile(GENERATED_ASSETS_PATH), // Generate assets from Webpack build
+                Pattern.compile(ROOT_PATH), // Index page
+                Pattern.compile(REGISTER_PATH), // Registration page
+                Pattern.compile(LOGIN_PATH), // login page
+                Pattern.compile(LOGOUT_PATH) // Logout page
         );
 
         // If we match one then we should not filter
@@ -146,11 +155,11 @@ public class JwtFilter extends OncePerRequestFilter {
      * @return String
      */
     private String getJwt(HttpServletRequest request) {
-        String authHeader = Optional.ofNullable(request.getHeader("Authorization")).orElse("");
+        String authHeader = Optional.ofNullable(request.getHeader(AUTHORIZATION_HEADER)).orElse("");
         String jwt = "";
 
         // If the request has an Authorization header which is a Bearer token (JWT) then attempt to verify it
-        if (authHeader.startsWith("Bearer ")) {
+        if (authHeader.startsWith(BEARER_PREFIX)) {
             return authHeader.substring(7);
         }
 
