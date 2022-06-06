@@ -26,6 +26,15 @@ public class JWTUtil {
 	@Value("${jwt_secret}")
 	public String jwtSecret;
 
+	/**
+	 * Add constructor for testing.
+	 *
+	 * @param jwtSecret Secret
+	 */
+	public JWTUtil(@Value("${jwt_secret}") String jwtSecret) {
+		this.jwtSecret = jwtSecret;
+	}
+
 	public String generateToken(String username) {
 		return JWT.create().withSubject("User Details").withClaim("username", username).withIssuedAt(new Date())
 				.withIssuer("Trackr Application").sign(Algorithm.HMAC256(jwtSecret));

@@ -13,9 +13,6 @@ import org.springframework.http.ResponseEntity;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.user.TrackrUserController;
-import edu.bu.metcs673.trackr.user.TrackrUserDTO;
-import edu.bu.metcs673.trackr.user.TrackrUserService;
 import net.minidev.json.JSONObject;
 
 @ExtendWith(MockitoExtension.class)

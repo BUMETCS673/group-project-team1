@@ -1,46 +1,44 @@
 /**
- * Home container to manage state and logic for the home page.
+ * Logout container to manage state and logic for the logout link.
  *
  * @author Jean Dorancy
  */
 
 import React from "react";
-import Home from "./home";
+import Logout from "./logout";
+import TrackrUserService from "../user/trackr-user-service";
 import { useNavigate } from "react-router";
-import TrackrUserService from "./user/trackr-user-service";
 
-const HomeContainer = (props) => {
+const LogoutContainer = (props) => {
   const service = new TrackrUserService();
   const navigate = useNavigate();
 
   /**
-   * Handle submit of the signup form by sending it to the backend.
-   *
-   * @param user Submit form values
+   * Handle user logout action by setting the state to trigger components rendering.
    */
-  const handleSignUpFormSubmit = (user) => {
+  const handleLogoutClick = () => {
     service
-      .create(user)
+      .logout()
       .then(function (response) {
-        navigate("/login", { replace: true });
         props.setAlert({
           show: true,
           variant: "success",
-          message: "Account successfully created!",
+          message: "Successfully logged out!",
         });
         setTimeout(() => props.setAlert({ show: false }), 2000);
+        navigate("/login", { replace: true });
       })
       .catch(function (error) {
         props.setAlert({
           show: true,
           variant: "danger",
-          message: `${error.response.data.message}`,
+          message: "Logout attempt failed!",
         });
         setTimeout(() => props.setAlert({ show: false }), 2000);
       });
   };
 
-  return <Home handleSignUpFormSubmit={handleSignUpFormSubmit} />;
+  return <Logout handleLogoutClick={handleLogoutClick} />;
 };
 
-export default HomeContainer;
+export default LogoutContainer;

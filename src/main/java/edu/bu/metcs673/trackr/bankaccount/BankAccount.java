@@ -42,8 +42,8 @@ public class BankAccount {
 	@Enumerated(EnumType.STRING)
 	private ACCOUNT_TYPE accountType;
 
-	@Column
-	@Size(min = 0, max = 255, message = CommonConstants.INVALID_ACCOUNT_DESC_LENGTH)
+	@Column(nullable = false)
+	@Size(min = 1, max = 255, message = CommonConstants.INVALID_ACCOUNT_DESC_LENGTH)
 	private String accountDescription;
 
 	@Column(nullable = false, precision = 2)

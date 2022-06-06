@@ -23,7 +23,7 @@ public class BankAccountDTO {
 	@Enumerated(EnumType.STRING)
 	private BankAccount.ACCOUNT_TYPE accountType;
 
-	@Size(min = 0, max = 255, message = CommonConstants.INVALID_ACCOUNT_DESC_LENGTH)
+	@Size(min = 1, max = 255, message = CommonConstants.INVALID_ACCOUNT_DESC_LENGTH)
 	private String accountDescription;
 
 	@NotNull(message = CommonConstants.BLANK_BALANCE)

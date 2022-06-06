@@ -32,6 +32,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      * @author Xiaobing Hou
      * @date 05/23/2022
      */
-    public List<Transaction> findAllTraByBankAccountId(long bankAccountId);
+    public List<Transaction> findAllTraByBankAccountIdAndStatus(long bankAccountId,Transaction.TRANSACTION_STATUS VALID);
 
 }
