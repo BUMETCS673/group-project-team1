@@ -63,7 +63,7 @@ public class BankAccountController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<GenericApiResponse> modifyBankAccount(@PathVariable(value = "id") long id) {
+	public ResponseEntity<GenericApiResponse<BankAccount>> modifyBankAccount(@PathVariable(value = "id") long id) {
 
 		// sets status in bank account record associated to the user making the API
 		// request to "INACTIVE". This will prevent new transactions from being

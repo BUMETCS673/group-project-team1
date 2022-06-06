@@ -62,7 +62,7 @@ public class GenericApiResponse<T> {
 	 * @return
 	 */
 	public static <T> GenericApiResponse<T> errorResponse(String message, T t) {
-		return new GenericApiResponse<>(CommonConstants.ERROR, LocalDate.now(), message, t);
+		return new GenericApiResponse<T>(CommonConstants.ERROR, LocalDate.now(), message, t);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class GenericApiResponse<T> {
 	 * @param message
 	 * @return
 	 */
-	public static <T> GenericApiResponse<T> errorResponse(String message) {
+	public static <T> GenericApiResponse<?> errorResponse(String message) {
 		return new GenericApiResponse<T>(CommonConstants.ERROR, LocalDate.now(), message);
 	}
 
