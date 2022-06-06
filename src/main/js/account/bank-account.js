@@ -4,7 +4,7 @@
  * @author Jean Dorancy
  */
 import React from "react";
-import {Button, Card, Col, Row} from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 
 const BankAccount = (props) => {
   return (
@@ -16,9 +16,9 @@ const BankAccount = (props) => {
           </Col>
           <Col md={1}>
             <Button
-                variant="link"
-                className="float-end"
-                onClick={() => props.handleBankAccountEditClick(props.account.id)}
+              variant="link"
+              className="float-end"
+              onClick={() => props.handleBankAccountEditClick(props.account.id)}
             >
               Edit
             </Button>
