@@ -4,8 +4,7 @@
  * @author Jean Dorancy
  */
 import React from "react";
-import { Card, Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import {Button, Card, Col, Row} from "react-bootstrap";
 
 const BankAccount = (props) => {
   return (
@@ -15,26 +14,28 @@ const BankAccount = (props) => {
           <Col md={10}>
             <h5>{props.account.accountDescription}</h5>
           </Col>
-          <Col md={1} className="text-end">
-            <Link
-              to="#"
-              onClick={() => props.handleBankAccountEditClick(props.account.id)}
+          <Col md={1}>
+            <Button
+                variant="link"
+                className="float-end"
+                onClick={() => props.handleBankAccountEditClick(props.account.id)}
             >
               Edit
-            </Link>
+            </Button>
           </Col>
-          <Col md={1} className="text-end">
-            <Link
-              to="#"
+          <Col md={1}>
+            <Button
+              variant="link"
+              className="float-end"
               onClick={() =>
                 props.handleBankAccountDeleteClick(props.account.id)
               }
             >
               Delete
-            </Link>
+            </Button>
           </Col>
         </Row>
-        <Row className="mt-md-4">
+        <Row className="mt-md-5">
           <Col md={8} className="text-start">
             {props.account.accountType} - {props.account.id}
           </Col>

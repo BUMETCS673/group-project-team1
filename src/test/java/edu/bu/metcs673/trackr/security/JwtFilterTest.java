@@ -18,6 +18,13 @@ import java.util.Collections;
 import java.util.stream.Stream;
 
 import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
+import static edu.bu.metcs673.trackr.security.JwtFilter.FAVICON_PATH;
+import static edu.bu.metcs673.trackr.security.JwtFilter.GENERATED_ASSETS_PATH;
+import static edu.bu.metcs673.trackr.security.JwtFilter.IMAGES_PATH;
+import static edu.bu.metcs673.trackr.security.JwtFilter.LOGIN_PATH;
+import static edu.bu.metcs673.trackr.security.JwtFilter.LOGOUT_PATH;
+import static edu.bu.metcs673.trackr.security.JwtFilter.REGISTER_PATH;
+import static edu.bu.metcs673.trackr.security.JwtFilter.ROOT_PATH;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -44,17 +51,17 @@ public class JwtFilterTest {
 
     private static Stream<Arguments> shouldNotFilterUrls() {
         return Stream.of(
-                Arguments.of("/favicon.ico"),
-                Arguments.of("/images/logo.png"),
-                Arguments.of("/images/awesome.jpeg"),
-                Arguments.of("/images/any-other-images.extension"),
-                Arguments.of("/built/bundle.js"),
-                Arguments.of("/built/main.css"),
-                Arguments.of("/built/some-file.extension"),
-                Arguments.of("/"),
-                Arguments.of("/register"),
-                Arguments.of("/login"),
-                Arguments.of("/logout")
+                Arguments.of(String.format(FAVICON_PATH)),
+                Arguments.of(String.format("%s%s/", IMAGES_PATH, "logo.png")),
+                Arguments.of(String.format("%s%s/", IMAGES_PATH, "awesome.jpeg")),
+                Arguments.of(String.format("%s%s/", IMAGES_PATH, "any-other-images.extension")),
+                Arguments.of(String.format("%s%s/", GENERATED_ASSETS_PATH, "bundle.js")),
+                Arguments.of(String.format("%s%s/", GENERATED_ASSETS_PATH, "min.css")),
+                Arguments.of(String.format("%s%s/", GENERATED_ASSETS_PATH, "some-file.extension")),
+                Arguments.of(ROOT_PATH),
+                Arguments.of(REGISTER_PATH),
+                Arguments.of(LOGIN_PATH),
+                Arguments.of(LOGOUT_PATH)
 
         );
     }
@@ -140,7 +147,6 @@ public class JwtFilterTest {
         assertFalse(filter.shouldNotFilter(request));
         verify(chain, times(0)).doFilter(request, response);
     }
-
 
     @ParameterizedTest
     @MethodSource("shouldFilterUrls")
