@@ -32,11 +32,11 @@ public class TrackrUserControllerTest {
 		Mockito.when(userService.createUser(testUser)).thenReturn(MOCK_TOKEN_VAL);
 
 		JSONObject extra = TrackrUserController.createTokenObject(MOCK_TOKEN_VAL);
-		ResponseEntity<GenericApiResponse> expected = new ResponseEntity<>(
+		ResponseEntity<GenericApiResponse<JSONObject>> expected = new ResponseEntity<>(
 				GenericApiResponse.successResponse(CommonConstants.CREATE_USER_SUCCESS, extra),
 				HttpStatus.OK);
 
-		ResponseEntity<GenericApiResponse> actual = controller.createUser(testUser);
+		ResponseEntity<GenericApiResponse<JSONObject>> actual = controller.createUser(testUser);
 
 		// Field by field comparison ignoring the extra field since it's not evaluated correctly being a raw object
 		assertThat(actual)
