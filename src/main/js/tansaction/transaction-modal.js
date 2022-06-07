@@ -8,6 +8,7 @@ import { Modal } from "react-bootstrap";
 import TransactionForm from "./transaction-form";
 
 const TransactionModal = ({
+  bankAccounts,
   bankAccountId,
   isAddTransaction,
   selectedTransaction,
@@ -40,6 +41,7 @@ const TransactionModal = ({
           handleEditTransactions={handleEditTransactions}
           handleAddTransactions={handleAddTransactions}
           bankAccountId={bankAccountId}
+          bankAccounts={bankAccounts}
           isAddTransaction={isAddTransaction}
         />
       </Modal.Body>
