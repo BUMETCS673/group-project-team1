@@ -4,8 +4,9 @@
  * @author Xiaobing Hou
  */
 import React from "react";
-import { Modal } from "react-bootstrap";
+import { FormGroup, FormLabel, Modal } from "react-bootstrap";
 import TransactionForm from "./transaction-form";
+import { Field } from "formik";
 
 const TransactionModal = ({
   bankAccounts,
@@ -16,6 +17,16 @@ const TransactionModal = ({
   handleAddTransactions,
   ...props
 }) => {
+  let title;
+  if (!isAddTransaction) {
+    title = (
+      <Modal.Title id="contained-modal-title-vcenter">
+        Bank account Id: {bankAccountId}
+        <br />
+        Transaction Id: {selectedTransaction ? selectedTransaction.id : "None"}
+      </Modal.Title>
+    );
+  }
   return (
     <Modal
       {...props}
@@ -23,18 +34,7 @@ const TransactionModal = ({
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Bank account Id: {bankAccountId}
-          <br />
-          Transaction Id:{" "}
-          {selectedTransaction
-            ? isAddTransaction
-              ? "None"
-              : selectedTransaction.id
-            : "None"}
-        </Modal.Title>
-      </Modal.Header>
+      <Modal.Header closeButton>{title}</Modal.Header>
       <Modal.Body>
         <TransactionForm
           selectedTransaction={selectedTransaction}
