@@ -34,8 +34,8 @@ COPY --from=0 /usr/app/src/ /usr/app/src/
 # Set the working directory
 WORKDIR /usr/app/src
 
-# Build app Uber JAR with maven which will include all resources alread built now
-RUN mvn clean install
+# Build app Uber JAR with maven which will include all resources alread built now. Skip tests there is another pipeline.
+RUN mvn clean install -Dmaven.test.skip=true
 
 # Stage 3 - Use Java JRE Headless OpenJDK Image to run the app
 FROM nimmis/java-centos:openjdk-8-jre-headless
