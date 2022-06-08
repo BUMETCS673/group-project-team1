@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.validation.ConstraintViolation;
@@ -91,14 +93,19 @@ public class BankAccountTest {
 		assertFalse(violations.isEmpty());
 	}
 
-	private static Stream<Arguments> generateTestData() {
-		return Stream.of(Arguments.of(new BankAccountDTO(), new BankAccountDTO(null, TEST_DESCRIPTION, TEST_BALANCE),
-				new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, 0),
-				new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, TEST_BALANCE * -1),
-				new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION
-						+ "alskjdfakls jdaf;lasj df;l kasjdfijasidopfjaosdjkv asjdflk jasdl;fkja;sdlfk j;aslkd fj;lkasjd f;lkajsd;lfj a;sldj f;lasj df;lk jasd;lkf jas;lkdjf l;asjd f;jk d",
-						TEST_BALANCE)
+    private static Stream<Arguments> generateTestData() {
+        return Stream.of(
+                Arguments.of(new BankAccountDTO()),
+                Arguments.of(new BankAccountDTO(null, TEST_DESCRIPTION, TEST_BALANCE)),
+                Arguments.of(new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, TEST_BALANCE * -1)),
+                Arguments.of(
+                        new BankAccountDTO(
+                                TEST_TYPE,
+                                IntStream.range(0, 256).boxed().map(Object::toString).collect(Collectors.joining()),
+                                TEST_BALANCE
+                        )
+                )
 
-		));
-	}
+        );
+    }
 }
