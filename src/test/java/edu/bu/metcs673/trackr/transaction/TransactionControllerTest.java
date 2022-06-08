@@ -16,7 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse1;
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.bankaccount.BankAccount;
 import edu.bu.metcs673.trackr.bankaccount.BankAccountService;
 import edu.bu.metcs673.trackr.common.CommonConstants;
@@ -81,10 +81,10 @@ public class TransactionControllerTest {
         Mockito.when(bankAccountService.findBankAccountByIdAndUserId(1L, 1L)).thenReturn(TEST_BANK_ACCOUNT);
         Mockito.when(transactionService.createTransaction(transactionDTO, TEST_BANK_ACCOUNT)).thenReturn(mockTransaction);
 
-        ResponseEntity<GenericApiResponse1<Transaction>> response = transactionController.createTransaction(transactionDTO);
+        ResponseEntity<GenericApiResponse<Transaction>> response = transactionController.createTransaction(transactionDTO);
 
-        ResponseEntity<GenericApiResponse1<Transaction>> mockResponse = new ResponseEntity<>(
-                GenericApiResponse1.successResponse(
+        ResponseEntity<GenericApiResponse<Transaction>> mockResponse = new ResponseEntity<>(
+                GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.CREATE_TRANSACTION, String.valueOf(mockTransaction.getId())),
                         mockTransaction),
                 HttpStatus.OK);
@@ -100,9 +100,9 @@ public class TransactionControllerTest {
         Mockito.when(transactionService.findTraByIdAndBankAccountId(1L, 1L)).thenReturn(mockTransaction);
         Mockito.when(transactionService.modifyTransaction(mockTransaction, transactionDTO_1)).thenReturn(mockTransaction_1);
 
-        ResponseEntity<GenericApiResponse1<Transaction>> response_1 = transactionController.modifyTransaction(transactionDTO_1.getBankAccountId(), transactionDTO_1);
-        ResponseEntity<GenericApiResponse1<Transaction>> mockResponse_1 = new ResponseEntity<>(
-                GenericApiResponse1.successResponse(
+        ResponseEntity<GenericApiResponse<Transaction>> response_1 = transactionController.modifyTransaction(transactionDTO_1.getBankAccountId(), transactionDTO_1);
+        ResponseEntity<GenericApiResponse<Transaction>> mockResponse_1 = new ResponseEntity<>(
+                GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.MODIFY_TRANSACTION, String.valueOf(mockTransaction_1.getId())),
                         mockTransaction_1),
                 HttpStatus.OK);

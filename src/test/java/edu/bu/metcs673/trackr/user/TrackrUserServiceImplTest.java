@@ -21,10 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
 import edu.bu.metcs673.trackr.security.JWTUtil;
-import edu.bu.metcs673.trackr.user.TrackrUser;
-import edu.bu.metcs673.trackr.user.TrackrUserDTO;
-import edu.bu.metcs673.trackr.user.TrackrUserRepository;
-import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 
 /**
  * Tests the methods in the TrackrUserServiceImpl. Uses Mockito to fake

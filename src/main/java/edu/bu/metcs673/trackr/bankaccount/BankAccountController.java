@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.api.GenericApiResponse1;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.user.TrackrUser;
 import edu.bu.metcs673.trackr.user.TrackrUserService;
@@ -64,7 +63,7 @@ public class BankAccountController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<GenericApiResponse> modifyBankAccount(@PathVariable(value = "id") long id) {
+	public ResponseEntity<GenericApiResponse<BankAccount>> modifyBankAccount(@PathVariable(value = "id") long id) {
 
 		// sets status in bank account record associated to the user making the API
 		// request to "INACTIVE". This will prevent new transactions from being
@@ -78,20 +77,20 @@ public class BankAccountController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<GenericApiResponse1<BankAccount>> findBankAccount(@PathVariable(value = "id") long id) {
+	public ResponseEntity<GenericApiResponse<BankAccount>> findBankAccount(@PathVariable(value = "id") long id) {
 		long userId = getUser().getId();
 		BankAccount bankAccount = bankAccountService.findBankAccountByIdAndUserId(id, userId);
 		return new ResponseEntity<>(
-				GenericApiResponse1.successResponse(
+				GenericApiResponse.successResponse(
 						MessageFormat.format(CommonConstants.FIND_BANKACCOUNT, String.valueOf(userId)), bankAccount),
 				HttpStatus.OK);
 	}
 
 	@GetMapping
-	public ResponseEntity<GenericApiResponse1<List<BankAccount>>> findAll() {
+	public ResponseEntity<GenericApiResponse<List<BankAccount>>> findAll() {
 		List<BankAccount> bankAccounts = bankAccountService.findBankAccountsByUserId(getUser().getId());
 
-		return new ResponseEntity<>(GenericApiResponse1.successResponse(
+		return new ResponseEntity<>(GenericApiResponse.successResponse(
 				MessageFormat.format(CommonConstants.FIND_ALL_BANKACCOUNT, String.valueOf(bankAccounts)), bankAccounts),
 				HttpStatus.OK);
 	}
