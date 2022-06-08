@@ -1,0 +1,19 @@
+name: Java Test
+
+on:
+
+  push:
+
+    branches:
+      - '**'        # matches every branch
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Java Test
+        run: docker build . --file docker/java-test/Dockerfile --tag trackr-java-test:$(date +%s)
