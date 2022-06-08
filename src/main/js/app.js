@@ -35,7 +35,12 @@ const App = () => {
             />
           }
         >
-          <Route index element={<HomeContainer setAlert={setAlert} />} />
+          {TrackrUserService.isAuthenticated() ? (
+            <Route index element={<DashboardContainer setAlert={setAlert} />} />
+          ) : (
+            <Route index element={<HomeContainer setAlert={setAlert} />} />
+          )}
+
           <Route
             path="login"
             element={<LoginContainer setAlert={setAlert} />}
@@ -51,16 +56,15 @@ const App = () => {
               path="dashboard"
               element={<DashboardContainer setAlert={setAlert} />}
             />
-
             <Route
               path="profile"
               element={<ProfileContainer setAlert={setAlert} />}
             />
+            <Route
+              path="accounts"
+              element={<AccountContainer setAlert={setAlert} />}
+            />
           </Route>
-          <Route
-            path="accounts"
-            element={<AccountContainer setAlert={setAlert} />}
-          />
         </Route>
       </Routes>
     </BrowserRouter>

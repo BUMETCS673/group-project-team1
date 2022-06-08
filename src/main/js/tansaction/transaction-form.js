@@ -11,6 +11,29 @@ import * as Yup from "yup";
 
 const TransactionForm = (props) => {
   const date = new Date();
+
+  let accountList;
+  if (props.isAddTransaction) {
+    accountList = (
+      <FormGroup className="mt-md-2">
+        <FormLabel htmlFor="bankAccountId" className="form-label col-md-5">
+          Select Account
+        </FormLabel>
+        <Field
+          as="select"
+          name="bankAccountId"
+          className="form-control col-md-5"
+        >
+          {props.bankAccounts.map((item) => (
+            <option key={item.id} value={item.id}>
+              Account: {item.id}
+            </option>
+          ))}
+        </Field>
+      </FormGroup>
+    );
+  }
+
   return (
     <Formik
       initialValues={{
@@ -32,7 +55,9 @@ const TransactionForm = (props) => {
           : props.selectedTransaction.transactionDescription,
       }}
       validationSchema={Yup.object({
-        money: Yup.number().required("Required").min(!0, "Cannot be zero"),
+        money: Yup.number()
+          .required("Required")
+          .positive("Can not be equal or less than zero"),
         counterparty: Yup.string()
           .max(100, "Must be 100 characters or less")
           .required("Required"),
@@ -52,6 +77,7 @@ const TransactionForm = (props) => {
       }}
     >
       <Form>
+        {accountList}
         <FormGroup className="mt-md-2">
           <FormLabel htmlFor="money" className="form-label col-md-5">
             Amount

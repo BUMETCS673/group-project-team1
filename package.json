@@ -13,6 +13,7 @@
     "npm": "^8.12.1",
     "react": "18.1.0",
     "react-bootstrap": "2.4.0",
+    "react-bootstrap-icons": "^1.8.2",
     "react-dom": "18.1.0",
     "react-router": "6.3.0",
     "react-router-dom": "6.3.0",

@@ -162,5 +162,4 @@ public class TransactionController extends CommonDataUtil {
 		BankAccount bankAccount = getBankAccount(bankAccountId);
 		return transactionService.findTraByIdAndBankAccountId(transactionId, bankAccount.getId());
 	}
-
 }
