@@ -13,3 +13,7 @@ services:
     build:
       context: .
       dockerfile: docker/prettier/Dockerfile
+  java-test:
+    build:
+      context: .
+      dockerfile: docker/java-test/Dockerfile
