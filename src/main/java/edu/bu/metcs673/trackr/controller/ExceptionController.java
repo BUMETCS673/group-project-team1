@@ -26,47 +26,48 @@ import javax.validation.ConstraintViolationException;
 @ControllerAdvice
 public class ExceptionController {
 
-    /**
-     * If a TrackrInputValidationException is thrown, then this block of code will
-     * execute.
-     *
-     * @param exception
-     * @param request
-     * @return
-     */
-    @ExceptionHandler(value = {TrackrInputValidationException.class, HttpMessageNotReadableException.class})
-    protected ResponseEntity<GenericApiResponse> handleCustomExceptions(Exception exception, WebRequest request) {
-        return new ResponseEntity<GenericApiResponse>(GenericApiResponse.errorResponse(exception.getMessage()),
-                HttpStatus.BAD_REQUEST);
-    }
+	/**
+	 * If a TrackrInputValidationException is thrown, then this block of code will
+	 * execute.
+	 *
+	 * @param exception
+	 * @param request
+	 * @return
+	 */
+	@ExceptionHandler(value = { TrackrInputValidationException.class, HttpMessageNotReadableException.class })
+	protected ResponseEntity<GenericApiResponse> handleCustomExceptions(Exception exception, WebRequest request) {
+		return new ResponseEntity<GenericApiResponse>(GenericApiResponse.errorResponse(exception.getMessage()),
+				HttpStatus.BAD_REQUEST);
+	}
 
-    /**
-     * If a ConstraintViolationException or MethodArgumentNotValidException is
-     * thrown, then this block of code will execute. All error messages that are
-     * captured in the validation will be returned to the user as a Map string.
-     *
-     * @param exception
-     * @param request
-     * @return
-     */
-    @ExceptionHandler(value = {ConstraintViolationException.class, MethodArgumentNotValidException.class})
-    protected ResponseEntity<GenericApiResponse> handleAnnotationValidationExceptions(MethodArgumentNotValidException exception,
-                                                                                      WebRequest request) {
-        JSONObject errorMap = new JSONObject();
-        exception.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errorMap.put(fieldName, errorMessage);
-        });
-        return new ResponseEntity<GenericApiResponse>(GenericApiResponse.errorResponse(CommonConstants.VALIDATION_ERRORS, errorMap),
-                HttpStatus.BAD_REQUEST);
-    }
+	/**
+	 * If a ConstraintViolationException or MethodArgumentNotValidException is
+	 * thrown, then this block of code will execute. All error messages that are
+	 * captured in the validation will be returned to the user as a Map string.
+	 *
+	 * @param exception
+	 * @param request
+	 * @return
+	 */
+	@ExceptionHandler(value = { ConstraintViolationException.class, MethodArgumentNotValidException.class })
+	protected ResponseEntity<GenericApiResponse> handleAnnotationValidationExceptions(
+			MethodArgumentNotValidException exception, WebRequest request) {
+		JSONObject errorMap = new JSONObject();
+		exception.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
+			String errorMessage = error.getDefaultMessage();
+			errorMap.put(fieldName, errorMessage);
+		});
+		return new ResponseEntity<GenericApiResponse>(
+				GenericApiResponse.errorResponse(CommonConstants.VALIDATION_ERRORS, errorMap), HttpStatus.BAD_REQUEST);
+	}
 
-    @ExceptionHandler(value = {AuthenticationException.class, UsernameNotFoundException.class})
-    protected ResponseEntity<GenericApiResponse> handleAuthenticationExceptions(Exception exception, WebRequest request) {
-        exception.printStackTrace();
-        return new ResponseEntity<GenericApiResponse>(GenericApiResponse.errorResponse(exception.getMessage()),
-                HttpStatus.BAD_REQUEST);
-    }
+	@ExceptionHandler(value = { AuthenticationException.class, UsernameNotFoundException.class })
+	protected ResponseEntity<GenericApiResponse> handleAuthenticationExceptions(Exception exception,
+			WebRequest request) {
+		exception.printStackTrace();
+		return new ResponseEntity<GenericApiResponse>(GenericApiResponse.errorResponse(exception.getMessage()),
+				HttpStatus.BAD_REQUEST);
+	}
 
 }

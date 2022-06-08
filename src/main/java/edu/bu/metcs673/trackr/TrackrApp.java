@@ -23,6 +23,8 @@ public class TrackrApp {
 		SpringApplication.run(TrackrApp.class, args);
 	}
 
+	// A third-party library configured using a bean which is used for encrypting
+	// password value
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
