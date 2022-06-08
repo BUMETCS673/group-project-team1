@@ -71,7 +71,7 @@ public class BankAccountServiceImplTest {
 
 		Mockito.when(accountRepository.save(modifiedAccount)).thenReturn(modifiedAccount);
 
-		BankAccount updatedAccount = accountServiceImpl.modifyBankAccount(bankAcctDTO, TEST_USER, 0L);
+		BankAccount updatedAccount = accountServiceImpl.modifyBankAccount(bankAcctDTO, TEST_USER.getId(), 0L);
 
 		assertNotNull(updatedAccount);
 		assertEquals(ACCOUNT_TYPE.SAVING, updatedAccount.getAccountType());
@@ -90,11 +90,11 @@ public class BankAccountServiceImplTest {
 		Mockito.when(accountRepository.findById(0L)).thenReturn(Optional.of(mockAccount));
 
 		assertThrows(TrackrInputValidationException.class,
-				() -> accountServiceImpl.modifyBankAccount(bankAcctDTO, TEST_USER, 0L));
+				() -> accountServiceImpl.modifyBankAccount(bankAcctDTO, TEST_USER.getId(), 0L));
 	}
-	
+
 	// no test for deactivateBankAccount_success because method returns void
-	
+
 	@Test
 	public void deactivateBankAccount_failure() {
 		BankAccount mockAccount = new BankAccount(0L, OTHER_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
@@ -103,7 +103,7 @@ public class BankAccountServiceImplTest {
 		Mockito.when(accountRepository.findById(0L)).thenReturn(Optional.of(mockAccount));
 
 		assertThrows(TrackrInputValidationException.class,
-				() -> accountServiceImpl.deactivateBankAccount(TEST_USER, 0L));
+				() -> accountServiceImpl.deactivateBankAccount(TEST_USER.getId(), 0L));
 	}
 
 	@Test
@@ -111,15 +111,18 @@ public class BankAccountServiceImplTest {
 		BankAccount mockAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
 				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
 
-		Mockito.when(accountRepository.findByIdAndUserIdAndStatus(0L,0L, BankAccount.ACCOUNT_STATUS.ACTIVE)).thenReturn(mockAccount);
-		BankAccount bankAccount = accountServiceImpl.findBankAccountByIdAndUserId(0L,0L);
+		Mockito.when(accountRepository.findByIdAndUserIdAndStatus(0L, 0L, BankAccount.ACCOUNT_STATUS.ACTIVE))
+				.thenReturn(mockAccount);
+		BankAccount bankAccount = accountServiceImpl.findBankAccountByIdAndUserId(0L, 0L);
 		assertEquals(mockAccount, bankAccount);
 
 	}
 
 	@Test
 	public void findBankAccountByUserIdTest_failure() {
-		Mockito.when(accountRepository.findByIdAndUserIdAndStatus(0L,0L, BankAccount.ACCOUNT_STATUS.ACTIVE)).thenReturn(null);
-		assertThrows(TrackrInputValidationException.class,()->accountServiceImpl.findBankAccountByIdAndUserId(0L,0L));
+		Mockito.when(accountRepository.findByIdAndUserIdAndStatus(0L, 0L, BankAccount.ACCOUNT_STATUS.ACTIVE))
+				.thenReturn(null);
+		assertThrows(TrackrInputValidationException.class,
+				() -> accountServiceImpl.findBankAccountByIdAndUserId(0L, 0L));
 	}
 }

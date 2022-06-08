@@ -18,8 +18,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import edu.bu.metcs673.trackr.bankaccount.BankAccount;
-import edu.bu.metcs673.trackr.bankaccount.BankAccountDTO;
 import edu.bu.metcs673.trackr.user.TrackrUser;
 
 public class BankAccountTest {
@@ -38,7 +36,7 @@ public class BankAccountTest {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
 	}
-	
+
 	@Test
 	public void getterSettersTest() {
 		BankAccount acct = new BankAccount();
@@ -92,13 +90,13 @@ public class BankAccountTest {
 	}
 
 	private static Stream<Arguments> generateTestData() {
-		return Stream.of(Arguments.of(new BankAccountDTO(), new BankAccountDTO(null, TEST_DESCRIPTION, TEST_BALANCE),
-				new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, 0),
-				new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, TEST_BALANCE * -1),
-				new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION
-						+ "alskjdfakls jdaf;lasj df;l kasjdfijasidopfjaosdjkv asjdflk jasdl;fkja;sdlfk j;aslkd fj;lkasjd f;lkajsd;lfj a;sldj f;lasj df;lk jasd;lkf jas;lkdjf l;asjd f;jk d",
-						TEST_BALANCE)
-
-		));
+		return Stream.of(Arguments.of(new BankAccountDTO()),
+				Arguments.of(new BankAccountDTO(null, TEST_DESCRIPTION, TEST_BALANCE)),
+				Arguments.of(new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, null)),
+				Arguments.of(new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, TEST_BALANCE * -1)),
+				Arguments.of(new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION
+						+ "alskjdfakls jdaf;lasj df;l kasjdfijasidopfjaosdjkv asjdflk jasdl;fkja;sdlfk j;aslkd fj;lkasjd f;lkajsd;lfj a;sldj f;lasj df;lk jasd;lkf jas;lkdjf l;asjd f;jk d"
+						+ "aklsjdf;lkajsd;lkfjal;ksdjfl;kajsd;lkfjal;skjdf;lkajsdlfkj;alsjdfl;ajsldkfj;lasjdfljasl;djfaksjd;fkj;asdjlfkkajsdfl;jas;ldf",
+						TEST_BALANCE)));
 	}
 }
