@@ -45,13 +45,16 @@ import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-	@Autowired
 	private TrackrUserServiceImpl userServiceImpl;
 
-	@Autowired
 	private JWTUtil jwtUtil;
 
 
+	/**
+	 * Constructor used to set autowired dependencies
+	 * @param service
+	 * @param util
+	 */
 	public JwtFilter(@Autowired TrackrUserServiceImpl service, @Autowired JWTUtil util) {
 		this.userServiceImpl = service;
 		this.jwtUtil = util;
@@ -138,7 +141,7 @@ public class JwtFilter extends OncePerRequestFilter {
 	 * Get the JWT from the request. It can come from a cookie or Http Authorization
 	 * header.
 	 *
-	 * @param request Http request
+	 * @param request HttpRequest
 	 * @return String
 	 */
 	private String getJwt(HttpServletRequest request) {

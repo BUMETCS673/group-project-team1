@@ -37,7 +37,8 @@ public class JWTUtil {
 
 	/**
 	 * Method to create a new JWT token with Subject, Claim, Issued At, Issuer
-	 * sections and sign with a secret using a secret value to make it unique
+	 * sections and sign with a secret using a secret value to make it unique.
+	 * Provided username parameter is used for the Claim section of the token.
 	 * 
 	 * @param username
 	 * @return String token
@@ -48,9 +49,10 @@ public class JWTUtil {
 	}
 
 	/**
-	 * Validate teh the provided token string is valid. This is determined by
+	 * Validate the the provided token string is valid. This is determined by
 	 * checking to see if it was created using the same algorithm, and contains a
-	 * matching subject and issuer values. Return 'username' value in token as a string.
+	 * matching subject and issuer values. Return 'username' value in token as a
+	 * string.
 	 * 
 	 * @param token
 	 * @return String username

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.bankaccount.BankAccount;
 import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.common.CommonDataUtil;
+import edu.bu.metcs673.trackr.common.BaseController;
 
 /**
  * Controller for Transactions Management. Contains 'Create', 'Find', 'Modify',
@@ -32,7 +32,7 @@ import edu.bu.metcs673.trackr.common.CommonDataUtil;
 @Validated
 @RestController
 @RequestMapping("/api/v1/transaction")
-public class TransactionController extends CommonDataUtil {
+public class TransactionController extends BaseController {
 
 	@Autowired
 	private TransactionService transactionService;

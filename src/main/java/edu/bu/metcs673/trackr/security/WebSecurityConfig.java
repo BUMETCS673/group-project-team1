@@ -54,13 +54,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().httpBasic().disable().cors().and().userDetailsService(userServiceImpl).exceptionHandling()
-				.authenticationEntryPoint(
-						(request, response, authException) -> response.sendError(SC_UNAUTHORIZED, "UNAUTHORIZED"))
-				.and().sessionManagement().sessionCreationPolicy(STATELESS);
+		http.csrf()
+			.disable()
+			.httpBasic()
+			.disable()
+			.cors()
+			.and()
+			.userDetailsService(userServiceImpl)
+			.exceptionHandling()
+			.authenticationEntryPoint( (request, response, authException) -> response.sendError(SC_UNAUTHORIZED, "UNAUTHORIZED"))
+			.and()
+			.sessionManagement()
+			.sessionCreationPolicy(STATELESS);
 
 		// Configure logout
-		http.logout(logout -> logout.logoutUrl("/logout").invalidateHttpSession(true)
+		http.logout(logout -> logout.logoutUrl("/logout")
+				.invalidateHttpSession(true)
 				.logoutSuccessHandler((request, response, authentication) -> response.setStatus(SC_OK))
 				.deleteCookies(JWT_COOKIE_NAME));
 

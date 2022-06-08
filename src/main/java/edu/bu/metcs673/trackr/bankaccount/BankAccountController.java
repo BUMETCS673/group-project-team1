@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.common.CommonDataUtil;
+import edu.bu.metcs673.trackr.common.BaseController;
 
 /**
  * Controller for Bank Account Management. Contains APIs for CRUD (create, read,
@@ -31,7 +31,7 @@ import edu.bu.metcs673.trackr.common.CommonDataUtil;
 @Validated
 @RestController
 @RequestMapping("/api/v1/bank-accounts")
-public class BankAccountController extends CommonDataUtil {
+public class BankAccountController extends BaseController {
 
 	@Autowired
 	private BankAccountService bankAccountService;

@@ -19,12 +19,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EntityScan("edu.bu.metcs673.trackr")
 public class TrackrApp {
 
+	/**
+	 * Main method of the Trackr application. Initializes context and sets up
+	 * application.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(TrackrApp.class, args);
 	}
 
-	// A third-party library configured using a bean which is used for encrypting
-	// password value
+	/**
+	 * A third-party library configured using a bean which is used for encrypting
+	 * password value
+	 * 
+	 * @return
+	 */
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();

@@ -10,7 +10,7 @@ import edu.bu.metcs673.trackr.user.TrackrUser;
 import edu.bu.metcs673.trackr.user.TrackrUserService;
 
 @Component
-public class CommonDataUtil {
+public abstract class BaseController {
 
 	@Autowired
 	private TrackrUserService trackrUserService;

@@ -44,7 +44,7 @@ public interface BankAccountService {
 	 * 'accountStatus' to INACTIVE which prevents new transactions from being
 	 * associated to the BankAccount record.
 	 *
-	 * @param user
+	 * @param userId
 	 * @param id
 	 * @return
 	 */
@@ -54,9 +54,9 @@ public interface BankAccountService {
 	 * The purpose of this method is to find a special bank account by 'id' and
 	 * 'userId' value.
 	 *
-	 * @param id     this is bank account id
-	 * @param userId this is user id
-	 * @return Transaction
+	 * @param bankAccountId this is bank account id
+	 * @param userId        this is user id
+	 * @return BankAccount
 	 * @author Xiaobing Hou
 	 */
 	public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId);
@@ -65,7 +65,7 @@ public interface BankAccountService {
 	 * Returns a list of Bank Account records associated to the provided userId.
 	 * 
 	 * @param userId
-	 * @return
+	 * @return List of BankAccount objects
 	 */
 	public List<BankAccount> findBankAccountsByUserId(long userId);
 }
