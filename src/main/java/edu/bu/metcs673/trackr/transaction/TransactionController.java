@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse1;
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.bankaccount.BankAccount;
 import edu.bu.metcs673.trackr.bankaccount.BankAccountService;
 import edu.bu.metcs673.trackr.common.CommonConstants;
@@ -53,7 +53,7 @@ public class TransactionController {
      * @date 05/21/2022
      */
     @PostMapping
-    public ResponseEntity<GenericApiResponse1<Transaction>> createTransaction(@Valid @RequestBody TransactionDTO transactionInput) {
+    public ResponseEntity<GenericApiResponse<Transaction>> createTransaction(@Valid @RequestBody TransactionDTO transactionInput) {
 
         BankAccount bankAccount = getBankAccount(transactionInput.getBankAccountId());
 
@@ -61,7 +61,7 @@ public class TransactionController {
         Transaction transaction = transactionService.createTransaction(transactionInput, bankAccount);
 
         return new ResponseEntity<>(
-                GenericApiResponse1.successResponse(
+                GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.CREATE_TRANSACTION, String.valueOf(transaction.getId())),
                         transaction),
                 HttpStatus.OK);
@@ -78,13 +78,13 @@ public class TransactionController {
      * @date 05/22/2022
      */
     @GetMapping("/find/{transactionId}/{bankAccountId}")
-    public ResponseEntity<GenericApiResponse1<Transaction>> findTransactionById(@PathVariable(value = "transactionId") long transactionId,
+    public ResponseEntity<GenericApiResponse<Transaction>> findTransactionById(@PathVariable(value = "transactionId") long transactionId,
                                                                                 @PathVariable(value = "bankAccountId") long bankAccountId) {
 
         Transaction transaction = getTransaction(bankAccountId, transactionId);
 
         return new ResponseEntity<>(
-                GenericApiResponse1.successResponse(
+                GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.FIND_TRANSACTION, String.valueOf(transactionId)),
                         transaction),
                 HttpStatus.OK);
@@ -100,14 +100,14 @@ public class TransactionController {
      * @date 05/23/2022
      */
     @GetMapping("/findAll/{bankAccountId}")
-    public ResponseEntity<GenericApiResponse1<List<Transaction>>> findAllTransactionById(@PathVariable(value = "bankAccountId") long bankAccountId) {
+    public ResponseEntity<GenericApiResponse<List<Transaction>>> findAllTransactionById(@PathVariable(value = "bankAccountId") long bankAccountId) {
 
         BankAccount bankAccount = getBankAccount(bankAccountId);
 
         List<Transaction> transactions = transactionService.findAllTraByBankAccountId(bankAccount.getId());
 
         return new ResponseEntity<>(
-                GenericApiResponse1.successResponse(
+                GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.FIND_ALL_TRANSACTION, String.valueOf(bankAccountId)),
                         transactions),
                 HttpStatus.OK);
@@ -123,14 +123,14 @@ public class TransactionController {
      * @date 05/23/2022
      */
     @PostMapping("/modify/{transactionId}")
-    public ResponseEntity<GenericApiResponse1<Transaction>> modifyTransaction(@PathVariable(value = "transactionId") long transactionId,
+    public ResponseEntity<GenericApiResponse<Transaction>> modifyTransaction(@PathVariable(value = "transactionId") long transactionId,
                                                                               @RequestBody TransactionDTO transactionInput) {
 
         Transaction transaction = getTransaction(transactionInput.getBankAccountId(), transactionId);
         transaction = transactionService.modifyTransaction(transaction, transactionInput);
 
         return new ResponseEntity<>(
-                GenericApiResponse1.successResponse(
+                GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.MODIFY_TRANSACTION, String.valueOf(transactionId)),
                         transaction),
                 HttpStatus.OK);
@@ -146,14 +146,14 @@ public class TransactionController {
      * @date 05/23/2022
      */
     @DeleteMapping("/delete/{transactionId}/{bankAccountId}")
-    public ResponseEntity<GenericApiResponse1<Transaction>> deleteTransaction(@PathVariable(value = "transactionId") long transactionId,
+    public ResponseEntity<GenericApiResponse<Transaction>> deleteTransaction(@PathVariable(value = "transactionId") long transactionId,
                                                                               @PathVariable(value = "bankAccountId") long bankAccountId) {
 
         Transaction transaction = getTransaction(bankAccountId, transactionId);
         transaction = transactionService.deleteTransaction(transaction);
 
         return new ResponseEntity<>(
-                GenericApiResponse1.successResponse(
+                GenericApiResponse.successResponse(
                         MessageFormat.format(CommonConstants.INVALID_TRANSACTION, String.valueOf(transactionId)),
                         transaction),
                 HttpStatus.OK);
