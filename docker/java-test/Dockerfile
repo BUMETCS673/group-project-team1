@@ -15,5 +15,5 @@ COPY . /usr/app/
 # Set the working directory
 WORKDIR /usr/app/
 
-# Run code sniff
+# Run Java tests
 RUN mvn verify
