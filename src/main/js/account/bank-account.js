@@ -4,38 +4,49 @@
  * @author Jean Dorancy
  */
 import React from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Dropdown, Button, Card, Col, Row } from "react-bootstrap";
+import { GearFill, Bank2 } from "react-bootstrap-icons";
 
 const BankAccount = (props) => {
   return (
     <Card className="m-2 shadow bg-white rounded">
       <Card.Body>
         <Row>
-          <Col md={10}>
+          <Col md={12}>
             <h5>{props.account.accountDescription}</h5>
           </Col>
-          <Col md={1}>
-            <Button
-              variant="link"
-              className="float-end"
-              onClick={() => props.handleBankAccountEditClick(props.account.id)}
-            >
-              Edit
-            </Button>
+        </Row>
+        <Row className="m-2">
+          <Col md={11}>
+            <Bank2 size="100" />
           </Col>
-          <Col md={1}>
-            <Button
-              variant="link"
-              className="float-end"
-              onClick={() =>
-                props.handleBankAccountDeleteClick(props.account.id)
-              }
-            >
-              Delete
-            </Button>
+          <Col md={1} className="mt-md-2">
+            <Dropdown>
+              <Dropdown.Toggle id="dropdown-basic" variant="secondary">
+                <GearFill size="25" />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  href="#"
+                  onClick={() =>
+                    props.handleBankAccountEditClick(props.account.id)
+                  }
+                >
+                  Edit
+                </Dropdown.Item>
+                <Dropdown.Item
+                  href="#"
+                  onClick={() =>
+                    props.handleBankAccountDeleteClick(props.account.id)
+                  }
+                >
+                  Delete
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </Col>
         </Row>
-        <Row className="mt-md-5">
+        <Row className="mt-md-2">
           <Col md={8} className="text-start">
             {props.account.accountType} - {props.account.id}
           </Col>
