@@ -60,6 +60,7 @@ const Dashboard = (props) => {
             <Row>
               <TransactionPreview
                 transactions={props.transactions}
+                bankAccounts={props.bankAccounts}
                 bankAccountId={props.bankAccountId}
                 selectedTransaction={props.selectedTransaction}
                 isAddTransaction={props.isAddTransaction}
