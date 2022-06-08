@@ -4,8 +4,8 @@
  * @author Jean Dorancy
  */
 import React from "react";
-import { Dropdown, Button, Card, Col, Row } from "react-bootstrap";
-import { GearFill, Bank2 } from "react-bootstrap-icons";
+import { Card, Col, Dropdown, Row } from "react-bootstrap";
+import { Bank2, GearFill } from "react-bootstrap-icons";
 
 const BankAccount = (props) => {
   return (
@@ -18,7 +18,7 @@ const BankAccount = (props) => {
         </Row>
         <Row className="m-2">
           <Col md={11}>
-            <Bank2 size="100" />
+            <Bank2 size="75" />
           </Col>
           <Col md={1} className="mt-md-2">
             <Dropdown>
