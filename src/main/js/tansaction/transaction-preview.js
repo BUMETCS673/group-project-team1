@@ -36,30 +36,24 @@ const TransactionPreview = (props) => {
 
       <Table striped bordered hover>
         <thead>
-          <tr>
+          <tr valign={"middle"} align={"center"}>
             <th>Date</th>
             <th>Counterparty</th>
             <th>Description</th>
+            <th>Account</th>
             <th>Amount</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {props.transactions.map((item) => (
-            <tr key={item.id}>
-              <td valign={"middle"} align={"center"}>
-                {item.time}
-              </td>
-              <td valign={"middle"} align={"center"}>
-                {item.counterparty}
-              </td>
-              <td valign={"middle"} align={"center"}>
-                {item.transactionDescription}
-              </td>
-              <td valign={"middle"} align={"center"}>
-                ${item.money}
-              </td>
-              <td valign={"middle"} align={"center"}>
+            <tr key={item.id} valign={"middle"} align={"center"}>
+              <td>{item.time}</td>
+              <td>{item.counterparty}</td>
+              <td>{item.transactionDescription}</td>
+              <td>{item.bankAccount.accountDescription}</td>
+              <td>${item.money}</td>
+              <td>
                 <Button
                   variant="link"
                   style={{
@@ -91,6 +85,7 @@ const TransactionPreview = (props) => {
         handleAddTransactions={props.handleAddTransactions}
         isAddTransaction={props.isAddTransaction}
         bankAccountId={props.bankAccountId}
+        bankAccounts={props.bankAccounts}
       />
       <TransactionConfModal
         selectedTransaction={props.selectedTransaction}

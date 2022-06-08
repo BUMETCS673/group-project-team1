@@ -70,6 +70,7 @@ const DashboardContainer = (props) => {
       .findAllTransactionsByBankId(bankAccountId)
       .then(function (response) {
         setTransactions(response.data.additionalData || []);
+        setBankAccountId(bankAccountId);
       })
       .catch(function (error) {
         props.setAlert({
