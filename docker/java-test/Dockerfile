@@ -1,9 +1,9 @@
-# Pull node v18 docker image
-FROM node:18.3-buster
+# Pull maven with OpenJDK 8 docker image
+FROM maven:3.8.5-openjdk-8
 
 # Add some meta
-LABEL edu.bu.metcs673.trackr.image.title="Prettier" \
-      edu.bu.metcs673.trackr.image.title="Run code sniffs in GitHub PRs." \
+LABEL edu.bu.metcs673.trackr.image.title="Maven" \
+      edu.bu.metcs673.trackr.image.title="Run Java Tests in GitHub PRs." \
       edu.bu.metcs673.trackr.image.authors="jdorancy@bu.edu; tflucker@bu.edu; xbhou@bu.edu; weijiel@bu.edu"
 
 # Create directory in container image for app code
@@ -15,8 +15,5 @@ COPY . /usr/app/
 # Set the working directory
 WORKDIR /usr/app/
 
-# Install dependencies in package.json
-RUN npm install
-
-# Run code sniff
-RUN npm run sniff
+# Run Java tests
+RUN mvn verify
