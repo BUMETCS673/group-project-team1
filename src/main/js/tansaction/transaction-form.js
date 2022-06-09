@@ -26,7 +26,7 @@ const TransactionForm = (props) => {
         >
           {props.bankAccounts.map((item) => (
             <option key={item.id} value={item.id}>
-                {item.accountDescription}
+              {item.accountDescription}
             </option>
           ))}
         </Field>
