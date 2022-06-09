@@ -9,8 +9,6 @@ import axios from "axios";
 
 const PATH = "/api/v1/transaction";
 const FIND_ALL_PATH = "findAll";
-const DEL_PATH = "delete";
-const EDIT_PATH = "modify";
 
 class TransactionService {
   /**
@@ -35,9 +33,13 @@ class TransactionService {
    * @date 06/03/2022
    */
   deleteTranByTranIdAndBankId = (transactionId, bankAccountId) => {
+<<<<<<< HEAD
     return axios.delete(
       `${PATH}/${transactionId}/${bankAccountId}`
     );
+=======
+    return axios.delete(`${PATH}/${transactionId}/${bankAccountId}`);
+>>>>>>> ca9b5e15d5926ef8dd8ce678ebd5bd702bb3d30e
   };
 
   /**
