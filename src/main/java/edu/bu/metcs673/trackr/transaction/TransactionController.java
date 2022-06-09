@@ -31,7 +31,7 @@ import edu.bu.metcs673.trackr.common.BaseController;
  */
 @Validated
 @RestController
-@RequestMapping("/api/v1/transaction")
+@RequestMapping("/api/v1/transactions")
 public class TransactionController extends BaseController {
 
 	@Autowired
