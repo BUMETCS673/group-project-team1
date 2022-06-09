@@ -33,13 +33,9 @@ class TransactionService {
    * @date 06/03/2022
    */
   deleteTranByTranIdAndBankId = (transactionId, bankAccountId) => {
-<<<<<<< HEAD
     return axios.delete(
       `${PATH}/${transactionId}/${bankAccountId}`
     );
-=======
-    return axios.delete(`${PATH}/${transactionId}/${bankAccountId}`);
->>>>>>> ca9b5e15d5926ef8dd8ce678ebd5bd702bb3d30e
   };
 
   /**
