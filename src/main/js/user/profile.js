@@ -35,9 +35,6 @@ const Profile = (props) => {
                                 lastName: Yup.string()
                                     .max(100, "Must be 100 characters or less")
                                     .required("Required"),
-                                username: Yup.string()
-                                    .max(50, "Must be 50 characters or less")
-                                    .required("Required"),
                                 email: Yup.string()
                                     .max(50, "Must be 50 characters or less")
                                     .email("Invalid email address")

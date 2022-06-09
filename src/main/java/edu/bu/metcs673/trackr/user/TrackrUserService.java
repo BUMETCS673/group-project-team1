@@ -16,28 +16,41 @@ public interface TrackrUserService {
 	/**
 	 * Used to verify the association between the User and the Bank Account.
 	 * 
-	 * @param id
+	 * @param id User ID
 	 * @return User
 	 */
 	public TrackrUser findUserById(long id);
 
 	/**
-	 * Used by the JWT Filter to find a user by the provided username to
-	 * authenticate the request.
-	 * 
-	 * @param username
-	 * @return
+	 * Get the current user form DB after getting the username from the JWT.
+	 *
+	 * @return Current user
 	 */
-	public TrackrUser findByUsername(String username);
+	public TrackrUser getCurrentUser();
+
+	/**
+	 * Get current user profile with only mutable fields in the profile. Change password is a separate flow.
+	 *
+	 * @return User DTO
+	 */
+	public TrackrUserDTO getCurrentUserProfile();
 
 	/**
 	 * Creates a new record in the USERS table with the provided method parameters.
 	 * These parameters are validated and if the validations fail, then no record is
 	 * saved and an error is returned.
 	 * 
-	 * @param userInput
+	 * @param userInput User DTO
 	 * @return String
 	 */
 	public String createUser(TrackrUserDTO userInput);
+
+	/**
+	 * Update user information but does not handle change password. We will have a separate endpoint for that.
+	 *
+	 * @param dto User DTO
+	 * @return JWT
+	 */
+	public void updateUser(TrackrUserDTO dto);
 
 }

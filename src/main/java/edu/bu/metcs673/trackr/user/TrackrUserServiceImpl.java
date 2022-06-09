@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,13 +41,36 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 		return userRepository.findById(id).get();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public TrackrUser findByUsername(String username) {
+	public TrackrUser getCurrentUser() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
 		return userRepository.findByUsername(username);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public TrackrUserDTO getCurrentUserProfile() {
+		TrackrUser model = getCurrentUser();
+		TrackrUserDTO dto = new TrackrUserDTO();
+
+		dto.setFirstName(model.getFirstName());
+		dto.setLastName(model.getLastName());
+		dto.setEmail(model.getEmail());
+
+		return dto;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String createUser(TrackrUserDTO userInput) {
+
 		// validate parameters
 		validateParameters(userInput);
 
@@ -57,17 +81,28 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 		TrackrUser user = userRepository.save(new TrackrUser(0L, userInput.getFirstName(), userInput.getLastName(),
 				userInput.getUsername(), encodedPwd, userInput.getEmail()));
 
-		String token = jwtUtil.generateToken(user.getUsername());
-
 		// return response entity with a success response
-		return token;
+		return jwtUtil.generateToken(user.getUsername());
 	}
 
 	/**
-	 * Validates the parameters of the User that cannot be covered using
-	 * annotations.
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void updateUser(TrackrUserDTO dto) {
+		TrackrUser trackrUser = getCurrentUser();
+		trackrUser.setFirstName(dto.getFirstName());
+		trackrUser.setLastName(dto.getLastName());
+		trackrUser.setEmail(dto.getEmail());
+
+		// Update DB with the new values
+		userRepository.save(trackrUser);
+	}
+
+	/**
+	 * Validates the parameters of the User that cannot be covered using annotations.
 	 * 
-	 * @param userInput
+	 * @param userInput User DTO
 	 */
 	public void validateParameters(TrackrUserDTO userInput) {
 
@@ -75,25 +110,25 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 		if (userRepository.existsByUsername(userInput.getUsername())) {
 			throw new TrackrInputValidationException(CommonConstants.DUPLICATE_USERNAME);
 		}
-
 	}
 
 	/**
 	 * Used by the UserDetailsService when the JWT filter logic is occurring.
 	 * Searches the USERS database table based on the provided username and then
 	 * creates a Spring Security 'User' object based on that information.
+	 *
+	 * @param username Username to do the lookup by
+	 * @return User details
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-
 		TrackrUser trackrUser = userRepository.findByUsername(username);
 
 		if (trackrUser == null) {
 			throw new UsernameNotFoundException(CommonConstants.INVALID_TOKEN);
 		}
+
 		return new User(username, trackrUser.getPassword(),
 				Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
-
 	}
-
 }

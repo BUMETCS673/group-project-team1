@@ -1,9 +1,9 @@
 package edu.bu.metcs673.trackr.bankaccount;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.text.MessageFormat;
-
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.user.TrackrUser;
+import edu.bu.metcs673.trackr.user.TrackrUserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,14 +11,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.user.TrackrUser;
-import edu.bu.metcs673.trackr.user.TrackrUserService;
+import java.text.MessageFormat;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 public class BankAccountControllerTest {
@@ -49,13 +45,7 @@ public class BankAccountControllerTest {
 				.successResponse(MessageFormat.format(CommonConstants.CREATE_BANK_ACCOUNT, mockBankAccount.getId()),
 						mockBankAccount));
 
-		// define mock responses
-		Authentication authentication = Mockito.mock(Authentication.class);
-		SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-		Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
-		SecurityContextHolder.setContext(securityContext);
-		Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("testUser");
-		Mockito.when(userService.findByUsername("testUser")).thenReturn(TEST_USER);
+		Mockito.when(userService.getCurrentUser()).thenReturn(TEST_USER);
 		Mockito.when(bankAccountService.createBankAccount(bankDTO, TEST_USER)).thenReturn(mockBankAccount);
 
 		ResponseEntity<GenericApiResponse<BankAccount>> response = controller.createBankAccount(bankDTO);

@@ -13,7 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -99,6 +101,29 @@ public class TrackrUserController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 					.body(GenericApiResponse.errorResponse(CommonConstants.INVALID_CREDENTIALS, null));
 		}
+	}
+
+	/**
+	 * Get current user profile. This is a secure path since the filter will run and fetch the token.
+	 *
+	 * @return User DTO presentation to avoid depending on model for views.
+	 */
+	@GetMapping("/profile")
+	public ResponseEntity<GenericApiResponse<TrackrUserDTO>> getProfile() {
+		TrackrUserDTO dto = userService.getCurrentUserProfile();
+		return ResponseEntity.ok(GenericApiResponse.successResponse(CommonConstants.GET_USER_PROFILE_SUCCESS, dto));
+	}
+
+	/**
+	 * Update user profile but only mutable fields in that context. Change password is different flow.
+	 *
+	 * @param dto User DTO
+	 * @return Response
+	 */
+	@PutMapping("/profile")
+	public ResponseEntity<GenericApiResponse<TrackrUserDTO>> updateProfile(@Valid @RequestBody TrackrUserDTO dto) {
+		userService.updateUser(dto);
+		return ResponseEntity.ok(GenericApiResponse.successResponse(CommonConstants.UPDATE_USER_PROFILE_SUCCESS));
 	}
 
 	/**

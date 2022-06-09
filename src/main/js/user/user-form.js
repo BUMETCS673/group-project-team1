@@ -58,17 +58,21 @@ const UserForm = (props) => {
             />
             <ErrorMessage name="lastName" component="div" />
           </FormGroup>
-          <FormGroup className="mt-md-2">
-            <FormLabel htmlFor="username" className="form-label col-md-5">
-              Username
-            </FormLabel>
-            <Field
-                type="text"
-                name="username"
-                className="form-control col-md-5"
-            />
-            <ErrorMessage name="username" component="div" />
-          </FormGroup>
+          {
+            isGuest() && (
+                  <FormGroup className="mt-md-2">
+                    <FormLabel htmlFor="username" className="form-label col-md-5">
+                      Username
+                    </FormLabel>
+                    <Field
+                        type="text"
+                        name="username"
+                        className="form-control col-md-5"
+                    />
+                    <ErrorMessage name="username" component="div" />
+                  </FormGroup>
+              )
+          }
           <FormGroup className="mt-md-2">
             <FormLabel htmlFor="email" className="form-label col-md-5">
               Email address

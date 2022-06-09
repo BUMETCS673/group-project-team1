@@ -129,7 +129,6 @@ public class TrackrUserTest {
 						"testEmail@email.com")),
 				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester11", "myCoolPassword",
 						"testEasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfmail@emasdfasdfasdfasasdfasdfsdfasdfasdfasdfasdfdfasdfasail.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "example", "123", "test@email.com")),
 
 				// bad email format
 				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester12", "myCoolPassword",
