@@ -8,7 +8,6 @@
 import axios from "axios";
 
 const PATH = "/api/v1/transaction";
-const FIND_ALL_PATH = "findAll";
 
 class TransactionService {
   /**
@@ -20,7 +19,7 @@ class TransactionService {
    * @date 06/03/2022
    */
   findAllTransactionsByBankId = (bankAccountId) => {
-    return axios.get(`${PATH}/${FIND_ALL_PATH}/${bankAccountId}`);
+    return axios.get(`${PATH}/${bankAccountId}`);
   };
 
   /**
