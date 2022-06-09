@@ -108,7 +108,7 @@ public class TrackrUserController {
 	 *
 	 * @return User DTO presentation to avoid depending on model for views.
 	 */
-	@GetMapping("/profile")
+	@GetMapping("/api/v1/profile")
 	public ResponseEntity<GenericApiResponse<TrackrUserDTO>> getProfile() {
 		TrackrUserDTO dto = userService.getCurrentUserProfile();
 		return ResponseEntity.ok(GenericApiResponse.successResponse(CommonConstants.GET_USER_PROFILE_SUCCESS, dto));
@@ -120,10 +120,10 @@ public class TrackrUserController {
 	 * @param dto User DTO
 	 * @return Response
 	 */
-	@PutMapping("/profile")
+	@PutMapping("/api/v1/profile")
 	public ResponseEntity<GenericApiResponse<TrackrUserDTO>> updateProfile(@Valid @RequestBody TrackrUserDTO dto) {
-		userService.updateUser(dto);
-		return ResponseEntity.ok(GenericApiResponse.successResponse(CommonConstants.UPDATE_USER_PROFILE_SUCCESS));
+		TrackrUserDTO updated = userService.updateUser(dto);
+		return ResponseEntity.ok(GenericApiResponse.successResponse(CommonConstants.UPDATE_USER_PROFILE_SUCCESS, updated));
 	}
 
 	/**

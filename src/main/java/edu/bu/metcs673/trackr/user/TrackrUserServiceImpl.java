@@ -89,14 +89,20 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void updateUser(TrackrUserDTO dto) {
+	public TrackrUserDTO updateUser(TrackrUserDTO dto) {
 		TrackrUser trackrUser = getCurrentUser();
 		trackrUser.setFirstName(dto.getFirstName());
 		trackrUser.setLastName(dto.getLastName());
 		trackrUser.setEmail(dto.getEmail());
 
-		// Update DB with the new values
-		userRepository.save(trackrUser);
+		trackrUser = userRepository.save(trackrUser);
+
+		TrackrUserDTO updated = new TrackrUserDTO();
+		updated.setFirstName(trackrUser.getFirstName());
+		updated.setLastName(trackrUser.getLastName());
+		updated.setEmail(trackrUser.getEmail());
+
+		return dto;
 	}
 
 	/**

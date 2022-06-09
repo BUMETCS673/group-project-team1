@@ -28,12 +28,10 @@ public class TrackrUserDTO {
 	@Size(min = 1, max = 100, message = CommonConstants.INVALID_LAST_NAME_LENGTH)
 	private String lastName;
 
-	@NotBlank(message = CommonConstants.BLANK_USERNAME)
 	@Size(max = 50, message = CommonConstants.INVALID_USERNAME_LENGTH)
 	private String username;
 
 	// extra column size is to account for hashed value
-	@NotBlank(message = CommonConstants.BLANK_PASSWORD)
 	@Size(max = 200, message = CommonConstants.INVALID_PASSWORD_LENGTH)
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;

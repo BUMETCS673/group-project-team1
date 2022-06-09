@@ -98,20 +98,13 @@ public class TrackrUserTest {
 	 * @return
 	 */
 	private static Stream<Arguments> generateTestData() {
-		return Stream.of(Arguments.of(
-				// null and empty tests
-				new TrackrUserDTO()),
-				Arguments.of(
-						new TrackrUserDTO(null, "mcTesterson", "tester00", "myCoolPassword", "testEmail@email.com")),
+		return Stream.of(Arguments.of(new TrackrUserDTO()),
+				Arguments.of(new TrackrUserDTO(null, "mcTesterson", "tester00", "myCoolPassword", "testEmail@email.com")),
 				Arguments.of(new TrackrUserDTO("testy", null, "tester01", "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", null, "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester02", null, "testEmail@email.com")),
 				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester03", "myCoolPassword", null)),
 				Arguments.of(new TrackrUserDTO("", "", "", "", "")),
 				Arguments.of(new TrackrUserDTO("", "mcTesterson", "tester04", "myCoolPassword", "testEmail@email.com")),
 				Arguments.of(new TrackrUserDTO("testy", "", "tester05", "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "", "myCoolPassword", "testEmail@email.com")),
-				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester06", "", "testEmail@email.com")),
 				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester07", "myCoolPassword", "")),
 
 				// length tests

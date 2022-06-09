@@ -24,26 +24,26 @@ const Home = (props) => {
         </Col>
         <Col sm={4} className="mt-md-4">
           <UserForm
-              handleUserFormSubmit={props.handleUserFormSubmit}
-              validationSchema={Yup.object({
-                firstName: Yup.string()
-                    .max(100, "Must be 100 characters or less")
-                    .required("Required"),
-                lastName: Yup.string()
-                    .max(100, "Must be 100 characters or less")
-                    .required("Required"),
-                username: Yup.string()
-                    .max(50, "Must be 50 characters or less")
-                    .required("Required"),
-                email: Yup.string()
-                    .max(50, "Must be 50 characters or less")
-                    .email("Invalid email address")
-                    .required("Required"),
-                password: Yup.string()
-                    .min(6, "Must be at least 6 characters")
-                    .max(200, "Must be less than 200 characters")
-                    .required("Required"),
-              })}
+            handleUserFormSubmit={props.handleUserFormSubmit}
+            validationSchema={Yup.object({
+              firstName: Yup.string()
+                .max(100, "Must be 100 characters or less")
+                .required("Required"),
+              lastName: Yup.string()
+                .max(100, "Must be 100 characters or less")
+                .required("Required"),
+              username: Yup.string()
+                .max(50, "Must be 50 characters or less")
+                .required("Required"),
+              email: Yup.string()
+                .max(50, "Must be 50 characters or less")
+                .email("Invalid email address")
+                .required("Required"),
+              password: Yup.string()
+                .min(6, "Must be at least 6 characters")
+                .max(200, "Must be less than 200 characters")
+                .required("Required"),
+            })}
           />
         </Col>
       </Row>
