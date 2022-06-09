@@ -7,7 +7,7 @@
 
 import axios from "axios";
 
-const PATH = "/api/v1/transaction";
+const PATH = "/api/v1/transactions";
 
 class TransactionService {
   /**
