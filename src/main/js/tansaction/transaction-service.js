@@ -9,8 +9,6 @@ import axios from "axios";
 
 const PATH = "/api/v1/transaction";
 const FIND_ALL_PATH = "findAll";
-const DEL_PATH = "delete";
-const EDIT_PATH = "modify";
 
 class TransactionService {
   /**
@@ -36,7 +34,7 @@ class TransactionService {
    */
   deleteTranByTranIdAndBankId = (transactionId, bankAccountId) => {
     return axios.delete(
-      `${PATH}/${DEL_PATH}/${transactionId}/${bankAccountId}`
+      `${PATH}/${transactionId}/${bankAccountId}`
     );
   };
 
@@ -50,7 +48,7 @@ class TransactionService {
    * @date 06/03/2022
    */
   editTranByTranIdAndBankId = (transactionId, values) => {
-    return axios.post(`${PATH}/${EDIT_PATH}/${transactionId}`, values);
+    return axios.put(`${PATH}/${transactionId}`, values);
   };
 
   /**

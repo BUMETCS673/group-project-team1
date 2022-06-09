@@ -1,26 +1,17 @@
 package edu.bu.metcs673.trackr.transaction;
 
-import java.text.MessageFormat;
-import java.util.List;
-
-import javax.validation.Valid;
-
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import edu.bu.metcs673.trackr.common.BaseController;
+import edu.bu.metcs673.trackr.common.CommonConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.bankaccount.BankAccount;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.common.BaseController;
+import javax.validation.Valid;
+import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * Controller for Transactions Management. Contains 'Create', 'Find', 'Modify',
@@ -109,7 +100,6 @@ public class TransactionController extends BaseController {
 	 * The purpose of this method is to modify a selected transaction by
 	 * 'bankAccountId' value
 	 *
-	 * @param id    this is transaction id
 	 * @param transactionInput this is a TransactionDTO object
 	 * @return ResponseEntity<GenericApiResponse>
 	 * @author Xiaobing Hou
@@ -130,7 +120,6 @@ public class TransactionController extends BaseController {
 	 * The purpose of this method is to valid a transaction by 'transactionId' and
 	 * 'bankAccountId' value
 	 *
-	 * @param id this is transaction id
 	 * @param bankAccountId this is bank account id
 	 * @return ResponseEntity<GenericApiResponse>
 	 * @author Xiaobing Hou
@@ -149,8 +138,7 @@ public class TransactionController extends BaseController {
 	}
 
 	/**
-	 * The purpose of this method is to get a transaction record by 'bankAccountId'
-	 * and 'transactionId' value
+	 * The purpose of this method is to get a transaction record by 'bankAccountId' and 'transactionId' value
 	 *
 	 * @param bankAccountId this is bank account id
 	 * @param transactionId this is bank account id
