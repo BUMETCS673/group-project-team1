@@ -9,6 +9,7 @@ import axios from "axios";
 const REGISTRATION_PATH = "/register";
 const LOGIN_PATH = "/login";
 const LOGOUT_PATH = "/logout";
+const PROFILE_PATH = "/api/v1/profile";
 
 class TrackrUserService {
   /**
@@ -56,6 +57,25 @@ class TrackrUserService {
   logout = () => {
     localStorage.removeItem("user");
     return axios.get(LOGOUT_PATH);
+  };
+
+  /**
+   * Get user profile.
+   *
+   * @returns {Promise<AxiosResponse<any>>} Promise
+   */
+  getProfile = () => {
+    return axios.get(PROFILE_PATH);
+  };
+
+  /**
+   * Update user profile.
+   *
+   * @param values Form values
+   * @returns {Promise<AxiosResponse<any>>} Promise
+   */
+  updateProfile = (values) => {
+    return axios.put(PROFILE_PATH, values);
   };
 }
 

@@ -1,7 +1,6 @@
 package edu.bu.metcs673.trackr.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import edu.bu.metcs673.trackr.bankaccount.BankAccount;
@@ -26,9 +25,7 @@ public abstract class BaseController {
 	 * @date 06/01/2022
 	 */
 	public TrackrUser getUser() {
-		// pull username from JWT token, find corresponding user record
-		String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		return trackrUserService.findByUsername(username);
+		return trackrUserService.getCurrentUser();
 	}
 
 	/**

@@ -67,13 +67,7 @@ public class TransactionControllerTest {
         Transaction mockTransaction = new Transaction(transactionDTO, TEST_BANK_ACCOUNT);
 
         // define mock responses
-        Authentication authentication = Mockito.mock(Authentication.class);
-        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
-        SecurityContextHolder.setContext(securityContext);
-
-        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("testUser");
-        Mockito.when(userService.findByUsername("testUser")).thenReturn(TEST_USER);
+        Mockito.when(userService.getCurrentUser()).thenReturn(TEST_USER);
         Mockito.when(bankAccountService.findBankAccountByIdAndUserId(1L, 1L)).thenReturn(TEST_BANK_ACCOUNT);
         Mockito.when(transactionService.createTransaction(transactionDTO, TEST_BANK_ACCOUNT)).thenReturn(mockTransaction);
 

@@ -177,7 +177,7 @@ const HomeContainer = (props) => {
    *
    * @param user Submit form values
    */
-  const handleSignUpFormSubmit = (user) => {
+  const handleUserFormSubmit = (user) => {
     service
       .create(user)
       .then(function (response) {
@@ -191,27 +191,28 @@ const HomeContainer = (props) => {
         console.log(response);
       });
 ```
-- Presentation: Simply showing the data and inputs to the user as desired. 
+- Presentation: Simply showing the data and inputs to the user as desired.
+
 ```javascript
 
 const Home = (props) => {
-  return (
-    <Container>
-      <Row>
-        <Col sm={8} className="mt-md-4">
-          <h1>Let's figure out together where your money goes.</h1>
-          <img
-            alt="Trackr"
-            src={"./images/logo.png"}
-            className="rounded mx-auto d-block"
-          />
-        </Col>
-        <Col sm={4} className="mt-md-4">
-          <SignUpForm handleSignUpFormSubmit={props.handleSignUpFormSubmit} />
-        </Col>
-      </Row>
-    </Container>
-  );
+    return (
+        <Container>
+            <Row>
+                <Col sm={8} className="mt-md-4">
+                    <h1>Let's figure out together where your money goes.</h1>
+                    <img
+                        alt="Trackr"
+                        src={"./images/logo.png"}
+                        className="rounded mx-auto d-block"
+                    />
+                </Col>
+                <Col sm={4} className="mt-md-4">
+                    <UserForm handleUserFormSubmit={props.handleSignUpFormSubmit}/>
+                </Col>
+            </Row>
+        </Container>
+    );
 };
 ```
 ## Workflow

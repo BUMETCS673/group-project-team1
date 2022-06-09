@@ -15,6 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -54,6 +57,14 @@ public class TrackrUserServiceImplTest {
 		mockUser = new TrackrUser(0L, "test", "mcTesterson", "testUser", "myCoolPassword", "testEmail@email.com");
 	}
 
+	public void setUpAuthMock() {
+		Authentication authentication = Mockito.mock(Authentication.class);
+		SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+		Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+		SecurityContextHolder.setContext(securityContext);
+		Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("testUser");
+	}
+
 	@Test
 	public void testFindById_success() {
 		Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(mockUser));
@@ -73,9 +84,10 @@ public class TrackrUserServiceImplTest {
 
 	@Test
 	public void testFindByUsername_success() {
+		setUpAuthMock();
 		Mockito.when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(mockUser);
 
-		TrackrUser user = serviceImpl.findByUsername(TEST_USERNAME);
+		TrackrUser user = serviceImpl.getCurrentUser();
 
 		assertNotNull(user);
 		assertEquals(TEST_USERNAME, user.getUsername());
@@ -83,9 +95,10 @@ public class TrackrUserServiceImplTest {
 
 	@Test
 	public void testFindByUsername_failure() {
+		setUpAuthMock();
 		Mockito.when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(null);
 
-		TrackrUser user = serviceImpl.findByUsername(TEST_USERNAME);
+		TrackrUser user = serviceImpl.getCurrentUser();
 
 		assertNull(user);
 	}
