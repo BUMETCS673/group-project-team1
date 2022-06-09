@@ -1,192 +1,153 @@
 package edu.bu.metcs673.trackr.transaction;
 
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import edu.bu.metcs673.trackr.common.BaseController;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.bankaccount.BankAccount;
-import edu.bu.metcs673.trackr.bankaccount.BankAccountService;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.user.TrackrUser;
-import edu.bu.metcs673.trackr.user.TrackrUserService;
-
 /**
- * Controller for Transactions Management. Contains 'Create', 'Find', 'Modify', and 'Delete' APIs
+ * Controller for Transactions Management. Contains 'Create', 'Find', 'Modify',
+ * and 'Delete' APIs
  *
  * @author Xiaobing Hou
  * @date 05/21/2022
  */
 @Validated
 @RestController
-@RequestMapping("/api/v1/transaction")
-public class TransactionController {
-    @Autowired
-    private TrackrUserService trackrUserService;
+@RequestMapping("/api/v1/transactions")
+public class TransactionController extends BaseController {
 
-    @Autowired
-    private BankAccountService bankAccountService;
+	@Autowired
+	private TransactionService transactionService;
 
-    @Autowired
-    private TransactionService transactionService;
+	/**
+	 * The purpose of this method is to find all transaction by 'bankAccountId'
+	 * value
+	 *
+	 * @param bankAccountId this is bank account id
+	 * @return ResponseEntity<Transaction>
+	 * @author Xiaobing Hou
+	 * @date 05/23/2022
+	 */
+	@GetMapping("/{bankAccountId}")
+	public ResponseEntity<GenericApiResponse<List<Transaction>>> findAllTransactionById(
+			@PathVariable(value = "bankAccountId") long bankAccountId) {
 
-    /**
-     * The purpose of this method is to insert a new transaction record into TRANSACTION DB table
-     *
-     * @param transactionInput this is a TransactionDTO
-     * @return ResponseEntity<Transaction>
-     * @author Xiaobing Hou
-     * @date 05/21/2022
-     */
-    @PostMapping
-    public ResponseEntity<GenericApiResponse<Transaction>> createTransaction(@Valid @RequestBody TransactionDTO transactionInput) {
+		BankAccount bankAccount = getBankAccount(bankAccountId);
 
-        BankAccount bankAccount = getBankAccount(transactionInput.getBankAccountId());
+		List<Transaction> transactions = transactionService.findAllTraByBankAccountId(bankAccount.getId());
 
-        // create a new transaction record associated to the user making the API request.
-        Transaction transaction = transactionService.createTransaction(transactionInput, bankAccount);
+		return ResponseEntity.ok(GenericApiResponse.successResponse(
+				MessageFormat.format(CommonConstants.FIND_ALL_TRANSACTION, String.valueOf(bankAccountId)),
+				transactions));
+	}
 
-        return new ResponseEntity<>(
-                GenericApiResponse.successResponse(
-                        MessageFormat.format(CommonConstants.CREATE_TRANSACTION, String.valueOf(transaction.getId())),
-                        transaction),
-                HttpStatus.OK);
-    }
+	/**
+	 * The purpose of this method is to find a special transaction by
+	 * 'transactionId' and 'bankAccountId' value
+	 *
+	 * @param transactionId this is transaction id
+	 * @param bankAccountId this is bank account id
+	 * @return ResponseEntity<Transaction>
+	 * @author Xiaobing Hou
+	 * @date 05/22/2022
+	 */
+	@GetMapping("/{bankAccountId}/{id}")
+	public ResponseEntity<GenericApiResponse<Transaction>> findTransactionById(
+			@PathVariable(value = "id") long transactionId,
+			@PathVariable(value = "bankAccountId") long bankAccountId) {
 
+		Transaction transaction = getTransaction(bankAccountId, transactionId);
 
-    /**
-     * The purpose of this method is to find a special transaction by 'transactionId'  and 'bankAccountId' value
-     *
-     * @param transactionId this is transaction id
-     * @param bankAccountId this is bank account id
-     * @return ResponseEntity<Transaction>
-     * @author Xiaobing Hou
-     * @date 05/22/2022
-     */
-    @GetMapping("/find/{transactionId}/{bankAccountId}")
-    public ResponseEntity<GenericApiResponse<Transaction>> findTransactionById(@PathVariable(value = "transactionId") long transactionId,
-                                                                                @PathVariable(value = "bankAccountId") long bankAccountId) {
+		return ResponseEntity.ok(GenericApiResponse.successResponse(
+				MessageFormat.format(CommonConstants.RETRIEVE_TRANSACTION, String.valueOf(transactionId)),
+				transaction));
+	}
 
-        Transaction transaction = getTransaction(bankAccountId, transactionId);
+	/**
+	 * The purpose of this method is to insert a new transaction record into
+	 * TRANSACTION DB table
+	 *
+	 * @param transactionInput this is a TransactionDTO
+	 * @return ResponseEntity<Transaction>
+	 * @author Xiaobing Hou
+	 * @date 05/21/2022
+	 */
+	@PostMapping
+	public ResponseEntity<GenericApiResponse<Transaction>> createTransaction(
+			@Valid @RequestBody TransactionDTO transactionInput) {
 
-        return new ResponseEntity<>(
-                GenericApiResponse.successResponse(
-                        MessageFormat.format(CommonConstants.FIND_TRANSACTION, String.valueOf(transactionId)),
-                        transaction),
-                HttpStatus.OK);
+		BankAccount bankAccount = getBankAccount(transactionInput.getBankAccountId());
 
-    }
+		// create a new transaction record associated to the user making the API
+		// request.
+		Transaction transaction = transactionService.createTransaction(transactionInput, bankAccount);
 
-    /**
-     * The purpose of this method is to find all transaction by 'bankAccountId' value
-     *
-     * @param bankAccountId this is bank account id
-     * @return ResponseEntity<Transaction>
-     * @author Xiaobing Hou
-     * @date 05/23/2022
-     */
-    @GetMapping("/findAll/{bankAccountId}")
-    public ResponseEntity<GenericApiResponse<List<Transaction>>> findAllTransactionById(@PathVariable(value = "bankAccountId") long bankAccountId) {
+		return ResponseEntity.ok(GenericApiResponse.successResponse(
+				MessageFormat.format(CommonConstants.CREATE_TRANSACTION, String.valueOf(transaction.getId())),
+				transaction));
+	}
 
-        BankAccount bankAccount = getBankAccount(bankAccountId);
+	/**
+	 * The purpose of this method is to modify a selected transaction by
+	 * 'bankAccountId' value
+	 *
+	 * @param transactionInput this is a TransactionDTO object
+	 * @return ResponseEntity<GenericApiResponse>
+	 * @author Xiaobing Hou
+	 * @date 05/23/2022
+	 */
+	@PutMapping("/{id}")
+	public ResponseEntity<GenericApiResponse<Transaction>> modifyTransaction(
+			@PathVariable(value = "id") long transactionId, @RequestBody TransactionDTO transactionInput) {
 
-        List<Transaction> transactions = transactionService.findAllTraByBankAccountId(bankAccount.getId());
+		Transaction transaction = getTransaction(transactionInput.getBankAccountId(), transactionId);
+		transaction = transactionService.modifyTransaction(transaction, transactionInput);
 
-        return new ResponseEntity<>(
-                GenericApiResponse.successResponse(
-                        MessageFormat.format(CommonConstants.FIND_ALL_TRANSACTION, String.valueOf(bankAccountId)),
-                        transactions),
-                HttpStatus.OK);
-    }
+		return ResponseEntity.ok(GenericApiResponse.successResponse(
+				MessageFormat.format(CommonConstants.MODIFY_TRANSACTION, String.valueOf(transactionId)), transaction));
+	}
 
-    /**
-     * The purpose of this method is to modify a selected transaction by 'bankAccountId' value
-     *
-     * @param transactionId    this is transaction id
-     * @param transactionInput this is a TransactionDTO object
-     * @return ResponseEntity<GenericApiResponse>
-     * @author Xiaobing Hou
-     * @date 05/23/2022
-     */
-    @PostMapping("/modify/{transactionId}")
-    public ResponseEntity<GenericApiResponse<Transaction>> modifyTransaction(@PathVariable(value = "transactionId") long transactionId,
-                                                                              @RequestBody TransactionDTO transactionInput) {
+	/**
+	 * The purpose of this method is to valid a transaction by 'transactionId' and
+	 * 'bankAccountId' value
+	 *
+	 * @param bankAccountId this is bank account id
+	 * @return ResponseEntity<GenericApiResponse>
+	 * @author Xiaobing Hou
+	 * @date 05/23/2022
+	 */
+	@DeleteMapping("/{id}/{bankAccountId}")
+	public ResponseEntity<GenericApiResponse<Transaction>> deleteTransaction(
+			@PathVariable(value = "id") long transactionId,
+			@PathVariable(value = "bankAccountId") long bankAccountId) {
 
-        Transaction transaction = getTransaction(transactionInput.getBankAccountId(), transactionId);
-        transaction = transactionService.modifyTransaction(transaction, transactionInput);
+		Transaction transaction = getTransaction(bankAccountId, transactionId);
+		transaction = transactionService.deleteTransaction(transaction);
 
-        return new ResponseEntity<>(
-                GenericApiResponse.successResponse(
-                        MessageFormat.format(CommonConstants.MODIFY_TRANSACTION, String.valueOf(transactionId)),
-                        transaction),
-                HttpStatus.OK);
-    }
+		return ResponseEntity.ok(GenericApiResponse.successResponse(
+				MessageFormat.format(CommonConstants.INVALID_TRANSACTION, String.valueOf(transactionId)), transaction));
+	}
 
-    /**
-     * The purpose of this method is to valid a transaction by 'transactionId' and 'bankAccountId' value
-     *
-     * @param transactionId this is transaction id
-     * @param bankAccountId this is bank account id
-     * @return ResponseEntity<GenericApiResponse>
-     * @author Xiaobing Hou
-     * @date 05/23/2022
-     */
-    @DeleteMapping("/delete/{transactionId}/{bankAccountId}")
-    public ResponseEntity<GenericApiResponse<Transaction>> deleteTransaction(@PathVariable(value = "transactionId") long transactionId,
-                                                                              @PathVariable(value = "bankAccountId") long bankAccountId) {
-
-        Transaction transaction = getTransaction(bankAccountId, transactionId);
-        transaction = transactionService.deleteTransaction(transaction);
-
-        return new ResponseEntity<>(
-                GenericApiResponse.successResponse(
-                        MessageFormat.format(CommonConstants.INVALID_TRANSACTION, String.valueOf(transactionId)),
-                        transaction),
-                HttpStatus.OK);
-    }
-
-    /**
-     * The purpose of this method is to get a bank account by 'bankAccountId' value
-     *
-     * @param bankAccountId this is bank account id
-     * @return BankAccount
-     * @author Xiaobing Hou
-     * @date 05/25/2022
-     */
-    public BankAccount getBankAccount(long bankAccountId) {
-        // pull username from JWT token, find corresponding user record
-        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        TrackrUser user = trackrUserService.findByUsername(username);
-        return bankAccountService.findBankAccountByIdAndUserId(bankAccountId, user.getId());
-    }
-
-    /**
-     * The purpose of this method is to get a transaction record by 'bankAccountId' and 'transactionId' value
-     *
-     * @param bankAccountId this is bank account id
-     * @param transactionId this is bank account id
-     * @return Transaction
-     * @author Xiaobing Hou
-     * @date 06/01/2022
-     */
-    public Transaction getTransaction(long bankAccountId, long transactionId) {
-        BankAccount bankAccount = getBankAccount(bankAccountId);
-        return transactionService.findTraByIdAndBankAccountId(transactionId, bankAccount.getId());
-    }
-
-
+	/**
+	 * The purpose of this method is to get a transaction record by 'bankAccountId' and 'transactionId' value
+	 *
+	 * @param bankAccountId this is bank account id
+	 * @param transactionId this is bank account id
+	 * @return Transaction
+	 * @author Xiaobing Hou
+	 * @date 06/01/2022
+	 */
+	public Transaction getTransaction(long bankAccountId, long transactionId) {
+		BankAccount bankAccount = getBankAccount(bankAccountId);
+		return transactionService.findTraByIdAndBankAccountId(transactionId, bankAccount.getId());
+	}
 }

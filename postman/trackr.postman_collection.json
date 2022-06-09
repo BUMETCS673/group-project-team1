@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "faa9f3f7-560f-44ca-9fde-3854a051f4a4",
+		"_postman_id": "8147cbd2-6f06-4b81-ace9-15be0dc3deca",
 		"name": "BU CS 673 Group Project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "21092474"
@@ -28,16 +28,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users",
+					"raw": "http://localhost:8080/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"api",
-						"v1",
-						"users"
+						"register"
 					]
 				}
 			},
@@ -65,16 +63,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users",
+					"raw": "http://localhost:8080/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"api",
-						"v1",
-						"users"
+						"register"
 					]
 				}
 			},
@@ -102,16 +98,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users",
+					"raw": "http://localhost:8080/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"api",
-						"v1",
-						"users"
+						"register"
 					]
 				}
 			},
@@ -139,54 +133,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users",
+					"raw": "http://localhost:8080/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"api",
-						"v1",
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get User Token",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\": \"testUser\",\n\t\"password\": \"myCoolPassword123\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/v1/users/retrieve-token",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"users",
-						"retrieve-token"
+						"register"
 					]
 				}
 			},
@@ -214,17 +168,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/users/retrieve-token",
+					"raw": "http://localhost:8080/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"api",
-						"v1",
-						"users",
-						"retrieve-token"
+						"login"
 					]
 				}
 			},
@@ -262,7 +213,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank-account",
+					"raw": "http://localhost:8080/api/v1/bank-accounts",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -271,7 +222,7 @@
 					"path": [
 						"api",
 						"v1",
-						"bank-account"
+						"bank-accounts"
 					]
 				}
 			},
@@ -285,7 +236,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MTg3OTcsInVzZXJuYW1lIjoidGZsdWNrZXIifQ.jK7NbP_klY5Y46ZilHD-E0sscpbZm9dzqPPR6kWyEAQ",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzM1NzEsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.76kKMGiaMNJQDixk25wAS-t3dL7QGvlxxV1fb5A19Co",
 							"type": "string"
 						}
 					]
@@ -309,7 +260,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank-account/5",
+					"raw": "http://localhost:8080/api/v1/bank-accounts/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -318,8 +269,8 @@
 					"path": [
 						"api",
 						"v1",
-						"bank-account",
-						"5"
+						"bank-accounts",
+						"7"
 					]
 				}
 			},
@@ -333,7 +284,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MTg3OTcsInVzZXJuYW1lIjoidGZsdWNrZXIifQ.jK7NbP_klY5Y46ZilHD-E0sscpbZm9dzqPPR6kWyEAQ",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzQxMDMsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.zl8I78cA1Ckg123DJZmUNMS5IAcVyJPO1Vc754_puOA",
 							"type": "string"
 						}
 					]
@@ -348,7 +299,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank-account/5",
+					"raw": "http://localhost:8080/api/v1/bank-accounts/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -357,8 +308,8 @@
 					"path": [
 						"api",
 						"v1",
-						"bank-account",
-						"5"
+						"bank-accounts",
+						"7"
 					]
 				}
 			},
@@ -372,16 +323,16 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MzAwMzIsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.H1GCt0N7p7oTMjRk349U0Ssqgl0zopV6OEcibQyCQ00",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzUxMTYsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.HCl7A8XbIkAgcVsZgi7MdtasZKUfuleoWNgQVacKePQ",
 							"type": "string"
 						}
 					]
 				},
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"bankAccountId\":5,\r\n    \"counterparty\":\"Wal121xiao-Mart\",\r\n    \"money\":10000.3,\r\n    \"time\":\"05/21-19:53\"\r\n}",
+					"raw": "{\r\n    \"bankAccountId\":7,\r\n    \"counterparty\":\"Wal121xiao-Mart\",\r\n    \"money\":10000.3,\r\n    \"time\":\"05/21-19:53\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -389,7 +340,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/modify/1",
+					"raw": "http://localhost:8080/api/v1/transaction/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -399,8 +350,7 @@
 						"api",
 						"v1",
 						"transaction",
-						"modify",
-						"1"
+						"7"
 					]
 				}
 			},
@@ -414,7 +364,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTMzNzMyNzIsInVzZXJuYW1lIjoidGVzdFVzZXIyIn0.0qVt5LL0DVu2xQzdt4_o--8TGK2MROARsB1Kf2mrsis",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzQxMDMsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.zl8I78cA1Ckg123DJZmUNMS5IAcVyJPO1Vc754_puOA",
 							"type": "string"
 						}
 					]
@@ -423,7 +373,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"bankAccountId\":5,\r\n    \"counterparty\":\"Wal-Mart\",\r\n    \"money\":15.6,\r\n    \"time\":\"05/21-19:53\"\r\n}",
+					"raw": "{\r\n    \"bankAccountId\":7,\r\n    \"counterparty\":\"Wal-Mart\",\r\n    \"money\":15.6,\r\n    \"time\":\"05/21-19:53\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -454,7 +404,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MzMxNzMsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.2n29Lc-8bpKuG4xgNb7Itt084kjArdqEhTMJi5e4Ik8",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzUxMTYsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.HCl7A8XbIkAgcVsZgi7MdtasZKUfuleoWNgQVacKePQ",
 							"type": "string"
 						}
 					]
@@ -462,7 +412,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/delete/1/5",
+					"raw": "http://localhost:8080/api/v1/transaction/7/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -472,9 +422,8 @@
 						"api",
 						"v1",
 						"transaction",
-						"delete",
-						"1",
-						"5"
+						"7",
+						"7"
 					]
 				}
 			},
@@ -488,7 +437,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0Mjc0NjUsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.d84XnHqCEaOM2lO4CFDQD7PimnliMy_jWfhmiSlMjY4",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzUxMTYsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.HCl7A8XbIkAgcVsZgi7MdtasZKUfuleoWNgQVacKePQ",
 							"type": "string"
 						}
 					]
@@ -496,7 +445,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/find/1/5",
+					"raw": "http://localhost:8080/api/v1/transaction/find/7/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -507,8 +456,8 @@
 						"v1",
 						"transaction",
 						"find",
-						"1",
-						"5"
+						"7",
+						"7"
 					]
 				}
 			},
@@ -522,7 +471,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTM0MzMxNzMsInVzZXJuYW1lIjoidGVzdFVzZXIzIn0.2n29Lc-8bpKuG4xgNb7Itt084kjArdqEhTMJi5e4Ik8",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzUxMTYsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.HCl7A8XbIkAgcVsZgi7MdtasZKUfuleoWNgQVacKePQ",
 							"type": "string"
 						}
 					]
@@ -530,7 +479,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/findAll/5",
+					"raw": "http://localhost:8080/api/v1/transaction/findAll/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -541,7 +490,7 @@
 						"v1",
 						"transaction",
 						"findAll",
-						"5"
+						"7"
 					]
 				}
 			},

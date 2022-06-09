@@ -1,24 +1,26 @@
 package edu.bu.metcs673.trackr.bankaccount;
 
-import edu.bu.metcs673.trackr.user.TrackrUser;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import edu.bu.metcs673.trackr.user.TrackrUser;
 
 public class BankAccountTest {
 
@@ -36,7 +38,7 @@ public class BankAccountTest {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
 	}
-	
+
 	@Test
 	public void getterSettersTest() {
 		BankAccount acct = new BankAccount();
@@ -93,6 +95,7 @@ public class BankAccountTest {
         return Stream.of(
                 Arguments.of(new BankAccountDTO()),
                 Arguments.of(new BankAccountDTO(null, TEST_DESCRIPTION, TEST_BALANCE)),
+				Arguments.of(new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, null)),
                 Arguments.of(new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, TEST_BALANCE * -1)),
                 Arguments.of(
                         new BankAccountDTO(

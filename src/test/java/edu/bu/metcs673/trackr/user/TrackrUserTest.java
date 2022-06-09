@@ -26,7 +26,6 @@ public class TrackrUserTest {
 	public static final String TEST_PASSWORD = "password";
 	public static final String TEST_EMAIL = "johnDoe@email.com";
 
-
 	private static Validator validator;
 
 	@BeforeAll
@@ -34,7 +33,7 @@ public class TrackrUserTest {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
 	}
-	
+
 	@Test
 	public void getterSetterTest() {
 		TrackrUser user = new TrackrUser();
@@ -83,7 +82,7 @@ public class TrackrUserTest {
 		assertEquals(TEST_PASSWORD, user.getPassword());
 		assertEquals(TEST_EMAIL, user.getEmail());
 	}
-	
+
 	@ParameterizedTest
 	@MethodSource("generateTestData")
 	public void testAnnotationBasedValidations(TrackrUserDTO userDTO) {
@@ -132,13 +131,8 @@ public class TrackrUserTest {
 						"testEasdfasdfasdfasdfasdfasdfasdfasdfasdfsadfmail@emasdfasdfasdfasasdfasdfsdfasdfasdfasdfasdfdfasdfasail.com")),
 				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "example", "123", "test@email.com")),
 
-
 				// bad email format
-				Arguments.of(
-						new TrackrUserDTO("testy", "mcTesterson", "tester12", "myCoolPassword", "#@$@#$!@$!@*^&*!@^#"))
-
-		);
-
+				Arguments.of(new TrackrUserDTO("testy", "mcTesterson", "tester12", "myCoolPassword",
+						"#@$@#$!@$!@*^&*!@^#")));
 	}
-
 }

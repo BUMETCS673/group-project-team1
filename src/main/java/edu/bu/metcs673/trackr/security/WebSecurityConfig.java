@@ -29,57 +29,54 @@ import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 //@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private TrackrUserServiceImpl userServiceImpl;
+	@Autowired
+	private TrackrUserServiceImpl userServiceImpl;
 
-    @Autowired
-    private JwtFilter filter;
+	@Autowired
+	private JwtFilter filter;
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(username -> userServiceImpl.loadUserByUsername(username));
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(username -> userServiceImpl.loadUserByUsername(username));
+	}
 
-    /**
-     * Configures traffic through the application to expose one endpoint that
-     * everyone can access, then implementing an authentication entry point for all
-     * other API URLs. Configures the session as well to be STATELESS (best
-     * practice).
-     */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .httpBasic()
-                .disable()
-                .cors()
-                .and()
-                .userDetailsService(userServiceImpl)
-                .exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, authException) -> response.sendError(SC_UNAUTHORIZED, "UNAUTHORIZED")
-                )
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(STATELESS);
+	/**
+	 * Configures traffic through the application to expose one endpoint that
+	 * everyone can access, then implementing an authentication entry point for all
+	 * other API URLs. Configures the session as well to be STATELESS (best
+	 * practice).
+	 */
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf()
+			.disable()
+			.httpBasic()
+			.disable()
+			.cors()
+			.and()
+			.userDetailsService(userServiceImpl)
+			.exceptionHandling()
+			.authenticationEntryPoint( (request, response, authException) -> response.sendError(SC_UNAUTHORIZED, "UNAUTHORIZED"))
+			.and()
+			.sessionManagement()
+			.sessionCreationPolicy(STATELESS);
 
-        // Configure logout
-        http.logout(logout -> logout.logoutUrl("/logout")
-                .invalidateHttpSession(true)
-                .logoutSuccessHandler((request, response, authentication) -> response.setStatus(SC_OK))
-                .deleteCookies(JWT_COOKIE_NAME)
-        );
+		// Configure logout
+		http.logout(logout -> logout.logoutUrl("/logout")
+				.invalidateHttpSession(true)
+				.logoutSuccessHandler((request, response, authentication) -> response.setStatus(SC_OK))
+				.deleteCookies(JWT_COOKIE_NAME));
 
-        // this will enable the frames for the H2 console
-        http.headers().frameOptions().disable();
+		// this will enable the frames for the H2 console
+		http.headers().frameOptions().disable();
 
-        // specifies when JWT filer is called in relation to other filters
-        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
-    }
+		// specifies when JWT filer is called in relation to other filters
+		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+	}
 }

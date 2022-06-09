@@ -1,5 +1,7 @@
 package edu.bu.metcs673.trackr.bankaccount;
 
+import static edu.bu.metcs673.trackr.bankaccount.BankAccount.ACCOUNT_STATUS.ACTIVE;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -80,5 +82,14 @@ public class BankAccount {
 			}
 			return false;
 		}
+	}
+	
+	public BankAccount(BankAccountDTO dto, TrackrUser user) {
+		this.id = 0L;
+		this.user = user;
+		this.accountDescription = dto.getAccountDescription();
+		this.accountType = dto.getAccountType();
+		this.balance = dto.getBalance();
+		this.status = ACTIVE;
 	}
 }

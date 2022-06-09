@@ -21,83 +21,83 @@ import static edu.bu.metcs673.trackr.bankaccount.BankAccount.ACCOUNT_STATUS.ACTI
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
 
-    @Autowired
-    private BankAccountRepository bankAccountRepository;
+	@Autowired
+	private BankAccountRepository bankAccountRepository;
 
-    @Override
-    public BankAccount createBankAccount(BankAccountDTO bankAccountInput, TrackrUser user) {
+	@Override
+	public BankAccount createBankAccount(BankAccountDTO bankAccountInput, TrackrUser user) {
 
-        // create new bank account object using DTO fields, set user and accountStatus
-        // as well
-        BankAccount bankAccount = new BankAccount(0L, user, bankAccountInput.getAccountType(),
-                bankAccountInput.getAccountDescription(), bankAccountInput.getBalance(),
-                ACTIVE);
+		// create new bank account object using DTO fields, set user and accountStatus
+		// as well
+		BankAccount bankAccount = new BankAccount(0L, user, bankAccountInput.getAccountType(),
+				bankAccountInput.getAccountDescription(), bankAccountInput.getBalance(), ACTIVE);
 
-        return bankAccountRepository.save(bankAccount);
-    }
+		return bankAccountRepository.save(bankAccount);
+	}
 
-    @Override
-    public BankAccount modifyBankAccount(BankAccountDTO bankAccountInput, TrackrUser user, long id) {
+	@Override
+	public BankAccount modifyBankAccount(BankAccountDTO bankAccountInput, long userId, long id) {
 
-        // verify that user making request is the same user associated to the DB record,
-        // throws exception if data does not match.
-        BankAccount bankAccount = verifyUser(user, id);
+		// verify that user making request is the same user associated to the DB record,
+		// throws exception if data does not match.
+		BankAccount bankAccount = verifyUser(userId, id);
 
-        // overwrite values for DB record, with provided DTO values
-        bankAccount.setAccountDescription(bankAccountInput.getAccountDescription());
-        bankAccount.setAccountType(bankAccountInput.getAccountType());
-        bankAccount.setBalance(bankAccountInput.getBalance());
+		// overwrite values for DB record, with provided DTO values
+		bankAccount.setAccountDescription(bankAccountInput.getAccountDescription());
+		bankAccount.setAccountType(bankAccountInput.getAccountType());
+		bankAccount.setBalance(bankAccountInput.getBalance());
 
-        // save modified record to DB
-        bankAccountRepository.save(bankAccount);
+		// save modified record to DB
+		bankAccountRepository.save(bankAccount);
 
-        return bankAccount;
-    }
+		return bankAccount;
+	}
 
-    @Override
-    public void deactivateBankAccount(TrackrUser user, long id) {
-        // verify that user making request is the same user associated to the DB record,
-        // throws exception if data does not match.
-        BankAccount bankAccount = verifyUser(user, id);
+	@Override
+	public void deactivateBankAccount(long userId, long id) {
+		// verify that user making request is the same user associated to the DB record,
+		// throws exception if data does not match.
+		BankAccount bankAccount = verifyUser(userId, id);
 
-        // set "INACTIVE" status, then save to DB
-        bankAccount.setStatus(ACCOUNT_STATUS.INACTIVE);
-        bankAccountRepository.save(bankAccount);
-    }
+		// set "INACTIVE" status, then save to DB
+		bankAccount.setStatus(ACCOUNT_STATUS.INACTIVE);
+		bankAccountRepository.save(bankAccount);
+	}
 
-    public BankAccount verifyUser(TrackrUser user, long id) {
-        // get bank account based on id method parameter
-        BankAccount bankAccount = bankAccountRepository.findById(id).get();
+	public BankAccount verifyUser(long userId, long id) {
+		// get bank account based on id method parameter
+		BankAccount bankAccount = bankAccountRepository.findById(id).get();
 
-        // verify that user making request is the same user associated to the DB record
-        if (user.getId() != bankAccount.getUser().getId()) {
-            throw new TrackrInputValidationException(CommonConstants.UNAUTHORIZED_ACCESS);
-        }
+		// verify that user making request is the same user associated to the DB record
+		if (userId != bankAccount.getUser().getId()) {
+			throw new TrackrInputValidationException(CommonConstants.UNAUTHORIZED_ACCESS);
+		}
 
-        return bankAccount;
-    }
+		return bankAccount;
+	}
 
+	@Override
+	public List<BankAccount> findBankAccountsByUserId(long userId) {
+		return bankAccountRepository.findAllByUserIdAndStatus(userId, ACTIVE);
+	}
 
-    /**
-     * The purpose of this method is to find a special bank account by its 'id' and 'userId' value.
-     *
-     * @param bankAccountId this is transaction id
-     * @param userId this is user id
-     * @return BankAccount
-     * @author Xiaobing Hou
-     */
-    @Override
-    public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId) {
-        BankAccount bankAccount = bankAccountRepository.findByIdAndUserIdAndStatus(bankAccountId, userId,  ACTIVE);
-        if (bankAccount != null) {
-            return bankAccount;
-        }
-        throw new TrackrInputValidationException(CommonConstants.INVALID_BANK_ACCOUNT_ID);
+	/**
+	 * The purpose of this method is to find a special bank account by its 'id' and
+	 * 'userId' value.
+	 *
+	 * @param bankAccountId this is transaction id
+	 * @param userId        this is user id
+	 * @return BankAccount
+	 * @author Xiaobing Hou
+	 */
+	@Override
+	public BankAccount findBankAccountByIdAndUserId(long bankAccountId, long userId) {
+		BankAccount bankAccount = bankAccountRepository.findByIdAndUserIdAndStatus(bankAccountId, userId, ACTIVE);
+		if (bankAccount != null) {
+			return bankAccount;
+		}
+		throw new TrackrInputValidationException(CommonConstants.INVALID_BANK_ACCOUNT_ID);
 
-    }
+	}
 
-    @Override
-    public  List<BankAccount> findBankAccountsByUserId(long userId) {
-        return bankAccountRepository.findAllByUserIdAndStatus(userId, ACTIVE);
-    }
 }

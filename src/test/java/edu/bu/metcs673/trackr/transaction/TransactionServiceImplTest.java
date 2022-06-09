@@ -10,10 +10,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import edu.bu.metcs673.trackr.bankaccount.BankAccount;
-import edu.bu.metcs673.trackr.transaction.Transaction;
-import edu.bu.metcs673.trackr.transaction.TransactionDTO;
-import edu.bu.metcs673.trackr.transaction.TransactionRepository;
-import edu.bu.metcs673.trackr.transaction.TransactionServiceImpl;
 import edu.bu.metcs673.trackr.user.TrackrUser;
 
 /**
@@ -39,7 +35,7 @@ public class TransactionServiceImplTest {
 	public static final String TEST_TIME = "05/24";
 	public static final BankAccount TEST_BANK_ACCOUNT = new BankAccount(1L, TEST_USER,
 			BankAccount.ACCOUNT_TYPE.CHECKING, "ACCOUNT_DESC", 100.0, BankAccount.ACCOUNT_STATUS.ACTIVE);
-	public static final TransactionDTO TEST_TRANSACTIONDTO = new TransactionDTO(1L, TEST_MONEY, TEST_TIME,
+	public static TransactionDTO TEST_TRANSACTIONDTO = new TransactionDTO(1L, TEST_MONEY, TEST_TIME,
 			TEST_COUNTERPARTY, TEST_DESCRIPTION);
 
 	@Test
@@ -69,7 +65,7 @@ public class TransactionServiceImplTest {
 	public void modifyTransactionTest() {
 		Transaction mockTransaction1 = new Transaction(TEST_TRANSACTIONDTO, TEST_BANK_ACCOUNT);
 
-		TEST_TRANSACTIONDTO.setMoney(1000);
+		TEST_TRANSACTIONDTO.setMoney(1000.00);
 
 		Mockito.when(transactionRepository.save(mockTransaction1)).thenReturn(mockTransaction1);
 

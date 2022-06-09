@@ -22,10 +22,10 @@ import lombok.NoArgsConstructor;
 public class TransactionDTO {
 
     @NotNull(message = CommonConstants.TRANSACTION_MONEY)
-    private long bankAccountId;
+    private Long bankAccountId;
 
     @NotNull(message = CommonConstants.TRANSACTION_MONEY)
-    private double money;
+    private Double money;
 
     @NotNull(message = CommonConstants.TRANSACTION_TIME)
     private String time;
