@@ -37,7 +37,7 @@ public class TransactionController extends BaseController {
 	 * @author Xiaobing Hou
 	 * @date 05/23/2022
 	 */
-	@GetMapping("/findAll/{bankAccountId}")
+	@GetMapping("/{bankAccountId}")
 	public ResponseEntity<GenericApiResponse<List<Transaction>>> findAllTransactionById(
 			@PathVariable(value = "bankAccountId") long bankAccountId) {
 
@@ -60,7 +60,7 @@ public class TransactionController extends BaseController {
 	 * @author Xiaobing Hou
 	 * @date 05/22/2022
 	 */
-	@GetMapping("/find/{id}/{bankAccountId}")
+	@GetMapping("/{bankAccountId}/{id}")
 	public ResponseEntity<GenericApiResponse<Transaction>> findTransactionById(
 			@PathVariable(value = "id") long transactionId,
 			@PathVariable(value = "bankAccountId") long bankAccountId) {
