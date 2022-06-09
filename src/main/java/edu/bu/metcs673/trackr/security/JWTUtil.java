@@ -35,11 +35,28 @@ public class JWTUtil {
 		this.jwtSecret = jwtSecret;
 	}
 
+	/**
+	 * Method to create a new JWT token with Subject, Claim, Issued At, Issuer
+	 * sections and sign with a secret using a secret value to make it unique.
+	 * Provided username parameter is used for the Claim section of the token.
+	 * 
+	 * @param username
+	 * @return String token
+	 */
 	public String generateToken(String username) {
 		return JWT.create().withSubject("User Details").withClaim("username", username).withIssuedAt(new Date())
 				.withIssuer("Trackr Application").sign(Algorithm.HMAC256(jwtSecret));
 	}
 
+	/**
+	 * Validate the the provided token string is valid. This is determined by
+	 * checking to see if it was created using the same algorithm, and contains a
+	 * matching subject and issuer values. Return 'username' value in token as a
+	 * string.
+	 * 
+	 * @param token
+	 * @return String username
+	 */
 	public String validateTokenAndRetrieveSubject(String token) {
 		JWTVerifier verifier = JWT.require(Algorithm.HMAC256(jwtSecret)).withSubject("User Details")
 				.withIssuer("Trackr Application").build();

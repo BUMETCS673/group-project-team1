@@ -21,7 +21,10 @@ const TransactionModal = ({
   if (!isAddTransaction) {
     title = (
       <Modal.Title id="contained-modal-title-vcenter">
-        Bank account Id: {bankAccountId}
+        Account:{" "}
+        {selectedTransaction
+          ? selectedTransaction.bankAccount.accountDescription
+          : "None"}
         <br />
         Transaction Id: {selectedTransaction ? selectedTransaction.id : "None"}
       </Modal.Title>

@@ -16,7 +16,7 @@ import java.time.LocalDate;
  * GenericApiResponse to GenericApiResponse1 is to be convenient for # retrieve
  * data from the response data without losing data types #
  *
- * @author Xiaobing Hou
+ * @author Xiaobing Hou + Timothy Flucker
  * @date 05/25/2022
  */
 @Data

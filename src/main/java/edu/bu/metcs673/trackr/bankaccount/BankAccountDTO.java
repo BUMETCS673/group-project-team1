@@ -28,5 +28,5 @@ public class BankAccountDTO {
 
 	@NotNull(message = CommonConstants.BLANK_BALANCE)
 	@PositiveOrZero(message = CommonConstants.INVALID_BALANCE_VALUE)
-	private double balance;
+	private Double balance;
 }
