@@ -18,7 +18,7 @@ const HomeContainer = (props) => {
    *
    * @param user Submit form values
    */
-  const handleSignUpFormSubmit = (user) => {
+  const handleUserFormSubmit = (user) => {
     service
       .create(user)
       .then(function (response) {
@@ -40,7 +40,7 @@ const HomeContainer = (props) => {
       });
   };
 
-  return <Home handleSignUpFormSubmit={handleSignUpFormSubmit} />;
+  return <Home handleUserFormSubmit={handleUserFormSubmit} />;
 };
 
 export default HomeContainer;
