@@ -102,8 +102,7 @@ public class BankAccountController extends BaseController {
 		// API request.
 		BankAccount bankAccount = bankAccountService.modifyBankAccount(bankAccountInput, getUser().getId(), id);
 
-		return new ResponseEntity<>(GenericApiResponse.successResponse(CommonConstants.MODIFY_TRANSACTION, bankAccount),
-				HttpStatus.OK);
+		return ResponseEntity.ok(GenericApiResponse.successResponse(CommonConstants.MODIFY_TRANSACTION, bankAccount));
 	}
 
 	/**
@@ -122,10 +121,7 @@ public class BankAccountController extends BaseController {
 		// associated to it.
 		bankAccountService.deactivateBankAccount(getUser().getId(), id);
 
-		return new ResponseEntity<>(
-				GenericApiResponse.successResponse(
-						MessageFormat.format(CommonConstants.DEACTIVATE_BANK_ACCOUNT, String.valueOf(id))),
-				HttpStatus.OK);
+		return ResponseEntity.ok(GenericApiResponse
+				.successResponse(MessageFormat.format(CommonConstants.DEACTIVATE_BANK_ACCOUNT, String.valueOf(id))));
 	}
-
 }
