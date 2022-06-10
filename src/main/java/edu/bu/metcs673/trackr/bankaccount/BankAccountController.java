@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.BaseController;
+import edu.bu.metcs673.trackr.common.CommonConstants;
 
 /**
  * Controller for Bank Account Management. Contains APIs for CRUD (create, read,

@@ -32,7 +32,7 @@ class TransactionService {
    * @date 06/03/2022
    */
   deleteTranByTranIdAndBankId = (transactionId, bankAccountId) => {
-    return axios.delete(`${PATH}/${transactionId}/${bankAccountId}`);
+    return axios.delete(`${PATH}/${bankAccountId}/${transactionId}`);
   };
 
   /**
