@@ -11,9 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.common.CommonConstants;
@@ -49,13 +46,7 @@ public class BankAccountControllerTest {
 				.successResponse(MessageFormat.format(CommonConstants.CREATE_BANK_ACCOUNT, mockBankAccount.getId()),
 						mockBankAccount));
 
-		// define mock responses
-		Authentication authentication = Mockito.mock(Authentication.class);
-		SecurityContext securityContext = Mockito.mock(SecurityContext.class);
-		Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
-		SecurityContextHolder.setContext(securityContext);
-		Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("testUser");
-		Mockito.when(userService.findByUsername("testUser")).thenReturn(TEST_USER);
+		Mockito.when(userService.getCurrentUser()).thenReturn(TEST_USER);
 		Mockito.when(bankAccountService.createBankAccount(bankDTO, TEST_USER)).thenReturn(mockBankAccount);
 
 		ResponseEntity<GenericApiResponse<BankAccount>> response = controller.createBankAccount(bankDTO);

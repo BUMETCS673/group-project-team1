@@ -80,6 +80,8 @@ public class CommonConstants {
 	// USER MANAGEMENT
 	public static final String CREATE_USER_SUCCESS = "Successfully created a new user! Please use the JWT token below to authenticate your API requests.";
 	public static final String NEW_JWT_TOKEN = "Successfully created new JWT token!";
+	public static final String GET_USER_PROFILE_SUCCESS = "Successfully loaded user profile!";
+	public static final String UPDATE_USER_PROFILE_SUCCESS = "Successfully updated user profile!";
 
 	// BANK ACCOUNT MANAGEMENT
 	public static final String FIND_ALL_BANK_ACCOUNT = "Successfully found all bank account records associated to current user.";
