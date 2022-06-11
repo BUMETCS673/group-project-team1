@@ -5,7 +5,9 @@
  */
 
 import axios from "axios";
+import Cookies from "js-cookie";
 
+const USER_LOGGED_IN_COOKIE_NAME = "userLoggedIn";
 const REGISTRATION_PATH = "/register";
 const LOGIN_PATH = "/login";
 const LOGOUT_PATH = "/logout";
@@ -19,14 +21,8 @@ class TrackrUserService {
    * @returns {boolean}
    */
   static isAuthenticated() {
-    return localStorage.getItem("user") != null;
-  }
-
-  /**
-   * Set a flag in local storage, although we may add user first and last name later
-   */
-  static authenticate() {
-    localStorage.setItem("user", JSON.stringify({ loggedIn: true }));
+    console.log(Cookies.get(USER_LOGGED_IN_COOKIE_NAME));
+    return Cookies.get(USER_LOGGED_IN_COOKIE_NAME) === "true";
   }
 
   /**

@@ -1,6 +1,7 @@
 package edu.bu.metcs673.trackr.security;
 
 import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
+import static edu.bu.metcs673.trackr.common.CommonConstants.USER_LOGGED_IN_COOKIE_NAME;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -71,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.logout(logout -> logout.logoutUrl("/logout")
 				.invalidateHttpSession(true)
 				.logoutSuccessHandler((request, response, authentication) -> response.setStatus(SC_OK))
-				.deleteCookies(JWT_COOKIE_NAME));
+				.deleteCookies(JWT_COOKIE_NAME, USER_LOGGED_IN_COOKIE_NAME));
 
 		// this will enable the frames for the H2 console
 		http.headers().frameOptions().disable();
