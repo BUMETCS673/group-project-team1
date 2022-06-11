@@ -26,6 +26,7 @@ import javax.validation.Valid;
 import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_MAX_AGE_MINUTES;
 import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
 import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_PATH;
+import static edu.bu.metcs673.trackr.common.CommonConstants.USER_LOGGED_IN_COOKIE_NAME;
 
 /**
  * Controller for Users Management. Contains a 'Create' API for new users to
@@ -81,19 +82,25 @@ public class TrackrUserController {
 			JSONObject tokenObj = createTokenObject(token);
 
 			// Return the JWT to the browser as cookie
-			Cookie cookie = new Cookie(JWT_COOKIE_NAME, token);
+			Cookie jwtCookie = new Cookie(JWT_COOKIE_NAME, token);
+
+			// Accessible by JS since it's a simple flag cannot be used with impersonate user without JWT
+			Cookie userLoggedInCookie = new Cookie(USER_LOGGED_IN_COOKIE_NAME, "true");
 
 			// We set HttpOnly so that JavaScript cannot read it top prevent XSS attack
-			cookie.setHttpOnly(true);
+			jwtCookie.setHttpOnly(true);
 
 			// Set path to root so that it's available to the whole application domain
-			cookie.setPath(JWT_COOKIE_PATH);
+			jwtCookie.setPath(JWT_COOKIE_PATH);
+			userLoggedInCookie.setPath(JWT_COOKIE_PATH);
 
 			// Set max age to be 15 minutes
-			cookie.setMaxAge(JWT_COOKIE_MAX_AGE_MINUTES);
+			jwtCookie.setMaxAge(JWT_COOKIE_MAX_AGE_MINUTES);
+			userLoggedInCookie.setMaxAge(JWT_COOKIE_MAX_AGE_MINUTES);
 
-			// Add Servlet Response to return to browser
-			response.addCookie(cookie);
+			// Add cookies to Servlet Response to return to browser
+			response.addCookie(jwtCookie);
+			response.addCookie(userLoggedInCookie);
 
 			return ResponseEntity.ok()
 					.body(GenericApiResponse.successResponse(CommonConstants.NEW_JWT_TOKEN, tokenObj));

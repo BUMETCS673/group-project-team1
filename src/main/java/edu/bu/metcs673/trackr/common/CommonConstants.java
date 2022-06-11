@@ -21,6 +21,7 @@ public class CommonConstants {
 
 	// Cookie
 	public static final String JWT_COOKIE_NAME = "jwtToken";
+	public static final String USER_LOGGED_IN_COOKIE_NAME = "userLoggedIn";
 	public static final String JWT_COOKIE_PATH = "/";
 	public static final int JWT_COOKIE_MAX_AGE_MINUTES = 60 * 15; // 15 minutes
 

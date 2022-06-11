@@ -22,7 +22,6 @@ const LoginContainer = (props) => {
     service
       .login(credentials)
       .then(function (response) {
-        TrackrUserService.authenticate();
         navigate("/dashboard", { replace: true });
         props.setAlert({
           show: true,
