@@ -8,6 +8,23 @@ package edu.bu.metcs673.trackr.common;
  */
 public class CommonConstants {
 
+	// Allowed patterns in JWT filter (security related)
+	public static final String AUTHORIZATION_HEADER = "Authorization";
+	public static final String BEARER_PREFIX = "Bearer ";
+	public static final String FAVICON_PATH = "/favicon.ico";
+	public static final String IMAGES_PATH = "/images/.*";
+	public static final String GENERATED_ASSETS_PATH = "/built/.*";
+	public static final String ROOT_PATH = "/";
+	public static final String REGISTER_PATH = "/register";
+	public static final String LOGIN_PATH = "/login";
+	public static final String LOGOUT_PATH = "/logout";
+
+	// Cookie
+	public static final String JWT_COOKIE_NAME = "jwtToken";
+	public static final String USER_LOGGED_IN_COOKIE_NAME = "userLoggedIn";
+	public static final String JWT_COOKIE_PATH = "/";
+	public static final int JWT_COOKIE_MAX_AGE_MINUTES = 60 * 15; // 15 minutes
+
 	// static strings used in APIs
 	public static final String SUCCESS = "SUCCESS";
 	public static final String ERROR = "ERROR";
@@ -53,24 +70,32 @@ public class CommonConstants {
 	public static final String VALIDATION_ERRORS = "Invalid values detected in request body. Please review the errors and modify your request accordingly.";
 	public static final String INVALID_BANK_ACCOUNT_ID = "Invalid bank account id. Please use another value.";
 	public static final String INVALID_TRANSACTION_ID = "Invalid transaction id. Please use another value.";
+	public static final String INVALID_USER_ID = "Invalid user id. Please use another value.";
 
-	// security-related messages
-	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials";
+	// security-related error messages
+	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials.";
 	public static final String UNAUTHORIZED_ACCESS = "You do not have access to the specified resource.";
 	public static final String INVALID_TOKEN = "Invalid Token value.";
 
-	
 	// Success messages
+	// USER MANAGEMENT
 	public static final String CREATE_USER_SUCCESS = "Successfully created a new user! Please use the JWT token below to authenticate your API requests.";
 	public static final String NEW_JWT_TOKEN = "Successfully created new JWT token!";
+	public static final String GET_USER_PROFILE_SUCCESS = "Successfully loaded user profile!";
+	public static final String UPDATE_USER_PROFILE_SUCCESS = "Successfully updated user profile!";
 
+	// BANK ACCOUNT MANAGEMENT
+	public static final String FIND_ALL_BANK_ACCOUNT = "Successfully found all bank account records associated to current user.";
+	public static final String RETRIEVE_BANK_ACCOUNT = "Successfully retrieved bank account with id: {0}.";
+	public static final String CREATE_BANK_ACCOUNT = "Successfully created a bank account with id: {0}.";
+	public static final String MODIFY_BANK_ACCOUNT = "Successfully modified bank account with id: {0}.";
+	public static final String DEACTIVATE_BANK_ACCOUNT = "Successfully deactivated bank account with id: {0}.";
 
-	public static final String DEACTIVATE_BANK_ACCOUNT = "Successfully deactivated Bank Account with id: {0}";
-
-	public static final String MODIFY_TRANSACTION = "Successfully modify the transaction with transaction id: {0}.";
-	public static final String CREATE_TRANSACTION = "Successfully create a transaction with transaction id: {0}";
-	public static final String FIND_ALL_TRANSACTION = "Successfully find all transaction with bank account id: {0}.";
-	public static final String FIND_TRANSACTION = "Successfully find the transaction with transaction id: {0}.";
-	public static final String INVALID_TRANSACTION = "Successfully invalid the transaction with transaction id: {0}.";
+	// TRANSACTION MANAGEMENT
+	public static final String MODIFY_TRANSACTION = "Successfully modified the transaction with id: {0}.";
+	public static final String CREATE_TRANSACTION = "Successfully created a transaction with id: {0}.";
+	public static final String FIND_ALL_TRANSACTION = "Successfully found all transactions associated to bank account id: {0}.";
+	public static final String RETRIEVE_TRANSACTION = "Successfully found the transaction with id: {0}.";
+	public static final String INVALID_TRANSACTION = "Successfully invalidated the transaction with id: {0}.";
 
 }

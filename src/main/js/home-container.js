@@ -18,7 +18,7 @@ const HomeContainer = (props) => {
    *
    * @param user Submit form values
    */
-  const handleSignUpFormSubmit = (user) => {
+  const handleUserFormSubmit = (user) => {
     service
       .create(user)
       .then(function (response) {
@@ -29,7 +29,6 @@ const HomeContainer = (props) => {
           message: "Account successfully created!",
         });
         setTimeout(() => props.setAlert({ show: false }), 2000);
-        console.log(response);
       })
       .catch(function (error) {
         props.setAlert({
@@ -41,7 +40,7 @@ const HomeContainer = (props) => {
       });
   };
 
-  return <Home handleSignUpFormSubmit={handleSignUpFormSubmit} />;
+  return <Home handleUserFormSubmit={handleUserFormSubmit} />;
 };
 
 export default HomeContainer;

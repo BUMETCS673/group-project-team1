@@ -1,5 +1,5 @@
-# Pull ubuntu docker image
-FROM ubuntu
+# Pull node v18 docker image
+FROM node:18.3-buster
 
 # Add some meta
 LABEL edu.bu.metcs673.trackr.image.title="Prettier" \
@@ -14,12 +14,6 @@ COPY . /usr/app/
 
 # Set the working directory
 WORKDIR /usr/app/
-
-# Install NodeJS, NPM
-RUN apt-get update
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
-RUN apt-get install -y npm
 
 # Install dependencies in package.json
 RUN npm install
