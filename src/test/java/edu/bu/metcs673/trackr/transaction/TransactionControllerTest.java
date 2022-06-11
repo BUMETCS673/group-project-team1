@@ -3,6 +3,8 @@ package edu.bu.metcs673.trackr.transaction;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,9 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.bankaccount.BankAccount;
@@ -66,9 +65,13 @@ public class TransactionControllerTest {
 
         Transaction mockTransaction = new Transaction(transactionDTO, TEST_BANK_ACCOUNT);
 
+        List<BankAccount> acctList = new ArrayList<BankAccount>();
+        acctList.add(TEST_BANK_ACCOUNT);
+        
         // define mock responses
         Mockito.when(userService.getCurrentUser()).thenReturn(TEST_USER);
         Mockito.when(bankAccountService.findBankAccountByIdAndUserId(1L, 1L)).thenReturn(TEST_BANK_ACCOUNT);
+		Mockito.when(bankAccountService.findBankAccountsByUserId(1L)).thenReturn(acctList);
         Mockito.when(transactionService.createTransaction(transactionDTO, TEST_BANK_ACCOUNT)).thenReturn(mockTransaction);
 
         ResponseEntity<GenericApiResponse<Transaction>> response = transactionController.createTransaction(transactionDTO);

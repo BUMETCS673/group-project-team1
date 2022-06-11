@@ -39,4 +39,12 @@ public abstract class BaseController {
 	public BankAccount getBankAccount(long bankAccountId) {
 		return bankAccountService.findBankAccountByIdAndUserId(bankAccountId, getUser().getId());
 	}
+
+	public boolean isUserAssociatedToBankAccount(long acctId) {
+
+		// gets current user id, then calls DB to see if the provided bank account id is
+		// one of the bank account ids associated to this user.
+		return bankAccountService.findBankAccountsByUserId(getUser().getId()).stream()
+				.anyMatch(bankAcct -> bankAcct.getId() == acctId);
+	}
 }

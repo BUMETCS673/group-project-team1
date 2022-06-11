@@ -1,17 +1,27 @@
 package edu.bu.metcs673.trackr.transaction;
 
+import java.text.MessageFormat;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
 import edu.bu.metcs673.trackr.bankaccount.BankAccount;
 import edu.bu.metcs673.trackr.common.BaseController;
 import edu.bu.metcs673.trackr.common.CommonConstants;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.text.MessageFormat;
-import java.util.List;
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
 
 /**
  * Controller for Transactions Management. Contains 'Create', 'Find', 'Modify',
@@ -33,21 +43,25 @@ public class TransactionController extends BaseController {
 	 * value
 	 *
 	 * @param bankAccountId this is bank account id
-	 * @return ResponseEntity<Transaction>
-	 * @author Xiaobing Hou
-	 * @date 05/23/2022
+	 * @return ResponseEntity<GenericApiResponse<List<Transaction>>>
 	 */
 	@GetMapping("/{bankAccountId}")
 	public ResponseEntity<GenericApiResponse<List<Transaction>>> findAllTransactionById(
 			@PathVariable(value = "bankAccountId") long bankAccountId) {
 
-		BankAccount bankAccount = getBankAccount(bankAccountId);
+		// verify that user is associated to the requested bank account
+		if (isUserAssociatedToBankAccount(bankAccountId)) {
+			// get all transaction related to this bankAccountId
+			List<Transaction> transactions = transactionService.findAllTraByBankAccountId(bankAccountId);
 
-		List<Transaction> transactions = transactionService.findAllTraByBankAccountId(bankAccount.getId());
-
-		return ResponseEntity.ok(GenericApiResponse.successResponse(
-				MessageFormat.format(CommonConstants.FIND_ALL_TRANSACTION, String.valueOf(bankAccountId)),
-				transactions));
+			return ResponseEntity.ok(GenericApiResponse.successResponse(
+					MessageFormat.format(CommonConstants.FIND_ALL_TRANSACTION, String.valueOf(bankAccountId)),
+					transactions));
+		} else {
+			// if user not associated to bank account return error response with
+			// unauthorized message
+			throw new TrackrInputValidationException(CommonConstants.UNAUTHORIZED_ACCESS);
+		}
 	}
 
 	/**
@@ -56,20 +70,25 @@ public class TransactionController extends BaseController {
 	 *
 	 * @param transactionId this is transaction id
 	 * @param bankAccountId this is bank account id
-	 * @return ResponseEntity<Transaction>
-	 * @author Xiaobing Hou
-	 * @date 05/22/2022
+	 * @return ResponseEntity<GenericApiResponse<Transaction>>
 	 */
 	@GetMapping("/{bankAccountId}/{id}")
 	public ResponseEntity<GenericApiResponse<Transaction>> findTransactionById(
-			@PathVariable(value = "id") long transactionId,
-			@PathVariable(value = "bankAccountId") long bankAccountId) {
+			@PathVariable(value = "id") long transactionId, @PathVariable(value = "bankAccountId") long bankAccountId) {
 
-		Transaction transaction = getTransaction(bankAccountId, transactionId);
+		// verify that user is associated to the requested bank account
+		if (isUserAssociatedToBankAccount(bankAccountId)) {
+			// get transaction with provided id that is related to this bankAccountId
+			Transaction transaction = getTransaction(bankAccountId, transactionId);
 
-		return ResponseEntity.ok(GenericApiResponse.successResponse(
-				MessageFormat.format(CommonConstants.RETRIEVE_TRANSACTION, String.valueOf(transactionId)),
-				transaction));
+			return ResponseEntity.ok(GenericApiResponse.successResponse(
+					MessageFormat.format(CommonConstants.RETRIEVE_TRANSACTION, String.valueOf(transactionId)),
+					transaction));
+		} else {
+			// if user not associated to bank account return error response with
+			// unauthorized message
+			throw new TrackrInputValidationException(CommonConstants.UNAUTHORIZED_ACCESS);
+		}
 	}
 
 	/**
@@ -78,22 +97,25 @@ public class TransactionController extends BaseController {
 	 *
 	 * @param transactionInput this is a TransactionDTO
 	 * @return ResponseEntity<Transaction>
-	 * @author Xiaobing Hou
-	 * @date 05/21/2022
 	 */
 	@PostMapping
 	public ResponseEntity<GenericApiResponse<Transaction>> createTransaction(
 			@Valid @RequestBody TransactionDTO transactionInput) {
 
-		BankAccount bankAccount = getBankAccount(transactionInput.getBankAccountId());
+		// verify that user is associated to the requested bank account
+		if (isUserAssociatedToBankAccount(transactionInput.getBankAccountId())) {
+			BankAccount bankAccount = getBankAccount(transactionInput.getBankAccountId());
+			// create a new transaction record associated to the user
+			Transaction transaction = transactionService.createTransaction(transactionInput, bankAccount);
 
-		// create a new transaction record associated to the user making the API
-		// request.
-		Transaction transaction = transactionService.createTransaction(transactionInput, bankAccount);
-
-		return ResponseEntity.ok(GenericApiResponse.successResponse(
-				MessageFormat.format(CommonConstants.CREATE_TRANSACTION, String.valueOf(transaction.getId())),
-				transaction));
+			return ResponseEntity.ok(GenericApiResponse.successResponse(
+					MessageFormat.format(CommonConstants.CREATE_TRANSACTION, String.valueOf(transaction.getId())),
+					transaction));
+		} else {
+			// if user not associated to bank account return error response with
+			// unauthorized message
+			throw new TrackrInputValidationException(CommonConstants.UNAUTHORIZED_ACCESS);
+		}
 	}
 
 	/**
@@ -101,44 +123,62 @@ public class TransactionController extends BaseController {
 	 * 'bankAccountId' value
 	 *
 	 * @param transactionInput this is a TransactionDTO object
-	 * @return ResponseEntity<GenericApiResponse>
-	 * @author Xiaobing Hou
-	 * @date 05/23/2022
+	 * @return ResponseEntity<GenericApiResponse<Transaction>>
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<GenericApiResponse<Transaction>> modifyTransaction(
 			@PathVariable(value = "id") long transactionId, @RequestBody TransactionDTO transactionInput) {
 
-		Transaction transaction = getTransaction(transactionInput.getBankAccountId(), transactionId);
-		transaction = transactionService.modifyTransaction(transaction, transactionInput);
+		// verify that user is associated to the requested bank account
+		if (isUserAssociatedToBankAccount(transactionInput.getBankAccountId())) {
 
-		return ResponseEntity.ok(GenericApiResponse.successResponse(
-				MessageFormat.format(CommonConstants.MODIFY_TRANSACTION, String.valueOf(transactionId)), transaction));
+			// get existing transaction data, then replace it with provided input
+			Transaction transaction = getTransaction(transactionInput.getBankAccountId(), transactionId);
+			transaction = transactionService.modifyTransaction(transaction, transactionInput);
+
+			return ResponseEntity.ok(GenericApiResponse.successResponse(
+					MessageFormat.format(CommonConstants.MODIFY_TRANSACTION, String.valueOf(transactionId)),
+					transaction));
+		} else {
+			// if user not associated to bank account return error response with
+			// unauthorized message
+			throw new TrackrInputValidationException(CommonConstants.UNAUTHORIZED_ACCESS);
+		}
 	}
 
 	/**
 	 * The purpose of this method is to valid a transaction by 'transactionId' and
 	 * 'bankAccountId' value
-	 *
+	 * 
+	 * @param transactionId this is transaction id
 	 * @param bankAccountId this is bank account id
-	 * @return ResponseEntity<GenericApiResponse>
-	 * @author Xiaobing Hou
-	 * @date 05/23/2022
+	 * @return ResponseEntity<GenericApiResponse<Transaction>>
 	 */
-	@DeleteMapping("/{id}/{bankAccountId}")
+	@DeleteMapping("/{bankAccountId}/{id}")
 	public ResponseEntity<GenericApiResponse<Transaction>> deleteTransaction(
-			@PathVariable(value = "id") long transactionId,
-			@PathVariable(value = "bankAccountId") long bankAccountId) {
+			@PathVariable(value = "id") long transactionId, @PathVariable(value = "bankAccountId") long bankAccountId) {
 
-		Transaction transaction = getTransaction(bankAccountId, transactionId);
-		transaction = transactionService.deleteTransaction(transaction);
+		// verify that user is associated to the requested bank account
+		if (isUserAssociatedToBankAccount(bankAccountId)) {
 
-		return ResponseEntity.ok(GenericApiResponse.successResponse(
-				MessageFormat.format(CommonConstants.INVALID_TRANSACTION, String.valueOf(transactionId)), transaction));
+			// get existing transaction data, then 'delete' the transaction
+			Transaction transaction = getTransaction(bankAccountId, transactionId);
+			transaction = transactionService.deleteTransaction(transaction);
+
+			return ResponseEntity.ok(GenericApiResponse.successResponse(
+					MessageFormat.format(CommonConstants.INVALID_TRANSACTION, String.valueOf(transactionId)),
+					transaction));
+		} else {
+			// if user not associated to bank account return error response with
+			// unauthorized message
+			throw new TrackrInputValidationException(CommonConstants.UNAUTHORIZED_ACCESS);
+		}
+
 	}
 
 	/**
-	 * The purpose of this method is to get a transaction record by 'bankAccountId' and 'transactionId' value
+	 * The purpose of this method is to get a transaction record by 'bankAccountId'
+	 * and 'transactionId' value
 	 *
 	 * @param bankAccountId this is bank account id
 	 * @param transactionId this is bank account id

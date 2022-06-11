@@ -1,9 +1,9 @@
 package edu.bu.metcs673.trackr.bankaccount;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.user.TrackrUser;
-import edu.bu.metcs673.trackr.user.TrackrUserService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.text.MessageFormat;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,9 +12,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
-import java.text.MessageFormat;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.user.TrackrUser;
+import edu.bu.metcs673.trackr.user.TrackrUserService;
 
 @ExtendWith(MockitoExtension.class)
 public class BankAccountControllerTest {

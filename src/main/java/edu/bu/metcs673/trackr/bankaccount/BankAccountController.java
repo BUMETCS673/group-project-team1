@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.BaseController;
+import edu.bu.metcs673.trackr.common.CommonConstants;
 
 /**
  * Controller for Bank Account Management. Contains APIs for CRUD (create, read,
@@ -102,8 +101,7 @@ public class BankAccountController extends BaseController {
 		// API request.
 		BankAccount bankAccount = bankAccountService.modifyBankAccount(bankAccountInput, getUser().getId(), id);
 
-		return new ResponseEntity<>(GenericApiResponse.successResponse(CommonConstants.MODIFY_TRANSACTION, bankAccount),
-				HttpStatus.OK);
+		return ResponseEntity.ok(GenericApiResponse.successResponse(CommonConstants.MODIFY_TRANSACTION, bankAccount));
 	}
 
 	/**
@@ -122,10 +120,7 @@ public class BankAccountController extends BaseController {
 		// associated to it.
 		bankAccountService.deactivateBankAccount(getUser().getId(), id);
 
-		return new ResponseEntity<>(
-				GenericApiResponse.successResponse(
-						MessageFormat.format(CommonConstants.DEACTIVATE_BANK_ACCOUNT, String.valueOf(id))),
-				HttpStatus.OK);
+		return ResponseEntity.ok(GenericApiResponse
+				.successResponse(MessageFormat.format(CommonConstants.DEACTIVATE_BANK_ACCOUNT, String.valueOf(id))));
 	}
-
 }
