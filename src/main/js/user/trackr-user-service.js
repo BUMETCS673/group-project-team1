@@ -21,7 +21,6 @@ class TrackrUserService {
    * @returns {boolean}
    */
   static isAuthenticated() {
-    console.log(Cookies.get(USER_LOGGED_IN_COOKIE_NAME));
     return Cookies.get(USER_LOGGED_IN_COOKIE_NAME) === "true";
   }
 
