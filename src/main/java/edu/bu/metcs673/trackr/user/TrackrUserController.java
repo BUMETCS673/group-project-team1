@@ -88,10 +88,10 @@ public class TrackrUserController {
 			Cookie userLoggedInCookie = new Cookie(USER_LOGGED_IN_COOKIE_NAME, "true");
 
 			// We set HttpOnly so that JavaScript cannot read it top prevent XSS attack
-			// we set the secure attribute to further increase security
+      // we set the secure attribute to further increase security
 			jwtCookie.setHttpOnly(true);
 			jwtCookie.setSecure(true);
-			
+      
 			// Set path to root so that it's available to the whole application domain
 			jwtCookie.setPath(JWT_COOKIE_PATH);
 			userLoggedInCookie.setPath(JWT_COOKIE_PATH);
