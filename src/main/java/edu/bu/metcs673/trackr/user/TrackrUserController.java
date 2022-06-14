@@ -91,7 +91,6 @@ public class TrackrUserController {
 			// we set the secure attribute to further increase security
 			jwtCookie.setHttpOnly(true);
 			jwtCookie.setSecure(true);
-			
 			// Set path to root so that it's available to the whole application domain
 			jwtCookie.setPath(JWT_COOKIE_PATH);
 			userLoggedInCookie.setPath(JWT_COOKIE_PATH);
