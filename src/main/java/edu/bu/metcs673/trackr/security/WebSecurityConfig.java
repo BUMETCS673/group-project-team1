@@ -55,16 +55,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf()
-			.disable()
+		http.csrf(csrf -> csrf.disable())
 			.httpBasic()
 			.disable()
 			.cors()
 			.and()
+//			.authorizeHttpRequests().antMatchers("/actuator/**").permitAll()
+//			.and()
 			.userDetailsService(userServiceImpl)
 			.exceptionHandling()
 			.authenticationEntryPoint( (request, response, authException) -> response.sendError(SC_UNAUTHORIZED, "UNAUTHORIZED"))
 			.and()
+
 			.sessionManagement()
 			.sessionCreationPolicy(STATELESS);
 
@@ -80,4 +82,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// specifies when JWT filer is called in relation to other filters
 		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 	}
+	
 }
