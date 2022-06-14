@@ -14,15 +14,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-=======
->>>>>>> d196b08f154293c63e7b295775a9553e8bbac60e
-=======
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-
->>>>>>> 6a712239952a297eefe987b1cec3860204e7a1c5
 
 import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 
