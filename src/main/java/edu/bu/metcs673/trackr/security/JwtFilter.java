@@ -157,7 +157,6 @@ public class JwtFilter extends OncePerRequestFilter {
 		// If no header then check the cookie
 		if (StringUtils.isBlank(jwt)) {
 			Cookie cookie = WebUtils.getCookie(request, JWT_COOKIE_NAME);
-			cookie.setSecure(true);
 			jwt = Optional.ofNullable(cookie).map(Cookie::getValue).orElse("");
 		}
 
