@@ -65,7 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf(csrf -> {
 				csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 					.ignoringAntMatchers("/api/**")
-					.ignoringAntMatchers("/register");
+					.ignoringAntMatchers("/register")
+					.ignoringAntMatchers("/login");
 			})
 //			.csrf().disable()
 			.httpBasic()
