@@ -1,12 +1,11 @@
 package edu.bu.metcs673.trackr.common;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import edu.bu.metcs673.trackr.bankaccount.BankAccount;
 import edu.bu.metcs673.trackr.bankaccount.BankAccountService;
 import edu.bu.metcs673.trackr.user.TrackrUser;
 import edu.bu.metcs673.trackr.user.TrackrUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public abstract class BaseController {

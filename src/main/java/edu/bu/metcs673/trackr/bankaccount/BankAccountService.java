@@ -1,8 +1,7 @@
 package edu.bu.metcs673.trackr.bankaccount;
 
-import org.springframework.stereotype.Component;
-
 import edu.bu.metcs673.trackr.user.TrackrUser;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 

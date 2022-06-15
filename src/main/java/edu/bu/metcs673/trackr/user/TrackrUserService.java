@@ -51,6 +51,6 @@ public interface TrackrUserService {
 	 * @param dto User DTO
 	 * @return JWT
 	 */
-	public TrackrUser updateUser(TrackrUserDTO dto);
+	public TrackrUserDTO updateUser(TrackrUserDTO dto);
 
 }

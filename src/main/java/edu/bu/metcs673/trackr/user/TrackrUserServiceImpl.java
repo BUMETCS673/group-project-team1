@@ -1,8 +1,9 @@
 package edu.bu.metcs673.trackr.user;
 
-import java.util.Collections;
-import java.util.Objects;
-
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import edu.bu.metcs673.trackr.security.JWTUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,9 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.security.JWTUtil;
+import java.util.Collections;
 
 /**
  * Defines logic of the "UserService" methods. Calls methods in the
@@ -90,29 +89,29 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
      * {@inheritDoc}
      */
     @Override
-    public TrackrUser updateUser(TrackrUserDTO dto) {
+    public TrackrUserDTO updateUser(TrackrUserDTO dto) {
         TrackrUser trackrUser = getCurrentUser();
 
-        if (!dto.getUsername().equals(trackrUser.getUsername())) {
-            validateParameters(dto);
-        }
-
-        if (!bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword()) && !dto.getPassword().equals("")) {
+        if (!bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword()) && StringUtils.isNotBlank(dto.getPassword())) {
             throw new TrackrInputValidationException(CommonConstants.WRONG_PASSWORD);
         }
 
         trackrUser.setFirstName(dto.getFirstName());
         trackrUser.setLastName(dto.getLastName());
         trackrUser.setEmail(dto.getEmail());
-        trackrUser.setUsername(dto.getUsername());
 
-        if (!dto.getNewPassword().equals("")) {
+        if (StringUtils.isNotBlank(dto.getNewPassword())) {
             trackrUser.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
         }
 
         trackrUser = userRepository.save(trackrUser);
 
-        return trackrUser;
+        TrackrUserDTO updated = new TrackrUserDTO();
+        updated.setFirstName(trackrUser.getFirstName());
+        updated.setLastName(trackrUser.getLastName());
+        updated.setEmail(trackrUser.getEmail());
+
+        return updated;
     }
 
     /**

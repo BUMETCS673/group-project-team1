@@ -6,7 +6,7 @@
 
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Button, FormGroup, FormLabel, Row } from "react-bootstrap";
+import { Button, Col, FormGroup, FormLabel, Row } from "react-bootstrap";
 
 const ProfileForm = (props) => {
   return (
@@ -16,13 +16,12 @@ const ProfileForm = (props) => {
         firstName: props.user.firstName ? props.user.firstName : "",
         lastName: props.user.lastName ? props.user.lastName : "",
         email: props.user.email ? props.user.email : "",
-        username: props.user.username ? props.user.username : "",
         password: "",
         newPassword: "",
       }}
       validationSchema={
         props.isChangePwd
-          ? props.validationSchema_change
+          ? props.validationSchemaChange
           : props.validationSchema
       }
       onSubmit={(values, actions) => {
@@ -56,17 +55,6 @@ const ProfileForm = (props) => {
           <ErrorMessage name="lastName" component="div" />
         </FormGroup>
         <FormGroup className="mt-md-2">
-          <FormLabel htmlFor="username" className="form-label col-md-5">
-            Username
-          </FormLabel>
-          <Field
-            type="text"
-            name="username"
-            className="form-control col-md-5"
-          />
-          <ErrorMessage name="username" component="div" />
-        </FormGroup>
-        <FormGroup className="mt-md-2">
           <FormLabel htmlFor="email" className="form-label col-md-5">
             Email address
           </FormLabel>
@@ -80,35 +68,42 @@ const ProfileForm = (props) => {
           </Button>
         )}
         {props.isChangePwd && (
-          <FormGroup className="mt-md-2">
-            <Row>
-              <FormLabel htmlFor="password" className="form-label col-md-5">
-                Old Password
-              </FormLabel>
+          <Row>
+            <Col md={9}>
+              <FormGroup className="mt-md-2">
+                <FormLabel htmlFor="password" className="form-label col-md-9">
+                  Old Password
+                </FormLabel>
+                <Field
+                  type="password"
+                  name="password"
+                  className="form-control col-md-5"
+                />
+                <ErrorMessage name="password" component="div" />
 
-              <FormLabel htmlFor="password" className="form-label col-md-5">
-                <a href="" onClick={() => props.setIsChangePwd(false)}>
-                  Cancel Change
-                </a>
-              </FormLabel>
-            </Row>
-            <Field
-              type="password"
-              name="password"
-              className="form-control col-md-5"
-            />
-            <ErrorMessage name="password" component="div" />
-
-            <FormLabel htmlFor="newPassword" className="form-label col-md-5">
-              New Password
-            </FormLabel>
-            <Field
-              type="password"
-              name="newPassword"
-              className="form-control col-md-5"
-            />
-            <ErrorMessage name="newPassword" component="div" />
-          </FormGroup>
+                <FormLabel
+                  htmlFor="newPassword"
+                  className="form-label col-md-9"
+                >
+                  New Password
+                </FormLabel>
+                <Field
+                  type="password"
+                  name="newPassword"
+                  className="form-control col-md-5"
+                />
+                <ErrorMessage name="newPassword" component="div" />
+              </FormGroup>
+            </Col>
+            <Col md={3}>
+              <Button
+                variant="link"
+                onClick={() => props.setIsChangePwd(false)}
+              >
+                Cancel Change
+              </Button>
+            </Col>
+          </Row>
         )}
         <Button type="submit" className="form-control btn-primary mt-md-2">
           <h5>Save</h5>

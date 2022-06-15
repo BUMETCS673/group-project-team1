@@ -51,7 +51,7 @@ const ProfileContainer = (props) => {
     service
       .updateProfile(values)
       .then(function (response) {
-        if (user.username !== values.username || values.newPassword !== "") {
+        if (values.newPassword !== "") {
           handleLogout();
         }
         setUser(response.data.additionalData || {});

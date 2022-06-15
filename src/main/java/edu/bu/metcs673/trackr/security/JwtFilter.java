@@ -1,7 +1,6 @@
 package edu.bu.metcs673.trackr.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +21,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;

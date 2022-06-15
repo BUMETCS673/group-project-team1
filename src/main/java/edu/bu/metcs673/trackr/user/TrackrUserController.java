@@ -13,20 +13,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_MAX_AGE_MINUTES;
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_PATH;
-import static edu.bu.metcs673.trackr.common.CommonConstants.USER_LOGGED_IN_COOKIE_NAME;
+import static edu.bu.metcs673.trackr.common.CommonConstants.*;
 
 /**
  * Controller for Users Management. Contains a 'Create' API for new users to
@@ -132,8 +125,8 @@ public class TrackrUserController {
 	 * @return Response
 	 */
 	@PutMapping("/api/v1/profile")
-	public ResponseEntity<GenericApiResponse<TrackrUser>> updateProfile(@Valid @RequestBody TrackrUserDTO dto) {
-		TrackrUser updated = userService.updateUser(dto);
+	public ResponseEntity<GenericApiResponse<TrackrUserDTO>> updateProfile(@Valid @RequestBody TrackrUserDTO dto) {
+		TrackrUserDTO updated = userService.updateUser(dto);
 		return ResponseEntity.ok(GenericApiResponse.successResponse(CommonConstants.UPDATE_USER_PROFILE_SUCCESS, updated));
 	}
 

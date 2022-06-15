@@ -1,10 +1,9 @@
 package edu.bu.metcs673.trackr.transaction;
 
-import java.util.List;
-
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
 import org.springframework.stereotype.Component;
 
-import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import java.util.List;
 
 /**
  * Interface which defines methods which will be implemented in the

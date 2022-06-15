@@ -29,15 +29,12 @@ const Profile = (props) => {
             isChangePwd={props.isChangePwd}
             user={props.user}
             handleUserFormSubmit={props.handleUserFormSubmit}
-            validationSchema_change={Yup.object({
+            validationSchemaChange={Yup.object({
               firstName: Yup.string()
                 .max(100, "Must be 100 characters or less")
                 .required("Required"),
               lastName: Yup.string()
                 .max(100, "Must be 100 characters or less")
-                .required("Required"),
-              username: Yup.string()
-                .max(50, "Must be 50 characters or less")
                 .required("Required"),
               email: Yup.string()
                 .max(50, "Must be 50 characters or less")
@@ -58,9 +55,6 @@ const Profile = (props) => {
                 .required("Required"),
               lastName: Yup.string()
                 .max(100, "Must be 100 characters or less")
-                .required("Required"),
-              username: Yup.string()
-                .max(50, "Must be 50 characters or less")
                 .required("Required"),
               email: Yup.string()
                 .max(50, "Must be 50 characters or less")
