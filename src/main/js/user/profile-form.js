@@ -1,27 +1,28 @@
 /**
  * The signup form built using Formik for form element and Yup for validation.
  *
- * @author Jean Dorancy
+ * @author Xiaobing Hou
  */
 
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Button, FormGroup, FormLabel } from "react-bootstrap";
+import { Button, FormGroup, FormLabel, Row } from "react-bootstrap";
 
-const UserForm = (props) => {
+const ProfileForm = (props) => {
   return (
     <Formik
       enableReinitialize={true}
       initialValues={{
-        firstName: "",
-        lastName: "",
-        email: "",
-        username: "",
+        firstName: props.user.firstName ? props.user.firstName : "",
+        lastName: props.user.lastName ? props.user.lastName : "",
+        email: props.user.email ? props.user.email : "",
+        username: props.user.username ? props.user.username : "",
         password: "",
       }}
       validationSchema={props.validationSchema}
       onSubmit={(values, actions) => {
         props.handleUserFormSubmit(values);
+        props.setIsChangePwd(false);
         actions.setSubmitting(false);
         actions.resetForm();
       }}
@@ -68,24 +69,38 @@ const UserForm = (props) => {
           <ErrorMessage name="email" component="div" />
         </FormGroup>
 
-        <FormGroup className="mt-md-2">
-          <FormLabel htmlFor="password" className="form-label col-md-5">
-            Password
-          </FormLabel>
-          <Field
-            type="password"
-            name="password"
-            className="form-control col-md-5"
-          />
-          <ErrorMessage name="password" component="div" />
-        </FormGroup>
+        {!props.isChangePwd && (
+          <Button variant="link" onClick={() => props.setIsChangePwd(true)}>
+            Change Password
+          </Button>
+        )}
+        {props.isChangePwd && (
+          <FormGroup className="mt-md-2">
+            <Row>
+              <FormLabel htmlFor="password" className="form-label col-md-5">
+                New Password
+              </FormLabel>
 
+              <FormLabel htmlFor="password" className="form-label col-md-5">
+                <a href="" onClick={() => props.setIsChangePwd(false)}>
+                  Cancel Change
+                </a>
+              </FormLabel>
+            </Row>
+            <Field
+              type="password"
+              name="password"
+              className="form-control col-md-5"
+            />
+            <ErrorMessage name="password" component="div" />
+          </FormGroup>
+        )}
         <Button type="submit" className="form-control btn-primary mt-md-2">
-          <h5>Sign Up!</h5>
+          <h5>Save</h5>
         </Button>
       </Form>
     </Formik>
   );
 };
 
-export default UserForm;
+export default ProfileForm;

@@ -71,7 +71,7 @@ const TransactionPreview = (props) => {
                   onClick={() => props.handleDelClick(item)}
                 >
                   Delete
-                </Button>{" "}
+                </Button>
               </td>
             </tr>
           ))}

@@ -4,7 +4,14 @@ import TrackrUserService from "./trackr-user-service";
 
 const ProfileContainer = (props) => {
   const service = new TrackrUserService();
-  const [user, setUser] = useState({ firstName: "", lastName: "", email: "" });
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    username: "",
+    password: "",
+  });
+  const [isChangePwd, setIsChangePwd] = useState(false);
 
   /**
    * Update user profile.
@@ -13,11 +20,7 @@ const ProfileContainer = (props) => {
    */
   const handleUserFormSubmit = (values) => {
     service
-      .updateProfile({
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-      })
+      .updateProfile(values)
       .then(function (response) {
         setUser(response.data.additionalData || {});
         props.setAlert({
@@ -58,7 +61,14 @@ const ProfileContainer = (props) => {
 
   useEffect(() => getUserProfile(), []);
 
-  return <Profile user={user} handleUserFormSubmit={handleUserFormSubmit} />;
+  return (
+    <Profile
+      user={user}
+      setIsChangePwd={setIsChangePwd}
+      isChangePwd={isChangePwd}
+      handleUserFormSubmit={handleUserFormSubmit}
+    />
+  );
 };
 
 export default ProfileContainer;
