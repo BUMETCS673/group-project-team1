@@ -34,7 +34,7 @@ public class TransactionServiceImplTest {
 	public static final String TEST_COUNTERPARTY = "WA";
 	public static final String TEST_TIME = "05/24";
 	public static final BankAccount TEST_BANK_ACCOUNT = new BankAccount(1L, TEST_USER,
-			BankAccount.ACCOUNT_TYPE.CHECKING, "ACCOUNT_DESC", 100.0, BankAccount.ACCOUNT_STATUS.ACTIVE);
+			BankAccount.ACCOUNT_TYPE.CHECKING, "ACCOUNT_DESC", 100.0, BankAccount.ACCOUNT_STATUS.ACTIVE, null);
 	public static TransactionDTO TEST_TRANSACTIONDTO = new TransactionDTO(1L, TEST_MONEY, TEST_TIME,
 			TEST_COUNTERPARTY, TEST_DESCRIPTION);
 

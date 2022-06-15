@@ -30,7 +30,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 		// create new bank account object using DTO fields, set user and accountStatus
 		// as well
 		BankAccount bankAccount = new BankAccount(0L, user, bankAccountInput.getAccountType(),
-				bankAccountInput.getAccountDescription(), bankAccountInput.getBalance(), ACTIVE);
+				bankAccountInput.getAccountDescription(), bankAccountInput.getBalance(), ACTIVE, null);
 
 		return bankAccountRepository.save(bankAccount);
 	}

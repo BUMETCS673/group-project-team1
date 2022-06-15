@@ -44,7 +44,7 @@ public class TransactionControllerTest {
     public static final String TRANSACTION_DESC = "TEST DESCRIPTION";
 
     public static final BankAccount TEST_BANK_ACCOUNT = new BankAccount(1L, TEST_USER, TEST_TYPE, ACCOUNT_DESC, TEST_BALANCE,
-            BankAccount.ACCOUNT_STATUS.ACTIVE);
+            BankAccount.ACCOUNT_STATUS.ACTIVE, null);
 
     @Mock
     private TransactionService transactionService;

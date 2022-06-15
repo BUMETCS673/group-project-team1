@@ -2,6 +2,8 @@ package edu.bu.metcs673.trackr.bankaccount;
 
 import static edu.bu.metcs673.trackr.bankaccount.BankAccount.ACCOUNT_STATUS.ACTIVE;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -19,6 +22,7 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
 
 import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.transaction.Transaction;
 import edu.bu.metcs673.trackr.user.TrackrUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -55,6 +59,9 @@ public class BankAccount {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private ACCOUNT_STATUS status;
+	
+	@OneToMany(mappedBy = "bankAccount")
+	private List<Transaction> transactions;
 
 	// enum used for the 'status' field in the BankAccount object
 	public static enum ACCOUNT_STATUS {
