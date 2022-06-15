@@ -29,6 +29,29 @@ const Profile = (props) => {
             isChangePwd={props.isChangePwd}
             user={props.user}
             handleUserFormSubmit={props.handleUserFormSubmit}
+            validationSchema_change={Yup.object({
+              firstName: Yup.string()
+                .max(100, "Must be 100 characters or less")
+                .required("Required"),
+              lastName: Yup.string()
+                .max(100, "Must be 100 characters or less")
+                .required("Required"),
+              username: Yup.string()
+                .max(50, "Must be 50 characters or less")
+                .required("Required"),
+              email: Yup.string()
+                .max(50, "Must be 50 characters or less")
+                .email("Invalid email address")
+                .required("Required"),
+              password: Yup.string()
+                .min(6, "Must be at least 6 characters")
+                .max(200, "Must be less than 200 characters")
+                .required("Required"),
+              newPassword: Yup.string()
+                .min(6, "Must be at least 6 characters")
+                .max(200, "Must be less than 200 characters")
+                .required("Required"),
+            })}
             validationSchema={Yup.object({
               firstName: Yup.string()
                 .max(100, "Must be 100 characters or less")
@@ -36,10 +59,15 @@ const Profile = (props) => {
               lastName: Yup.string()
                 .max(100, "Must be 100 characters or less")
                 .required("Required"),
+              username: Yup.string()
+                .max(50, "Must be 50 characters or less")
+                .required("Required"),
               email: Yup.string()
                 .max(50, "Must be 50 characters or less")
                 .email("Invalid email address")
                 .required("Required"),
+              password: Yup.string(),
+              newPassword: Yup.string(),
             })}
           />
         </Col>

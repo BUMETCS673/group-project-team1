@@ -132,8 +132,8 @@ public class TrackrUserController {
 	 * @return Response
 	 */
 	@PutMapping("/api/v1/profile")
-	public ResponseEntity<GenericApiResponse<TrackrUserDTO>> updateProfile(@Valid @RequestBody TrackrUserDTO dto) {
-		TrackrUserDTO updated = userService.updateUser(dto);
+	public ResponseEntity<GenericApiResponse<TrackrUser>> updateProfile(@Valid @RequestBody TrackrUserDTO dto) {
+		TrackrUser updated = userService.updateUser(dto);
 		return ResponseEntity.ok(GenericApiResponse.successResponse(CommonConstants.UPDATE_USER_PROFILE_SUCCESS, updated));
 	}
 

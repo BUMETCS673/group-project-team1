@@ -90,27 +90,29 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
      * {@inheritDoc}
      */
     @Override
-    public TrackrUserDTO updateUser(TrackrUserDTO dto) {
+    public TrackrUser updateUser(TrackrUserDTO dto) {
         TrackrUser trackrUser = getCurrentUser();
+
+        if (!dto.getUsername().equals(trackrUser.getUsername())) {
+            validateParameters(dto);
+        }
+
+        if (!bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword()) && !dto.getPassword().equals("")) {
+            throw new TrackrInputValidationException(CommonConstants.WRONG_PASSWORD);
+        }
+
         trackrUser.setFirstName(dto.getFirstName());
         trackrUser.setLastName(dto.getLastName());
         trackrUser.setEmail(dto.getEmail());
         trackrUser.setUsername(dto.getUsername());
 
-        if (!dto.getPassword().equals("") && dto.getPassword() != null && !bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword())) {
-            trackrUser.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+        if (!dto.getNewPassword().equals("")) {
+            trackrUser.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
         }
 
         trackrUser = userRepository.save(trackrUser);
 
-        TrackrUserDTO updated = new TrackrUserDTO();
-        updated.setFirstName(trackrUser.getFirstName());
-        updated.setLastName(trackrUser.getLastName());
-        updated.setEmail(trackrUser.getEmail());
-        updated.setUsername(trackrUser.getUsername());
-        updated.setPassword(trackrUser.getPassword());
-
-        return dto;
+        return trackrUser;
     }
 
     /**

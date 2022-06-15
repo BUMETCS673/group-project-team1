@@ -36,8 +36,20 @@ public class TrackrUserDTO {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 
+    @Size(max = 200, message = CommonConstants.INVALID_PASSWORD_LENGTH)
+    @JsonProperty(access = Access.WRITE_ONLY)
+    private String newPassword;
+
 	@NotBlank(message = CommonConstants.BLANK_EMAIL)
 	@Size(max = 50, message = CommonConstants.INVALID_EMAIL_LENGTH)
 	@Email(regexp = CommonConstants.EMAIL_REGEX, message = CommonConstants.INVALID_EMAIL_FORMAT)
 	private String email;
+
+    public TrackrUserDTO(String firstName, String lastName, String username, String password, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 }

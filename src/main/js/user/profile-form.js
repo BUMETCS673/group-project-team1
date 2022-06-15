@@ -18,8 +18,13 @@ const ProfileForm = (props) => {
         email: props.user.email ? props.user.email : "",
         username: props.user.username ? props.user.username : "",
         password: "",
+        newPassword: "",
       }}
-      validationSchema={props.validationSchema}
+      validationSchema={
+        props.isChangePwd
+          ? props.validationSchema_change
+          : props.validationSchema
+      }
       onSubmit={(values, actions) => {
         props.handleUserFormSubmit(values);
         props.setIsChangePwd(false);
@@ -78,7 +83,7 @@ const ProfileForm = (props) => {
           <FormGroup className="mt-md-2">
             <Row>
               <FormLabel htmlFor="password" className="form-label col-md-5">
-                New Password
+                Old Password
               </FormLabel>
 
               <FormLabel htmlFor="password" className="form-label col-md-5">
@@ -93,6 +98,16 @@ const ProfileForm = (props) => {
               className="form-control col-md-5"
             />
             <ErrorMessage name="password" component="div" />
+
+            <FormLabel htmlFor="newPassword" className="form-label col-md-5">
+              New Password
+            </FormLabel>
+            <Field
+              type="password"
+              name="newPassword"
+              className="form-control col-md-5"
+            />
+            <ErrorMessage name="newPassword" component="div" />
           </FormGroup>
         )}
         <Button type="submit" className="form-control btn-primary mt-md-2">
