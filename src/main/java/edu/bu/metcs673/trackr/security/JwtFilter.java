@@ -101,7 +101,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
 				// Set authentication for API request
 				if (SecurityContextHolder.getContext().getAuthentication() == null) {
-					authToken.setAuthenticated(true);
 					SecurityContextHolder.getContext().setAuthentication(authToken);
 				}
 			}
