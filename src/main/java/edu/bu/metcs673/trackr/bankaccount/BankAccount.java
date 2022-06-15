@@ -60,7 +60,8 @@ public class BankAccount {
 	@Enumerated(EnumType.STRING)
 	private ACCOUNT_STATUS status;
 	
-	@OneToMany(mappedBy = "bankAccount")
+	@OneToMany
+	@JoinColumn(name = "transactions")
 	private List<Transaction> transactions;
 
 	// enum used for the 'status' field in the BankAccount object
