@@ -7,6 +7,7 @@ import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -95,7 +96,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 				// Create token using the username and password gathered from the JWT token
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username,
-						userDetails.getPassword(), new ArrayList<>());
+						userDetails.getPassword(), Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 				// Set authentication for API request

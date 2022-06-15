@@ -56,7 +56,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+		http
+			.csrf(csrf -> {
+					// enable CSRF protection, ignore the following paths which are entry/exit
+					// points, or API paths
+					csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+					.ignoringAntMatchers("/api/**")
+					.ignoringAntMatchers("/register")
+					.ignoringAntMatchers("/login");
+			})
 			.httpBasic()
 			.disable()
 			.cors()
@@ -67,12 +75,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.sessionManagement()
 			.sessionCreationPolicy(STATELESS);
-
+		
 		// Configure logout
 		http.logout(logout -> logout.logoutUrl("/logout")
-				.invalidateHttpSession(true)
 				.logoutSuccessHandler((request, response, authentication) -> response.setStatus(SC_OK))
-				.deleteCookies(JWT_COOKIE_NAME, USER_LOGGED_IN_COOKIE_NAME));
+				.deleteCookies(JWT_COOKIE_NAME, USER_LOGGED_IN_COOKIE_NAME)
+				.invalidateHttpSession(true));
 
 		// this will enable the frames for the H2 console
 		http.headers().frameOptions().disable();
