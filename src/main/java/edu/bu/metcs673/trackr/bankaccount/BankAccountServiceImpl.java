@@ -1,13 +1,14 @@
 package edu.bu.metcs673.trackr.bankaccount;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import edu.bu.metcs673.trackr.bankaccount.BankAccount.ACCOUNT_STATUS;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
 import edu.bu.metcs673.trackr.user.TrackrUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 import static edu.bu.metcs673.trackr.bankaccount.BankAccount.ACCOUNT_STATUS.ACTIVE;
 

@@ -1,6 +1,11 @@
 package edu.bu.metcs673.trackr.security;
 
-import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
+import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
+import static edu.bu.metcs673.trackr.common.CommonConstants.USER_LOGGED_IN_COOKIE_NAME;
+import static javax.servlet.http.HttpServletResponse.SC_OK;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
-import static edu.bu.metcs673.trackr.common.CommonConstants.USER_LOGGED_IN_COOKIE_NAME;
-import static javax.servlet.http.HttpServletResponse.SC_OK;
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 
 /**
  * Created to specify the spring-security behavior for authorization and

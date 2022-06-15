@@ -70,8 +70,7 @@ public class CommonConstants {
 	public static final String VALIDATION_ERRORS = "Invalid values detected in request body. Please review the errors and modify your request accordingly.";
 	public static final String INVALID_BANK_ACCOUNT_ID = "Invalid bank account id. Please use another value.";
 	public static final String INVALID_TRANSACTION_ID = "Invalid transaction id. Please use another value.";
-	public static final String WRONG_PASSWORD = "Wrong old password. Please try again.";
-
+	public static final String WRONG_PASSWORD = "Old password is wrong. Please try again.";
 
 	// security-related error messages
 	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials.";

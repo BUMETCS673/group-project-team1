@@ -1,12 +1,13 @@
 package edu.bu.metcs673.trackr.transaction;
 
-import edu.bu.metcs673.trackr.bankaccount.BankAccount;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
 
 /**
  * Defines logic for the "TransactionService" methods. Calls methods in the

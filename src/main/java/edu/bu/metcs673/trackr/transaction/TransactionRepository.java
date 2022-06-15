@@ -1,9 +1,9 @@
 package edu.bu.metcs673.trackr.transaction;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * Directly interfaces with the "TRANSACTION" table in the H2 repository, using the
