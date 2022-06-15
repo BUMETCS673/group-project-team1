@@ -51,9 +51,7 @@ class TrackrUserService {
    */
   logout = () => {
     localStorage.removeItem("user");
-	Cookies.remove("jwtToken", {path: "/"});
-	Cookies.remove(USER_LOGGED_IN_COOKIE_NAME, {path: "/"});
-    return axios.get(LOGOUT_PATH);
+    return axios.post(LOGOUT_PATH);
   };
 
   /**
