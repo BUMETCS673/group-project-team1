@@ -6,8 +6,6 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 
@@ -63,12 +58,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.csrf(csrf -> {
-				csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+					// enable CSRF protection, ignore the following paths which are entry/exit
+					// points, or API paths
+					csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 					.ignoringAntMatchers("/api/**")
 					.ignoringAntMatchers("/register")
 					.ignoringAntMatchers("/login");
 			})
-//			.csrf().disable()
 			.httpBasic()
 			.disable()
 			.cors()
@@ -92,17 +88,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// specifies when JWT filer is called in relation to other filters
 		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 	}
-	
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));
-//        configuration.setAllowedMethods(Arrays.asList("*"));
-//        configuration.setAllowedHeaders(Arrays.asList("*"));
-//        configuration.addAllowedHeader("Content-Type");
-//        configuration.setAllowCredentials(true);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 }
