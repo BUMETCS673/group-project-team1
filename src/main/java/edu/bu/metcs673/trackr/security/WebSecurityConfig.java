@@ -6,6 +6,8 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 
@@ -56,10 +61,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+		http
+			.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+//			.csrf().disable()
 			.httpBasic()
 			.disable()
 			.cors()
+			.and()
+			.authorizeRequests().antMatchers("/register").permitAll()
 			.and()
 			.userDetailsService(userServiceImpl)
 			.exceptionHandling()
@@ -67,12 +76,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.sessionManagement()
 			.sessionCreationPolicy(STATELESS);
-
+		
 		// Configure logout
 		http.logout(logout -> logout.logoutUrl("/logout")
-				.invalidateHttpSession(true)
 				.logoutSuccessHandler((request, response, authentication) -> response.setStatus(SC_OK))
-				.deleteCookies(JWT_COOKIE_NAME, USER_LOGGED_IN_COOKIE_NAME));
+				.deleteCookies(JWT_COOKIE_NAME, USER_LOGGED_IN_COOKIE_NAME)
+				.invalidateHttpSession(true));
 
 		// this will enable the frames for the H2 console
 		http.headers().frameOptions().disable();
@@ -80,4 +89,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// specifies when JWT filer is called in relation to other filters
 		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 	}
+	
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.addAllowedHeader("Content-Type");
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }

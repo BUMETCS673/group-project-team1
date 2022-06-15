@@ -1,8 +1,12 @@
 package edu.bu.metcs673.trackr.security;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
@@ -44,7 +48,16 @@ public class JWTUtil {
 	 * @return String token
 	 */
 	public String generateToken(String username) {
-		return JWT.create().withSubject("User Details").withClaim("username", username).withIssuedAt(new Date())
+		List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+                .commaSeparatedStringToAuthorityList("ROLE_USER");
+		
+		return JWT.create().withSubject("User Details")
+				.withClaim("username", username)
+				.withClaim("authorities", 
+						grantedAuthorities.stream()
+						.map(GrantedAuthority::getAuthority)
+						.collect(Collectors.toList()))
+				.withIssuedAt(new Date())
 				.withIssuer("Trackr Application").sign(Algorithm.HMAC256(jwtSecret));
 	}
 
