@@ -74,6 +74,7 @@ public class CommonConstants {
 	public static final String INVALID_TRANSACTION_ID = "Invalid transaction id. Please use another value.";
 	public static final String INVALID_USER_ID = "Invalid user id. Please use another value.";
 	public static final String INVALID_CHARACTERS = "Invalid characters detected in {0}. Please use another value.";
+	public static final String WRONG_PASSWORD = "Old password is wrong. Please try again.";
 
 	// security-related error messages
 	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials.";

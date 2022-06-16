@@ -4,9 +4,8 @@
  * @author Xiaobing Hou
  */
 import React from "react";
-import { FormGroup, FormLabel, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import TransactionForm from "./transaction-form";
-import { Field } from "formik";
 
 const TransactionModal = ({
   bankAccounts,

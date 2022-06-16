@@ -1,7 +1,9 @@
 package edu.bu.metcs673.trackr.user;
 
-import java.util.Collections;
-
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import edu.bu.metcs673.trackr.security.JWTUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,129 +14,137 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.security.JWTUtil;
+import java.util.Collections;
 
 /**
  * Defines logic of the "UserService" methods. Calls methods in the
  * 'UserRepository' class to get / save data. JavaDocs for overridden methods
  * are in the UserService class.
- * 
- * @author Tim Flucker
  *
+ * @author Tim Flucker
  */
 @Service
 public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsService {
 
-	@Autowired
-	private TrackrUserRepository userRepository;
+    @Autowired
+    private TrackrUserRepository userRepository;
 
-	@Autowired
-	private JWTUtil jwtUtil;
+    @Autowired
+    private JWTUtil jwtUtil;
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@Override
-	public TrackrUser findUserById(long id) {
-		return userRepository.findById(id).get();
-	}
+    @Override
+    public TrackrUser findUserById(long id) {
+        return userRepository.findById(id).get();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TrackrUser getCurrentUser() {
-		String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		return userRepository.findByUsername(username);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TrackrUser getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        return userRepository.findByUsername(username);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TrackrUserDTO getCurrentUserProfile() {
-		TrackrUser model = getCurrentUser();
-		TrackrUserDTO dto = new TrackrUserDTO();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TrackrUserDTO getCurrentUserProfile() {
+        TrackrUser model = getCurrentUser();
+        TrackrUserDTO dto = new TrackrUserDTO();
 
-		dto.setFirstName(model.getFirstName());
-		dto.setLastName(model.getLastName());
-		dto.setEmail(model.getEmail());
+        dto.setFirstName(model.getFirstName());
+        dto.setLastName(model.getLastName());
+        dto.setEmail(model.getEmail());
+        dto.setUsername(model.getUsername());
 
-		return dto;
-	}
+        return dto;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String createUser(TrackrUserDTO userInput) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String createUser(TrackrUserDTO userInput) {
 
-		// validate parameters
-		validateParameters(userInput);
+        // validate parameters
+        validateParameters(userInput);
 
-		// encrypt the provided password value, update User object
-		String encodedPwd = bCryptPasswordEncoder.encode(userInput.getPassword());
+        // encrypt the provided password value, update User object
+        String encodedPwd = bCryptPasswordEncoder.encode(userInput.getPassword());
 
-		// saves new User record in DB
-		TrackrUser user = userRepository.save(new TrackrUser(0L, userInput.getFirstName(), userInput.getLastName(),
-				userInput.getUsername(), encodedPwd, userInput.getEmail()));
+        // saves new User record in DB
+        TrackrUser user = userRepository.save(new TrackrUser(0L, userInput.getFirstName(), userInput.getLastName(),
+                userInput.getUsername(), encodedPwd, userInput.getEmail()));
 
-		// return response entity with a success response
-		return jwtUtil.generateToken(user.getUsername());
-	}
+        // return response entity with a success response
+        return jwtUtil.generateToken(user.getUsername());
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TrackrUserDTO updateUser(TrackrUserDTO dto) {
-		TrackrUser trackrUser = getCurrentUser();
-		trackrUser.setFirstName(dto.getFirstName());
-		trackrUser.setLastName(dto.getLastName());
-		trackrUser.setEmail(dto.getEmail());
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TrackrUserDTO updateUser(TrackrUserDTO dto) {
+        TrackrUser trackrUser = getCurrentUser();
 
-		trackrUser = userRepository.save(trackrUser);
+        if (StringUtils.isNotBlank(dto.getNewPassword())) {
+            if (!bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword())) {
+                throw new TrackrInputValidationException(CommonConstants.WRONG_PASSWORD);
+            } else {
+                trackrUser.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
+            }
+        }
 
-		TrackrUserDTO updated = new TrackrUserDTO();
-		updated.setFirstName(trackrUser.getFirstName());
-		updated.setLastName(trackrUser.getLastName());
-		updated.setEmail(trackrUser.getEmail());
+        trackrUser.setFirstName(dto.getFirstName());
+        trackrUser.setLastName(dto.getLastName());
+        trackrUser.setEmail(dto.getEmail());
 
-		return dto;
-	}
+        trackrUser = userRepository.save(trackrUser);
 
-	/**
-	 * Validates the parameters of the User that cannot be covered using annotations.
-	 * 
-	 * @param userInput User DTO
-	 */
-	public void validateParameters(TrackrUserDTO userInput) {
+        TrackrUserDTO updated = new TrackrUserDTO();
+        updated.setFirstName(trackrUser.getFirstName());
+        updated.setLastName(trackrUser.getLastName());
+        updated.setEmail(trackrUser.getEmail());
+        updated.setUsername(trackrUser.getUsername());
 
-		// check that username is unique
-		if (userRepository.existsByUsername(userInput.getUsername())) {
-			throw new TrackrInputValidationException(CommonConstants.DUPLICATE_USERNAME);
-		}
-	}
+        return updated;
+    }
 
-	/**
-	 * Used by the UserDetailsService when the JWT filter logic is occurring.
-	 * Searches the USERS database table based on the provided username and then
-	 * creates a Spring Security 'User' object based on that information.
-	 *
-	 * @param username Username to do the lookup by
-	 * @return User details
-	 */
-	@Override
-	public UserDetails loadUserByUsername(String username) {
-		TrackrUser trackrUser = userRepository.findByUsername(username);
+    /**
+     * Validates the parameters of the User that cannot be covered using annotations.
+     *
+     * @param userInput User DTO
+     */
+    public void validateParameters(TrackrUserDTO userInput) {
 
-		if (trackrUser == null) {
-			throw new UsernameNotFoundException(CommonConstants.INVALID_TOKEN);
-		}
+        // check that username is unique
+        if (userRepository.existsByUsername(userInput.getUsername())) {
+            throw new TrackrInputValidationException(CommonConstants.DUPLICATE_USERNAME);
+        }
+    }
 
-		return new User(username, trackrUser.getPassword(),
-				Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
-	}
+    /**
+     * Used by the UserDetailsService when the JWT filter logic is occurring.
+     * Searches the USERS database table based on the provided username and then
+     * creates a Spring Security 'User' object based on that information.
+     *
+     * @param username Username to do the lookup by
+     * @return User details
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        TrackrUser trackrUser = userRepository.findByUsername(username);
+
+        if (trackrUser == null) {
+            throw new UsernameNotFoundException(CommonConstants.INVALID_TOKEN);
+        }
+
+        return new User(username, trackrUser.getPassword(),
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+    }
 }
