@@ -9,22 +9,13 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button, FormGroup, FormLabel } from "react-bootstrap";
 
 const UserForm = (props) => {
-  /**
-   * Utility method to check if the user is logged in.
-   *
-   * @returns {boolean} Boolean
-   */
-  const isGuest = () => {
-    return !props.hasOwnProperty("user");
-  };
-
   return (
     <Formik
       enableReinitialize={true}
       initialValues={{
-        firstName: isGuest() ? "" : props.user.firstName,
-        lastName: isGuest() ? "" : props.user.lastName,
-        email: isGuest() ? "" : props.user.email,
+        firstName: "",
+        lastName: "",
+        email: "",
         username: "",
         password: "",
       }}
@@ -58,19 +49,17 @@ const UserForm = (props) => {
           />
           <ErrorMessage name="lastName" component="div" />
         </FormGroup>
-        {isGuest() && (
-          <FormGroup className="mt-md-2">
-            <FormLabel htmlFor="username" className="form-label col-md-5">
-              Username
-            </FormLabel>
-            <Field
-              type="text"
-              name="username"
-              className="form-control col-md-5"
-            />
-            <ErrorMessage name="username" component="div" />
-          </FormGroup>
-        )}
+        <FormGroup className="mt-md-2">
+          <FormLabel htmlFor="username" className="form-label col-md-5">
+            Username
+          </FormLabel>
+          <Field
+            type="text"
+            name="username"
+            className="form-control col-md-5"
+          />
+          <ErrorMessage name="username" component="div" />
+        </FormGroup>
         <FormGroup className="mt-md-2">
           <FormLabel htmlFor="email" className="form-label col-md-5">
             Email address
@@ -78,30 +67,22 @@ const UserForm = (props) => {
           <Field type="email" name="email" className="form-control col-md-5" />
           <ErrorMessage name="email" component="div" />
         </FormGroup>
-        {isGuest() && (
-          <FormGroup className="mt-md-2">
-            <FormLabel htmlFor="password" className="form-label col-md-5">
-              Password
-            </FormLabel>
-            <Field
-              type="password"
-              name="password"
-              className="form-control col-md-5"
-            />
-            <ErrorMessage name="password" component="div" />
-          </FormGroup>
-        )}
-        {isGuest() && (
-          <Button type="submit" className="form-control btn-primary mt-md-2">
-            <h5>Sign Up!</h5>
-          </Button>
-        )}
 
-        {!isGuest() && (
-          <Button type="submit" className="form-control btn-primary mt-md-2">
-            <h5>Save</h5>
-          </Button>
-        )}
+        <FormGroup className="mt-md-2">
+          <FormLabel htmlFor="password" className="form-label col-md-5">
+            Password
+          </FormLabel>
+          <Field
+            type="password"
+            name="password"
+            className="form-control col-md-5"
+          />
+          <ErrorMessage name="password" component="div" />
+        </FormGroup>
+
+        <Button type="submit" className="form-control btn-primary mt-md-2">
+          <h5>Sign Up!</h5>
+        </Button>
       </Form>
     </Formik>
   );
