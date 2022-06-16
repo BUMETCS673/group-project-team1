@@ -122,6 +122,6 @@ public class TransactionServiceImpl implements TransactionService {
 				.stream().map(BankAccount::getId).collect(Collectors.toList());
 		
 		
-		return transactionRepository.findByBankAccountIdIn(bankAccountIds);
+		return transactionRepository.findByBankAccountIdInAndStatus(bankAccountIds,Transaction.TRANSACTION_STATUS.VALID);
 	}
 }

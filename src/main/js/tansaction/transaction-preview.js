@@ -84,7 +84,6 @@ const TransactionPreview = (props) => {
         handleEditTransactions={props.handleEditTransactions}
         handleAddTransactions={props.handleAddTransactions}
         isAddTransaction={props.isAddTransaction}
-        bankAccountId={props.bankAccountId}
         bankAccounts={props.bankAccounts}
       />
       <TransactionConfModal

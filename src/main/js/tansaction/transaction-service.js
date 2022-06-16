@@ -11,15 +11,14 @@ const PATH = "/api/v1/transactions";
 
 class TransactionService {
   /**
-   * To get all transaction .
+   * To get all transactions.
    *
-   * @param bankAccountId
    * @returns {Promise<AxiosResponse<any>>} Promise
    * @author Xiaobing Hou
    * @date 06/03/2022
    */
-  findAllTransactionsByBankId = (bankAccountId) => {
-    return axios.get(`${PATH}/${bankAccountId}`);
+  findAllTransactions = () => {
+    return axios.get(`${PATH}`);
   };
 
   /**

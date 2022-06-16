@@ -9,7 +9,6 @@ import TransactionForm from "./transaction-form";
 
 const TransactionModal = ({
   bankAccounts,
-  bankAccountId,
   isAddTransaction,
   selectedTransaction,
   handleEditTransactions,
@@ -42,7 +41,6 @@ const TransactionModal = ({
           selectedTransaction={selectedTransaction}
           handleEditTransactions={handleEditTransactions}
           handleAddTransactions={handleAddTransactions}
-          bankAccountId={bankAccountId}
           bankAccounts={bankAccounts}
           isAddTransaction={isAddTransaction}
         />

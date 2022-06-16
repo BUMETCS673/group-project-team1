@@ -30,11 +30,7 @@ const AccountPreview = (props) => {
     <Container className="mt-md-4">
       <ListGroup defaultActiveKey="#link1">
         {props.bankAccounts.map((item) => (
-          <ListGroup.Item
-            key={item.id}
-            action
-            onClick={() => props.handleBankAccounts(item.id)}
-          >
+          <ListGroup.Item key={item.id}>
             <Row>
               <Col className="text-start" md={8}>
                 {item.accountType}
