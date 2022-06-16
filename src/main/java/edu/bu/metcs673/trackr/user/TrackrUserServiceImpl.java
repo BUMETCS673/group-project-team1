@@ -1,8 +1,9 @@
 package edu.bu.metcs673.trackr.user;
 
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.security.JWTUtil;
+import java.text.MessageFormat;
+import java.util.Collections;
+import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,7 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import edu.bu.metcs673.trackr.security.JWTUtil;
 
 /**
  * Defines logic of the "UserService" methods. Calls methods in the
@@ -74,6 +77,9 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
         // validate parameters
         validateParameters(userInput);
 
+		regexNameValidation(userInput.getFirstName());
+		regexNameValidation(userInput.getLastName());
+		
         // encrypt the provided password value, update User object
         String encodedPwd = bCryptPasswordEncoder.encode(userInput.getPassword());
 
@@ -126,8 +132,26 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
         if (userRepository.existsByUsername(userInput.getUsername())) {
             throw new TrackrInputValidationException(CommonConstants.DUPLICATE_USERNAME);
         }
+        
+		if (userRepository.existsByEmail(userInput.getEmail())) {
+			throw new TrackrInputValidationException(CommonConstants.DUPLICATE_EMAIL);
+
+		}
     }
 
+
+	/**
+	 * Validates that a string value only contains alphanumeric input
+	 * 
+	 * @param name
+	 */
+	public void regexNameValidation(String name) {
+
+		if (!Pattern.matches(CommonConstants.NAME_REGEX, name)) {
+			throw new TrackrInputValidationException(MessageFormat.format(CommonConstants.INVALID_CHARACTERS, name));
+		}
+	}
+	
     /**
      * Used by the UserDetailsService when the JWT filter logic is occurring.
      * Searches the USERS database table based on the provided username and then

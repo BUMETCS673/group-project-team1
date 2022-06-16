@@ -1,5 +1,6 @@
 package edu.bu.metcs673.trackr.user;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -11,6 +12,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -36,6 +39,7 @@ import edu.bu.metcs673.trackr.security.JWTUtil;
 public class TrackrUserServiceImplTest {
 
 	private static final String TEST_USERNAME = "testUser";
+	private static final String TEST_EMAIL = "testEmail@email.com";
 	private TrackrUser mockUser;
 
 	@Mock
@@ -54,7 +58,7 @@ public class TrackrUserServiceImplTest {
 	// to use as verification
 	@BeforeEach
 	public void beforeEach() {
-		mockUser = new TrackrUser(0L, "test", "mcTesterson", "testUser", "myCoolPassword", "testEmail@email.com");
+		mockUser = new TrackrUser(0L, "test", "mcTesterson", TEST_USERNAME, "myCoolPassword", TEST_EMAIL);
 	}
 
 	public void setUpAuthMock() {
@@ -62,7 +66,7 @@ public class TrackrUserServiceImplTest {
 		SecurityContext securityContext = Mockito.mock(SecurityContext.class);
 		Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
 		SecurityContextHolder.setContext(securityContext);
-		Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn("testUser");
+		Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(TEST_USERNAME);
 	}
 
 	@Test
@@ -72,7 +76,7 @@ public class TrackrUserServiceImplTest {
 		TrackrUser user = serviceImpl.findUserById(1L);
 
 		assertNotNull(user);
-		assertEquals("testUser", user.getUsername());
+		assertEquals(TEST_USERNAME, user.getUsername());
 	}
 
 	@Test
@@ -124,8 +128,7 @@ public class TrackrUserServiceImplTest {
 	public void testCreateUser_success() {
 
 		// define input
-		TrackrUserDTO userInput = new TrackrUserDTO("test", "mcTesterson", TEST_USERNAME, "myCoolPassword",
-				"testEmail@email.com");
+		TrackrUserDTO userInput = new TrackrUserDTO("test", "mcTesterson", TEST_USERNAME, "myCoolPassword", TEST_EMAIL);
 		mockUser.setPassword("ENCODED_PASSWORD");
 		// mock repository calls
 		Mockito.when(userRepository.existsByUsername(TEST_USERNAME)).thenReturn(false);
@@ -143,8 +146,27 @@ public class TrackrUserServiceImplTest {
 	@Test
 	public void testDuplicateUsername() {
 		Mockito.when(userRepository.existsByUsername(TEST_USERNAME)).thenReturn(true);
-		TrackrUserDTO testUser = new TrackrUserDTO("testy", "mcTesterson", TEST_USERNAME, "myCoolPassword",
-				"testEmail@email.com");
+		TrackrUserDTO testUser = new TrackrUserDTO("testy", "mcTesterson", TEST_USERNAME, "myCoolPassword", TEST_EMAIL);
 		assertThrows(TrackrInputValidationException.class, () -> serviceImpl.validateParameters(testUser));
+	}
+
+	@Test
+	public void testDuplicateEmail() {
+		Mockito.when(userRepository.existsByUsername(TEST_USERNAME)).thenReturn(false);
+		Mockito.when(userRepository.existsByEmail(TEST_EMAIL)).thenReturn(true);
+		TrackrUserDTO testUser = new TrackrUserDTO("testy", "mcTesterson", TEST_USERNAME, "myCoolPassword", TEST_EMAIL);
+		assertThrows(TrackrInputValidationException.class, () -> serviceImpl.validateParameters(testUser));
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "Tim", "Jean", "Xioabing", "Weijie", "Test-Name", "Tim123" })
+	public void testNameRegex_success(String name) {
+		assertDoesNotThrow(() -> serviceImpl.regexNameValidation(name));
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = { "Tim@$#@", "Jea@$T@$an", "Xioabi1/-+15$ng", "Wei LKJDSF_ *Y(*RYjie" })
+	public void testNameRegex_failure(String name) {
+		assertThrows(TrackrInputValidationException.class, () -> serviceImpl.regexNameValidation(name));
 	}
 }

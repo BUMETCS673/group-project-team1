@@ -1,9 +1,14 @@
 package edu.bu.metcs673.trackr.user;
 
-import edu.bu.metcs673.trackr.api.GenericApiResponse;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.security.JWTUtil;
-import net.minidev.json.JSONObject;
+import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_MAX_AGE_MINUTES;
+import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
+import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_PATH;
+import static edu.bu.metcs673.trackr.common.CommonConstants.USER_LOGGED_IN_COOKIE_NAME;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +24,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_MAX_AGE_MINUTES;
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_PATH;
-import static edu.bu.metcs673.trackr.common.CommonConstants.USER_LOGGED_IN_COOKIE_NAME;
+import edu.bu.metcs673.trackr.api.GenericApiResponse;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.security.JWTUtil;
+import net.minidev.json.JSONObject;
 
 /**
  * Controller for Users Management. Contains a 'Create' API for new users to

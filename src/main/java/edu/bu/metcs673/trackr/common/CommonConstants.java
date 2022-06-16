@@ -29,7 +29,7 @@ public class CommonConstants {
 	public static final String SUCCESS = "SUCCESS";
 	public static final String ERROR = "ERROR";
 
-	public static final String NAME_REGEX ="([A-Za-z-., '0-9]+)+";
+	public static final String NAME_REGEX ="^([A-Za-z-.,'0-9])+([ ])*$";
 	public static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
 	// ------------- Error messages -------------
