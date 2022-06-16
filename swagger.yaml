@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "This is the Team 1 group project for Boston University's MET CS 673 class in Summer 1 2022.  The application is modeled after personal finance applications like Mint and Truebill and allows users to input bank account and transaction data.  This data can then be accessed, modified, or voided at the user's discretion and it allows them to see their spending habits at a high level. \n\n Team members: Jean Dorancy, Timothy Flucker, Xiaobing Hou, Weijie Liang"
+  description: "This is the Team 1 group project for Boston University's MET CS 673 class in Summer 1 2022 (May - June).  The application is modeled after personal finance applications like Mint and Truebill and allows users to input bank account and transaction data.  This data can then be accessed, modified, or voided at the user's discretion and it allows them to see their spending habits at a high level. \n\n Team members: Jean Dorancy, Timothy Flucker, Xiaobing Hou, Weijie Liang"
   version: "1.0.0"
   title: "Trackr - Personal Transaction Management"
   termsOfService: "http://swagger.io/terms/"
@@ -18,6 +18,12 @@ tags:
 schemes:
   - "https"
   - "http"
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    
 paths:
   /register:
     post:
@@ -110,6 +116,8 @@ paths:
             
   /api/v1/profile:
     get:
+      security:
+        - Bearer: []
       tags: 
         - "User Management"
       summary: "Get the current user profile."
@@ -160,6 +168,8 @@ paths:
                   type: "string"
                   example: "some detailed error message"
     put:
+      security:
+        - Bearer: []    
       tags: 
         - "User Management"
       summary: "Update the current user profile information."
@@ -218,6 +228,8 @@ paths:
   
   /api/v1/bank-accounts:
     get:
+      security:
+        - Bearer: []
       tags:
         - "Bank Account Management"
       summary: "Retrieves all bank accounts tied to user."
@@ -268,6 +280,8 @@ paths:
                   type: "string"
                   example: "some detailed error message"
     post:
+      security:
+        - Bearer: []
       tags:
         - "Bank Account Management"
       summary: "Create a bank account tied to the user."
@@ -326,6 +340,8 @@ paths:
 
   /api/v1/bank-accounts/{id}:
     get:
+      security:
+        - Bearer: []
       tags:
         - "Bank Account Management"
       summary: "Retrieves a bank account tied to the user based on the provided id"
@@ -381,6 +397,8 @@ paths:
                   type: "string"
                   example: "some detailed error message"
     delete:
+      security:
+        - Bearer: []
       tags:
         - "Bank Account Management"
       summary: "Voids a bank account tied to the user based on the provided id"
@@ -434,6 +452,8 @@ paths:
                   type: "string"
                   example: "some detailed error message"
     put:
+      security:
+        - Bearer: []
       tags:
         - "Bank Account Management"
       summary: "Updateds a bank account tied to the user based on the provided id"
@@ -509,6 +529,8 @@ paths:
 
   /api/v1/transactions/{bankAccountId}:
     get:
+      security:
+        - Bearer: []
       tags:
         - "Transaction Management"
       summary: "Retrieves all transactions tied to a specific bankAccountId."
@@ -568,6 +590,8 @@ paths:
   
   /api/v1/transactions/{bankAccountId}/{id}:
     get:
+      security:
+        - Bearer: []
       tags:
         - "Transaction Management"
       summary: "Retrieves all transactions tied to a specific bankAccountId."
@@ -630,6 +654,8 @@ paths:
                   type: "string"
                   example: "some detailed error message"
     delete:
+      security:
+        - Bearer: []
       tags:
         - "Transaction Management"
       summary: "Voids a transaction tied to the user based on the provided id"
@@ -699,7 +725,62 @@ paths:
                   example: "some detailed error message"
 
   /api/v1/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags: 
+        - "Transaction Management"
+      summary: "Retrieve all transaction associated to the current user."
+      description: "Retrieve all transaction associated to the current user."
+      operationId: "getAllTransactions"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Transaction"
+                  
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
     post:
+      security:
+        - Bearer: []
       tags:
         - "Transaction Management"
       summary: "Create a transaction tied to the user and a specific bank account"
@@ -740,15 +821,46 @@ paths:
         "200": 
           description: "success response"
           schema:
-            $ref: "#/definitions/MessageResponse"        
-        "400":
-          description: "invalid data response"
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                $ref: "#/definitions/Transaction"
+                  
+        "400": 
+          description: "error response"
           schema:
-            $ref: "#/definitions/MessageResponse"
-  
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
   
   /api/v1/transaction/{id}:
     put:
+      security:
+        - Bearer: []
       tags:
         - "Transaction Management"
       summary: "Updates a transaction with the provided request body."
@@ -941,31 +1053,6 @@ definitions:
         type: "string"
         format: "date"
         example: "2022-05-10"
-  GenericApiResponse:
-    type: "object"
-    properties:
-      status:
-        type: "string"
-        example: "SUCCESS or ERROR"
-      date:
-        type: "string"
-        format: "date"
-        example: "2022-06-10"
-      message:
-        type: "string"
-        example: "Some message here!"
-      additionalData:
-        type: "object"
-        example: 
-          field1: "some object field or string"
-          field2: "some object field or string"
-        description: "This is a generic field that can be populated with strings or objects representing data."
-  MessageResponse:
-    type: "object"
-    properties:
-      message:
-        type: "string"
-        example: "Some message here!"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
