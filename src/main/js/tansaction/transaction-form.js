@@ -37,7 +37,7 @@ const TransactionForm = (props) => {
   return (
     <Formik
       initialValues={{
-        bankAccountId: props.bankAccountId,
+        bankAccountId: props.bankAccounts[0].id,
         money: props.isAddTransaction ? 0 : props.selectedTransaction.money,
         counterparty: props.isAddTransaction
           ? ""
@@ -70,6 +70,7 @@ const TransactionForm = (props) => {
         if (props.isAddTransaction) {
           props.handleAddTransactions(values);
         } else {
+          values.bankAccountId = props.selectedTransaction.bankAccount.id;
           props.handleEditTransactions(props.selectedTransaction.id, values);
         }
         actions.setSubmitting(false);

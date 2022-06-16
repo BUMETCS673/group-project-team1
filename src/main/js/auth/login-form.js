@@ -32,6 +32,7 @@ const LoginForm = (props) => {
             Username
           </FormLabel>
           <Field
+            id="username"
             type="text"
             name="username"
             className="form-control col-md-5"
@@ -43,6 +44,7 @@ const LoginForm = (props) => {
             Password
           </FormLabel>
           <Field
+            id="password"
             type="password"
             name="password"
             className="form-control col-md-5"
