@@ -92,17 +92,17 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
     public TrackrUserDTO updateUser(TrackrUserDTO dto) {
         TrackrUser trackrUser = getCurrentUser();
 
-        if (!bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword()) && StringUtils.isNotBlank(dto.getPassword())) {
-            throw new TrackrInputValidationException(CommonConstants.WRONG_PASSWORD);
+        if (StringUtils.isNotBlank(dto.getNewPassword())) {
+            if (!bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword())) {
+                throw new TrackrInputValidationException(CommonConstants.WRONG_PASSWORD);
+            } else {
+                trackrUser.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
+            }
         }
 
         trackrUser.setFirstName(dto.getFirstName());
         trackrUser.setLastName(dto.getLastName());
         trackrUser.setEmail(dto.getEmail());
-
-        if (StringUtils.isNotBlank(dto.getNewPassword())) {
-            trackrUser.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
-        }
 
         trackrUser = userRepository.save(trackrUser);
 
@@ -110,6 +110,7 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
         updated.setFirstName(trackrUser.getFirstName());
         updated.setLastName(trackrUser.getLastName());
         updated.setEmail(trackrUser.getEmail());
+        updated.setUsername(trackrUser.getUsername());
 
         return updated;
     }

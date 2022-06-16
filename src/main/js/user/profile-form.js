@@ -25,6 +25,10 @@ const ProfileForm = (props) => {
           : props.validationSchema
       }
       onSubmit={(values, actions) => {
+        if (!props.isChangePwd) {
+          values.password = "";
+          values.newPassword = "";
+        }
         props.handleUserFormSubmit(values);
         props.setIsChangePwd(false);
         actions.setSubmitting(false);
