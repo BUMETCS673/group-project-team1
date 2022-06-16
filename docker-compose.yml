@@ -17,3 +17,7 @@ services:
     build:
       context: .
       dockerfile: docker/java-test/Dockerfile
+  js-test:
+    build:
+      context: .
+      dockerfile: docker/js-test/Dockerfile

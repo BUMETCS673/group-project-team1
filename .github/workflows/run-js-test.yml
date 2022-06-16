@@ -1,0 +1,14 @@
+name: JS Code Sniff
+on:
+  push:
+    branches:
+      - '**'        # matches every branch
+    paths:
+      - 'src/main/js/**.js' # JS paths
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: JS Code Sniff
+        run: docker build . --file docker/js-test/Dockerfile --tag trackr-js-test:$(date +%s)
