@@ -14,7 +14,6 @@ const DashboardContainer = (props) => {
   const accountService = new AccountService();
   const transactionService = new TransactionService();
   const [bankAccounts, setBankAccounts] = useState([]);
-  const [bankAccountId, setBankAccountId] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [transactionModalShow, setTransactionModalShow] = useState(false);
   const [transactionConfModalShow, setTransactionConfModalShow] =
@@ -25,24 +24,14 @@ const DashboardContainer = (props) => {
   /**
    * Handle click on bank account, init the bank accounts list and transactions list
    *
-   * @param bankAccountId
    * @author Xiaobing Hou
    */
-  const handleBankAccounts = (bankAccountId) => {
+  const handleBankAccounts = () => {
     accountService
       .findAllBankAccount()
       .then(function (response) {
         setBankAccounts(response.data.additionalData || []);
-        if (bankAccountId) {
-          setBankAccountId(bankAccountId);
-          handleTransactions(setTransactions, bankAccountId);
-        } else {
-          setBankAccountId(response.data.additionalData[0].id);
-          handleTransactions(
-            setTransactions,
-            response.data.additionalData[0].id
-          );
-        }
+        handleTransactions(setTransactions);
       })
       .catch(function (error) {
         props.setAlert({
@@ -62,15 +51,13 @@ const DashboardContainer = (props) => {
    * The purpose of this method is to get the data for transactions list
    *
    * @param setTransactions
-   * @param bankAccountId
    * @author Xiaobing Hou
    */
-  const handleTransactions = (setTransactions, bankAccountId) => {
+  const handleTransactions = (setTransactions) => {
     transactionService
-      .findAllTransactionsByBankId(bankAccountId)
+      .findAllTransactions()
       .then(function (response) {
         setTransactions(response.data.additionalData || []);
-        setBankAccountId(bankAccountId);
       })
       .catch(function (error) {
         props.setAlert({
@@ -93,7 +80,7 @@ const DashboardContainer = (props) => {
     transactionService
       .deleteTranByTranIdAndBankId(transactionId, bankAccountId)
       .then(function (response) {
-        handleTransactions(setTransactions, bankAccountId);
+        handleTransactions(setTransactions);
         setTransactionConfModalShow(false);
       })
       .catch(function (error) {
@@ -128,7 +115,7 @@ const DashboardContainer = (props) => {
     transactionService
       .editTranByTranIdAndBankId(transactionId, value)
       .then(function (response) {
-        handleTransactions(setTransactions, value.bankAccountId);
+        handleTransactions(setTransactions);
         setTransactionModalShow(false);
       })
       .catch(function (error) {
@@ -162,7 +149,7 @@ const DashboardContainer = (props) => {
     transactionService
       .addTransaction(value)
       .then(function (response) {
-        handleTransactions(setTransactions, value.bankAccountId);
+        handleTransactions(setTransactions);
         setTransactionModalShow(false);
       })
       .catch(function (error) {
@@ -188,7 +175,6 @@ const DashboardContainer = (props) => {
   return (
     <Dashboard
       transactions={transactions}
-      bankAccountId={bankAccountId}
       bankAccounts={bankAccounts}
       selectedTransaction={selectedTransaction}
       isAddTransaction={isAddTransaction}
@@ -202,7 +188,6 @@ const DashboardContainer = (props) => {
       handleAddClick={handleAddClick}
       handleEditTransactions={handleEditTransactions}
       handleDelTransactions={handleDelTransactions}
-      handleBankAccounts={handleBankAccounts}
     />
   );
 };

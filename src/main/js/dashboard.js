@@ -30,10 +30,7 @@ const Dashboard = (props) => {
               </h4>
             </Row>
             <Row>
-              <AccountPreview
-                bankAccounts={props.bankAccounts}
-                handleBankAccounts={props.handleBankAccounts}
-              />
+              <AccountPreview bankAccounts={props.bankAccounts} />
             </Row>
           </Row>
         </Col>
@@ -46,22 +43,12 @@ const Dashboard = (props) => {
                 }}
               >
                 Transactions
-                <span
-                  style={{
-                    fontSize: "12px",
-                    color: "gray",
-                  }}
-                >
-                  {" "}
-                  • from account {props.bankAccountId}
-                </span>
               </h4>
             </Row>
             <Row>
               <TransactionPreview
                 transactions={props.transactions}
                 bankAccounts={props.bankAccounts}
-                bankAccountId={props.bankAccountId}
                 selectedTransaction={props.selectedTransaction}
                 isAddTransaction={props.isAddTransaction}
                 setTransactionConfModalShow={props.setTransactionConfModalShow}
