@@ -133,32 +133,6 @@ public class TransactionServiceImpl implements TransactionService {
         List<Long> bankAccountIds = bankAccountRepository.findAllByUserIdAndStatus(userId, ACCOUNT_STATUS.ACTIVE)
                 .stream().map(BankAccount::getId).collect(Collectors.toList());
 
-        List<Transaction> transactions = transactionRepository.findByBankAccountIdInAndStatus(bankAccountIds, Transaction.TRANSACTION_STATUS.VALID);
-        transactions.sort((t1, t2) -> {
-            long dateDifference = getMillisecond(t1.getTime()) - getMillisecond(t2.getTime());
-            if (dateDifference == 0) {
-                return 0;
-            } else {
-                return dateDifference > 0 ? -1 : 1;
-            }
-        });
-        return transactions;
-    }
-
-    /**
-     * The purpose of this method is to get with a date string
-     *
-     * @param date
-     * @return Long
-     * @author Xiaobing
-     */
-    private long getMillisecond(String date) {
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.setTime(new SimpleDateFormat("MM/dd/yyyy").parse(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return calendar.getTimeInMillis();
+        return transactionRepository.findByBankAccountIdInAndStatusOrderByTimeDesc(bankAccountIds, Transaction.TRANSACTION_STATUS.VALID);
     }
 }

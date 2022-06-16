@@ -34,6 +34,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      */
     public List<Transaction> findAllTraByBankAccountIdAndStatus(long bankAccountId, Transaction.TRANSACTION_STATUS VALID);
 
-    public List<Transaction> findByBankAccountIdInAndStatus(List<Long> bankAccountIds, Transaction.TRANSACTION_STATUS VALID);
+    public List<Transaction> findByBankAccountIdInAndStatusOrderByTimeDesc(List<Long> bankAccountIds, Transaction.TRANSACTION_STATUS VALID);
 
 }
