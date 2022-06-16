@@ -40,7 +40,7 @@ public class BankAccountControllerTest {
 
 		BankAccountDTO bankDTO = new BankAccountDTO(TEST_TYPE, ACCOUNT_DESC, TEST_BALANCE);
 		BankAccount mockBankAccount = new BankAccount(1L, TEST_USER, TEST_TYPE, ACCOUNT_DESC, TEST_BALANCE,
-				BankAccount.ACCOUNT_STATUS.ACTIVE);
+				BankAccount.ACCOUNT_STATUS.ACTIVE,null);
 
 		ResponseEntity<GenericApiResponse<BankAccount>> mockResponse = ResponseEntity.ok(GenericApiResponse
 				.successResponse(MessageFormat.format(CommonConstants.CREATE_BANK_ACCOUNT, mockBankAccount.getId()),
