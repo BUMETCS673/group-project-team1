@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button, FormGroup, FormLabel } from "react-bootstrap";
 import * as Yup from "yup";
 

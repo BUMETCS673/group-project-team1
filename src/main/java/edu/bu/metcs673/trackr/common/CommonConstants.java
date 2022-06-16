@@ -29,6 +29,7 @@ public class CommonConstants {
 	public static final String SUCCESS = "SUCCESS";
 	public static final String ERROR = "ERROR";
 
+	public static final String NAME_REGEX ="^([A-Za-z-.,'0-9])+([ ])*$";
 	public static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
 	// ------------- Error messages -------------
@@ -64,13 +65,16 @@ public class CommonConstants {
 	public static final String INVALID_TRANSACTION_TD_LENGTH = "Transaction Description must be less than 225 characters.";
 
 	// custom validation error messages
-	public static final String DUPLICATE_USERNAME = "Invalid USERNAME value. Please use another value.";
+	public static final String DUPLICATE_USERNAME = "Invalid USERNAME value provided. Please use another value.";
+	public static final String DUPLICATE_EMAIL = "Invalid EMAIL value provided. Please use another value.";
 	public static final String INVALID_EMAIL_FORMAT = "Email has an invalid format. Please try again.";
 	public static final String INVALID_BALANCE_VALUE = "Balance must be a positive number or zero.";
 	public static final String VALIDATION_ERRORS = "Invalid values detected in request body. Please review the errors and modify your request accordingly.";
 	public static final String INVALID_BANK_ACCOUNT_ID = "Invalid bank account id. Please use another value.";
 	public static final String INVALID_TRANSACTION_ID = "Invalid transaction id. Please use another value.";
 	public static final String INVALID_USER_ID = "Invalid user id. Please use another value.";
+	public static final String INVALID_CHARACTERS = "Invalid characters detected in {0}. Please use another value.";
+	public static final String WRONG_PASSWORD = "Old password is wrong. Please try again.";
 
 	// security-related error messages
 	public static final String INVALID_CREDENTIALS = "Invalid Login Credentials.";
@@ -95,6 +99,7 @@ public class CommonConstants {
 	public static final String MODIFY_TRANSACTION = "Successfully modified the transaction with id: {0}.";
 	public static final String CREATE_TRANSACTION = "Successfully created a transaction with id: {0}.";
 	public static final String FIND_ALL_TRANSACTION = "Successfully found all transactions associated to bank account id: {0}.";
+	public static final String FIND_ALL_TRANSACTION_FOR_USER = "Successfully found all transactions associated to user: {0}";
 	public static final String RETRIEVE_TRANSACTION = "Successfully found the transaction with id: {0}.";
 	public static final String INVALID_TRANSACTION = "Successfully invalidated the transaction with id: {0}.";
 

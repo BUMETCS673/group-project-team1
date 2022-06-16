@@ -59,11 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf(csrf -> {
 					// enable CSRF protection, ignore the following paths which are entry/exit
-					// points, or API paths
+					// points, Spring Actuator endpoints, or API paths
 					csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 					.ignoringAntMatchers("/api/**")
 					.ignoringAntMatchers("/register")
-					.ignoringAntMatchers("/login");
+					.ignoringAntMatchers("/login")
+					.ignoringAntMatchers("/actuator/**");
 			})
 			.httpBasic()
 			.disable()

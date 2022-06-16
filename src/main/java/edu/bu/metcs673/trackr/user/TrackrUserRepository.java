@@ -29,4 +29,13 @@ public interface TrackrUserRepository extends JpaRepository<TrackrUser, Long> {
 	 * @return
 	 */
 	public TrackrUser findByUsername(String username);
+
+	/**
+	 * Custom JPA query that checks to see if a record with the provided 'email'
+	 * already exists in the DB.
+	 * 
+	 * @param username
+	 * @return boolean
+	 */
+	public boolean existsByEmail(String email);
 }
