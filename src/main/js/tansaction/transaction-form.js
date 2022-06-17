@@ -20,6 +20,7 @@ const TransactionForm = (props) => {
           Select Account
         </FormLabel>
         <Field
+          id="bankAccountId"
           as="select"
           name="bankAccountId"
           className="form-control col-md-5"
@@ -61,10 +62,9 @@ const TransactionForm = (props) => {
         counterparty: Yup.string()
           .max(100, "Must be 100 characters or less")
           .required("Required"),
-        transactionDescription: Yup.string().max(
-          100,
-          "Must be 100 characters or less"
-        ),
+        transactionDescription: Yup.string()
+          .min(1)
+          .max(100, "Must be 100 characters or less"),
       })}
       onSubmit={(values, actions) => {
         if (props.isAddTransaction) {
@@ -83,7 +83,12 @@ const TransactionForm = (props) => {
           <FormLabel htmlFor="money" className="form-label col-md-5">
             Amount
           </FormLabel>
-          <Field type="text" name="money" className="form-control col-md-5" />
+          <Field
+            id="money"
+            type="text"
+            name="money"
+            className="form-control col-md-5"
+          />
           <ErrorMessage name="money" component="div" />
         </FormGroup>
         <FormGroup className="mt-md-2">
@@ -91,6 +96,7 @@ const TransactionForm = (props) => {
             Counterparty
           </FormLabel>
           <Field
+            id="counterparty"
             type="text"
             name="counterparty"
             className="form-control col-md-5"
@@ -105,6 +111,7 @@ const TransactionForm = (props) => {
             Description
           </FormLabel>
           <Field
+            id="transactionDescription"
             type="text"
             name="transactionDescription"
             className="form-control col-md-5"
