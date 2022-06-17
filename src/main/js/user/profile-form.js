@@ -7,8 +7,55 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button, Col, FormGroup, FormLabel, Row } from "react-bootstrap";
+import * as Yup from "yup";
 
 const ProfileForm = (props) => {
+  /**
+   * Select validation schema.
+   *
+   * @returns Schema
+   */
+  const getValidationSchema = () => {
+    if (props.isChangePwd) {
+      return Yup.object({
+        firstName: Yup.string()
+          .max(100, "Must be 100 characters or less")
+          .required("Required"),
+        lastName: Yup.string()
+          .max(100, "Must be 100 characters or less")
+          .required("Required"),
+        email: Yup.string()
+          .max(50, "Must be 50 characters or less")
+          .email("Invalid email address")
+          .required("Required"),
+        password: Yup.string()
+          .min(6, "Must be at least 6 characters")
+          .max(200, "Must be less than 200 characters")
+          .required("Required"),
+        newPassword: Yup.string()
+          .min(6, "Must be at least 6 characters")
+          .max(200, "Must be less than 200 characters")
+          .required("Required"),
+      });
+    }
+
+    // Not change password path
+    return Yup.object({
+      firstName: Yup.string()
+        .max(100, "Must be 100 characters or less")
+        .required("Required"),
+      lastName: Yup.string()
+        .max(100, "Must be 100 characters or less")
+        .required("Required"),
+      email: Yup.string()
+        .max(50, "Must be 50 characters or less")
+        .email("Invalid email address")
+        .required("Required"),
+      password: Yup.string(),
+      newPassword: Yup.string(),
+    });
+  };
+
   return (
     <Formik
       enableReinitialize={true}
@@ -19,11 +66,7 @@ const ProfileForm = (props) => {
         password: "",
         newPassword: "",
       }}
-      validationSchema={
-        props.isChangePwd
-          ? props.validationSchemaChange
-          : props.validationSchema
-      }
+      validationSchema={getValidationSchema()}
       onSubmit={(values, actions) => {
         if (!props.isChangePwd) {
           values.password = "";
@@ -41,6 +84,7 @@ const ProfileForm = (props) => {
             First name
           </FormLabel>
           <Field
+            id="firstName"
             type="text"
             name="firstName"
             className="form-control col-md-5"
@@ -52,6 +96,7 @@ const ProfileForm = (props) => {
             Last name
           </FormLabel>
           <Field
+            id="lastName"
             type="text"
             name="lastName"
             className="form-control col-md-5"
@@ -62,7 +107,12 @@ const ProfileForm = (props) => {
           <FormLabel htmlFor="email" className="form-label col-md-5">
             Email address
           </FormLabel>
-          <Field type="email" name="email" className="form-control col-md-5" />
+          <Field
+            id="email"
+            type="email"
+            name="email"
+            className="form-control col-md-5"
+          />
           <ErrorMessage name="email" component="div" />
         </FormGroup>
 
@@ -79,6 +129,7 @@ const ProfileForm = (props) => {
                   Old Password
                 </FormLabel>
                 <Field
+                  id="password"
                   type="password"
                   name="password"
                   className="form-control col-md-5"
@@ -92,6 +143,7 @@ const ProfileForm = (props) => {
                   New Password
                 </FormLabel>
                 <Field
+                  id="newPassword"
                   type="password"
                   name="newPassword"
                   className="form-control col-md-5"
