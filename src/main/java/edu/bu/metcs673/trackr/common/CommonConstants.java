@@ -31,6 +31,7 @@ public class CommonConstants {
 
 	public static final String NAME_REGEX ="^([A-Za-z-.,'0-9])+([ ])*$";
 	public static final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+	public static final String PASSWORD_REGEX = "^([A-Za-z-.,'0-9!?_])+([ ])*$";
 
 	// ------------- Error messages -------------
 	// Null / Blank validation error messages

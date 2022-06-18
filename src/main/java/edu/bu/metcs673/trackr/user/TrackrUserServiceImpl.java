@@ -1,9 +1,8 @@
 package edu.bu.metcs673.trackr.user;
 
-import java.text.MessageFormat;
-import java.util.Collections;
-import java.util.regex.Pattern;
-
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import edu.bu.metcs673.trackr.security.JWTUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,9 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.security.JWTUtil;
+import java.text.MessageFormat;
+import java.util.Collections;
+import java.util.regex.Pattern;
 
 /**
  * Defines logic of the "UserService" methods. Calls methods in the
@@ -151,6 +150,13 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 			throw new TrackrInputValidationException(MessageFormat.format(CommonConstants.INVALID_CHARACTERS, name));
 		}
 	}
+
+    public void regexPasswordValidation(String password) {
+
+        if (!Pattern.matches(CommonConstants.PASSWORD_REGEX, password)) {
+            throw new TrackrInputValidationException(MessageFormat.format(CommonConstants.INVALID_CHARACTERS, password));
+        }
+    }
 	
     /**
      * Used by the UserDetailsService when the JWT filter logic is occurring.
