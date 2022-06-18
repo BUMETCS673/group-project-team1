@@ -7,6 +7,7 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button, FormGroup, FormLabel } from "react-bootstrap";
+import * as Yup from "yup";
 
 const UserForm = (props) => {
   return (
@@ -19,7 +20,25 @@ const UserForm = (props) => {
         username: "",
         password: "",
       }}
-      validationSchema={props.validationSchema}
+      validationSchema={Yup.object({
+        firstName: Yup.string()
+          .max(100, "Must be 100 characters or less")
+          .required("Required"),
+        lastName: Yup.string()
+          .max(100, "Must be 100 characters or less")
+          .required("Required"),
+        username: Yup.string()
+          .max(50, "Must be 50 characters or less")
+          .required("Required"),
+        email: Yup.string()
+          .max(50, "Must be 50 characters or less")
+          .email("Invalid email address")
+          .required("Required"),
+        password: Yup.string()
+          .min(6, "Must be at least 6 characters")
+          .max(200, "Must be less than 200 characters")
+          .required("Required"),
+      })}
       onSubmit={(values, actions) => {
         props.handleUserFormSubmit(values);
         actions.setSubmitting(false);
@@ -32,6 +51,7 @@ const UserForm = (props) => {
             First name
           </FormLabel>
           <Field
+            id="firstName"
             type="text"
             name="firstName"
             className="form-control col-md-5"
@@ -43,6 +63,7 @@ const UserForm = (props) => {
             Last name
           </FormLabel>
           <Field
+            id="lastName"
             type="text"
             name="lastName"
             className="form-control col-md-5"
@@ -54,6 +75,7 @@ const UserForm = (props) => {
             Username
           </FormLabel>
           <Field
+            id="username"
             type="text"
             name="username"
             className="form-control col-md-5"
@@ -64,7 +86,12 @@ const UserForm = (props) => {
           <FormLabel htmlFor="email" className="form-label col-md-5">
             Email address
           </FormLabel>
-          <Field type="email" name="email" className="form-control col-md-5" />
+          <Field
+            id="email"
+            type="email"
+            name="email"
+            className="form-control col-md-5"
+          />
           <ErrorMessage name="email" component="div" />
         </FormGroup>
 
@@ -73,6 +100,7 @@ const UserForm = (props) => {
             Password
           </FormLabel>
           <Field
+            id="password"
             type="password"
             name="password"
             className="form-control col-md-5"
@@ -88,4 +116,4 @@ const UserForm = (props) => {
   );
 };
 
-export default UserForm;
+export default SignUpForm;

@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8147cbd2-6f06-4b81-ace9-15be0dc3deca",
+		"_postman_id": "83697b57-9868-44ff-bc00-a120ba39bf23",
 		"name": "BU CS 673 Group Project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "21092474"
+		"_exporter_id": "6395563"
 	},
 	"item": [
 		{
@@ -182,6 +182,148 @@
 			"response": []
 		},
 		{
+			"name": "Get User Profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify User Profile",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Test\",\n    \"lastName\": \"Testerman\",\n    \"username\": \"testUser\",\n\t\"password\": \"myCoolPassword\",\n\t\"email\": \"myEmail@email.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Bank Accounts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzQxMDMsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.zl8I78cA1Ckg123DJZmUNMS5IAcVyJPO1Vc754_puOA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/bank-accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"bank-accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Bank Account By ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzQxMDMsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.zl8I78cA1Ckg123DJZmUNMS5IAcVyJPO1Vc754_puOA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/bank-accounts/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"bank-accounts",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create Bank Account",
 			"request": {
 				"auth": {
@@ -316,7 +458,7 @@
 			"response": []
 		},
 		{
-			"name": "Modify transaction",
+			"name": "Get transaction by BankAccountId and TransactionId",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -328,19 +470,10 @@
 						}
 					]
 				},
-				"method": "PUT",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"bankAccountId\":7,\r\n    \"counterparty\":\"Wal121xiao-Mart\",\r\n    \"money\":10000.3,\r\n    \"time\":\"05/21-19:53\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/7",
+					"raw": "http://localhost:8080/api/v1/transactions/7/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -349,7 +482,73 @@
 					"path": [
 						"api",
 						"v1",
-						"transaction",
+						"transactions",
+						"7",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Transaction By BankID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzUxMTYsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.HCl7A8XbIkAgcVsZgi7MdtasZKUfuleoWNgQVacKePQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/transactions/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transactions",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All User's Transactions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzUxMTYsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.HCl7A8XbIkAgcVsZgi7MdtasZKUfuleoWNgQVacKePQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/transactions/7/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transactions",
+						"7",
 						"7"
 					]
 				}
@@ -381,7 +580,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction",
+					"raw": "http://localhost:8080/api/v1/transactions",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -390,7 +589,48 @@
 					"path": [
 						"api",
 						"v1",
-						"transaction"
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify transaction",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzUxMTYsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.HCl7A8XbIkAgcVsZgi7MdtasZKUfuleoWNgQVacKePQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bankAccountId\":7,\r\n    \"counterparty\":\"Wal121xiao-Mart\",\r\n    \"money\":10000.3,\r\n    \"time\":\"05/21-19:53\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/transactions/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"transactions",
+						"7"
 					]
 				}
 			},
@@ -412,7 +652,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/7/7",
+					"raw": "http://localhost:8080/api/v1/transactions/7/7",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -421,75 +661,8 @@
 					"path": [
 						"api",
 						"v1",
-						"transaction",
+						"transactions",
 						"7",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get transaction by id",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzUxMTYsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.HCl7A8XbIkAgcVsZgi7MdtasZKUfuleoWNgQVacKePQ",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/find/7/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"transaction",
-						"find",
-						"7",
-						"7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get all transaction",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIERldGFpbHMiLCJpc3MiOiJUcmFja3IgQXBwbGljYXRpb24iLCJpYXQiOjE2NTQ3MzUxMTYsInVzZXJuYW1lIjoidGVzdFVzZXIifQ.HCl7A8XbIkAgcVsZgi7MdtasZKUfuleoWNgQVacKePQ",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/api/v1/transaction/findAll/7",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"v1",
-						"transaction",
-						"findAll",
 						"7"
 					]
 				}
