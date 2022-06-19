@@ -94,15 +94,15 @@ public class TransactionServiceImplTest {
 
 	}
 
-	/**@Test
+	@Test
 	public void modifyTransactionTest_failure() {
 		Transaction mockTransaction = new Transaction(OTHER_TRANSACTIONDTO,OTHER_BANK_ACCOUNT);
 
-		Mockito.when(transactionRepository.findTraByIdAndBankAccountId(mockTransaction.getId(),mockTransaction.getBankAccount().getId())).thenReturn(Optional.of(mockTransaction));
+		Mockito.when(transactionRepository.save(mockTransaction)).thenThrow(TrackrInputValidationException.class);
 		assertThrows(TrackrInputValidationException.class,
-				() -> transactionServiceImpl.modifyTransaction(mockTransaction,TEST_TRANSACTIONDTO));
+				() -> transactionServiceImpl.modifyTransaction(mockTransaction,OTHER_TRANSACTIONDTO));
 	}
-	 */
+
 
 	@Test
 	public void deleteTransaction() {
@@ -117,11 +117,10 @@ public class TransactionServiceImplTest {
 
 	}
 
-	/**@Test
+	@Test
 	public void deleteTransaction_failure() {
-		TransactionDTO mockDTO = new TransactionDTO(4L,TEST_MONEY,TEST_TIME,TEST_COUNTERPARTY,TEST_DESCRIPTION);
 		Transaction mockTransaction = new Transaction(4L,TEST_BANK_ACCOUNT,TEST_MONEY,TEST_TIME,TEST_COUNTERPARTY,TEST_DESCRIPTION, Transaction.TRANSACTION_STATUS.VALID);
-		Mockito.when(transactionRepository.findTraByIdAndBankAccountId(0L,0L)).thenReturn(null);
-		assertNotEquals(Transaction.TRANSACTION_STATUS.INVALID, transactionServiceImpl.deleteTransaction(mockTransaction).getStatus());
-	}*/
+		Mockito.when(transactionRepository.save(mockTransaction)).thenThrow(TrackrInputValidationException.class);
+		assertThrows(TrackrInputValidationException.class, () ->transactionServiceImpl.deleteTransaction(mockTransaction));
+	}
 }

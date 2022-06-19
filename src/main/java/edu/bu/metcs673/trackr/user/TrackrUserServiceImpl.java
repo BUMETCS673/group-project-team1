@@ -78,6 +78,7 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
 
 		regexNameValidation(userInput.getFirstName());
 		regexNameValidation(userInput.getLastName());
+        regexPasswordValidation(userInput.getPassword());
 		
         // encrypt the provided password value, update User object
         String encodedPwd = bCryptPasswordEncoder.encode(userInput.getPassword());
@@ -96,6 +97,7 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
     @Override
     public TrackrUserDTO updateUser(TrackrUserDTO dto) {
         TrackrUser trackrUser = getCurrentUser();
+        regexPasswordValidation(dto.getPassword());
 
         if (StringUtils.isNotBlank(dto.getNewPassword())) {
             if (!bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword())) {
@@ -104,6 +106,8 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
                 trackrUser.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
             }
         }
+        regexNameValidation(getCurrentUser().getFirstName());
+        regexNameValidation(getCurrentUser().getLastName());
 
         trackrUser.setFirstName(dto.getFirstName());
         trackrUser.setLastName(dto.getLastName());

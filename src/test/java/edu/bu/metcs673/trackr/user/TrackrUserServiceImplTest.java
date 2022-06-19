@@ -176,7 +176,7 @@ public class TrackrUserServiceImplTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(strings = { "Tim的", "Jeaالعربيةan", "Xioabiにほんごng", "Wei한국어jie" })
+	@ValueSource(strings = { "Tim的", "Jeaالعربيةan", "Xiaobiにほんごng", "Wei한국어jie" })
 	public void testPasswordRegex_failure(String password) {
 		assertThrows(TrackrInputValidationException.class, () -> serviceImpl.regexPasswordValidation(password));
 	}
