@@ -106,8 +106,8 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
                 trackrUser.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
             }
         }
-        regexNameValidation(getCurrentUser().getFirstName());
-        regexNameValidation(getCurrentUser().getLastName());
+        regexNameValidation(dto.getFirstName());
+        regexNameValidation(dto.getLastName());
 
         trackrUser.setFirstName(dto.getFirstName());
         trackrUser.setLastName(dto.getLastName());
