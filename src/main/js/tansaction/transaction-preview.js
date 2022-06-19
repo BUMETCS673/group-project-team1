@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Container from "react-bootstrap/Container";
 import { Button, Table } from "react-bootstrap";
 import TransactionModal from "./transaction-modal";
@@ -84,7 +84,6 @@ const TransactionPreview = (props) => {
         handleEditTransactions={props.handleEditTransactions}
         handleAddTransactions={props.handleAddTransactions}
         isAddTransaction={props.isAddTransaction}
-        bankAccountId={props.bankAccountId}
         bankAccounts={props.bankAccounts}
       />
       <TransactionConfModal

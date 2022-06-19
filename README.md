@@ -208,7 +208,7 @@ const Home = (props) => {
                     />
                 </Col>
                 <Col sm={4} className="mt-md-4">
-                    <UserForm handleUserFormSubmit={props.handleSignUpFormSubmit}/>
+                    <SignUpForm handleUserFormSubmit={props.handleSignUpFormSubmit}/>
                 </Col>
             </Row>
         </Container>
@@ -339,3 +339,4 @@ Please refer to [Heroku Dev Center](https://devcenter.heroku.com/articles/loggin
 - React Router: https://reactrouter.com/docs/en/v6
 - Spring Boot auto reload changes using LiveReload and DevTools: https://www.codejava.net/frameworks/spring-boot/spring-boot-auto-reload-changes-using-livereload-and-devtools
 - Spring Hot Swapping: https://docs.spring.io/spring-boot/docs/1.5.22.RELEASE/reference/html/howto-hotswapping.html
+- React Testing Library Example with Formik: https://testing-library.com/docs/example-react-formik/

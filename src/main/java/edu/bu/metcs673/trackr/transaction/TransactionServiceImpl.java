@@ -1,13 +1,15 @@
 package edu.bu.metcs673.trackr.transaction;
 
-import java.util.List;
-
+import edu.bu.metcs673.trackr.bankaccount.BankAccount;
+import edu.bu.metcs673.trackr.bankaccount.BankAccount.ACCOUNT_STATUS;
+import edu.bu.metcs673.trackr.bankaccount.BankAccountRepository;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.bu.metcs673.trackr.bankaccount.BankAccount;
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Defines logic for the "TransactionService" methods. Calls methods in the
@@ -22,12 +24,17 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private BankAccountRepository bankAccountRepository;
+
     /**
      * The purpose of this method is to create a transaction in a bank account by
      * 'transactionInput' and 'bankAccount' value.
      *
-     * @param transactionInput this is a TransactionDTO object which gotten from the request body
-     * @param bankAccount      this is a bank account object which you will insert a transaction into
+     * @param transactionInput this is a TransactionDTO object which gotten from the
+     *                         request body
+     * @param bankAccount      this is a bank account object which you will insert a
+     *                         transaction into
      * @return Transaction
      * @author Xiaobing Hou
      * @date 05/23/2022
@@ -41,7 +48,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     /**
-     * The purpose of this method is to find a special transaction by 'transactionId' and 'bankAccountId' value.
+     * The purpose of this method is to find a special transaction by
+     * 'transactionId' and 'bankAccountId' value.
      *
      * @param transactionId this is transaction id
      * @param bankAccountId This is the id of the corresponding bank account
@@ -59,7 +67,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     /**
-     * The purpose of this method is to modify a special transaction record by 'transaction' and 'transactionInput' value.
+     * The purpose of this method is to modify a special transaction record by
+     * 'transaction' and 'transactionInput' value.
      *
      * @param transaction      this is a Transaction object
      * @param transactionInput This is a TransactionDTO object
@@ -86,7 +95,8 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
     public List<Transaction> findAllTraByBankAccountId(long bankAccountId) {
-        return transactionRepository.findAllTraByBankAccountIdAndStatus(bankAccountId, Transaction.TRANSACTION_STATUS.VALID);
+        return transactionRepository.findAllTraByBankAccountIdAndStatus(bankAccountId,
+                Transaction.TRANSACTION_STATUS.VALID);
     }
 
     /**
@@ -102,5 +112,22 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setStatus(Transaction.TRANSACTION_STATUS.INVALID);
         transactionRepository.save(transaction);
         return transaction;
+    }
+
+    /**
+     * The purpose of this method is to get all valid transaction
+     *
+     * @param userId
+     * @return List<Transaction>
+     * @author Tim and Xiaobing
+     */
+    @Override
+    public List<Transaction> findAllTransactions(long userId) {
+
+
+        List<Long> bankAccountIds = bankAccountRepository.findAllByUserIdAndStatus(userId, ACCOUNT_STATUS.ACTIVE)
+                .stream().map(BankAccount::getId).collect(Collectors.toList());
+
+        return transactionRepository.findByBankAccountIdInAndStatusOrderByTimeDesc(bankAccountIds, Transaction.TRANSACTION_STATUS.VALID);
     }
 }

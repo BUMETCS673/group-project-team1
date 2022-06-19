@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 
@@ -55,8 +56,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf()
-			.disable()
+		http
+			.csrf(csrf -> {
+					// enable CSRF protection, ignore the following paths which are entry/exit
+					// points, Spring Actuator endpoints, or API paths
+					csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+					.ignoringAntMatchers("/api/**")
+					.ignoringAntMatchers("/register")
+					.ignoringAntMatchers("/login")
+					.ignoringAntMatchers("/actuator/**");
+			})
 			.httpBasic()
 			.disable()
 			.cors()
@@ -67,12 +76,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.sessionManagement()
 			.sessionCreationPolicy(STATELESS);
-
+		
 		// Configure logout
 		http.logout(logout -> logout.logoutUrl("/logout")
-				.invalidateHttpSession(true)
 				.logoutSuccessHandler((request, response, authentication) -> response.setStatus(SC_OK))
-				.deleteCookies(JWT_COOKIE_NAME, USER_LOGGED_IN_COOKIE_NAME));
+				.deleteCookies(JWT_COOKIE_NAME, USER_LOGGED_IN_COOKIE_NAME)
+				.invalidateHttpSession(true));
 
 		// this will enable the frames for the H2 console
 		http.headers().frameOptions().disable();

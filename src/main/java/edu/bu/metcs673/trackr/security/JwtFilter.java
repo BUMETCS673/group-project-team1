@@ -1,12 +1,24 @@
 package edu.bu.metcs673.trackr.security;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
+import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
-import edu.bu.metcs673.trackr.common.CommonConstants;
-import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,20 +27,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.regex.Pattern;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 
-import static edu.bu.metcs673.trackr.common.CommonConstants.JWT_COOKIE_NAME;
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import edu.bu.metcs673.trackr.common.CommonConstants;
+import edu.bu.metcs673.trackr.user.TrackrUserServiceImpl;
 
 /**
  * Filter class that runs before actual API logic is processed. Checks for a JWT
@@ -95,7 +97,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 				// Create token using the username and password gathered from the JWT token
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username,
-						userDetails.getPassword(), new ArrayList<>());
+						userDetails.getPassword(), Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 				// Set authentication for API request

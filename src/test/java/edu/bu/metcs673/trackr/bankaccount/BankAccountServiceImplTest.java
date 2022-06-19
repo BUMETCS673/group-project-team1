@@ -47,7 +47,7 @@ public class BankAccountServiceImplTest {
 	public void createBankAccountTest() {
 
 		BankAccount mockAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
-				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
+				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE, null);
 		BankAccountDTO bankAcctDTO = new BankAccountDTO(BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
 				TEST_BALANCE);
 
@@ -61,9 +61,9 @@ public class BankAccountServiceImplTest {
 	@Test
 	public void modifyBankAccount_success() {
 		BankAccount mockAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
-				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
+				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE, null);
 		BankAccount modifiedAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.SAVING,
-				TEST_DESCRIPTION_OTHER, TEST_BALANCE_OTHER, BankAccount.ACCOUNT_STATUS.ACTIVE);
+				TEST_DESCRIPTION_OTHER, TEST_BALANCE_OTHER, BankAccount.ACCOUNT_STATUS.ACTIVE, null);
 		BankAccountDTO bankAcctDTO = new BankAccountDTO(BankAccount.ACCOUNT_TYPE.SAVING, TEST_DESCRIPTION_OTHER,
 				TEST_BALANCE_OTHER);
 
@@ -83,7 +83,7 @@ public class BankAccountServiceImplTest {
 	@Test
 	public void modifyBankAccount_failure() {
 		BankAccount mockAccount = new BankAccount(0L, OTHER_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
-				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
+				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE, null);
 		BankAccountDTO bankAcctDTO = new BankAccountDTO(BankAccount.ACCOUNT_TYPE.SAVING, TEST_DESCRIPTION_OTHER,
 				TEST_BALANCE_OTHER);
 
@@ -98,7 +98,7 @@ public class BankAccountServiceImplTest {
 	@Test
 	public void deactivateBankAccount_failure() {
 		BankAccount mockAccount = new BankAccount(0L, OTHER_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
-				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
+				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE, null);
 
 		Mockito.when(accountRepository.findById(0L)).thenReturn(Optional.of(mockAccount));
 
@@ -109,7 +109,7 @@ public class BankAccountServiceImplTest {
 	@Test
 	public void findBankAccountByUserIdTest_success() {
 		BankAccount mockAccount = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
-				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
+				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE, null);
 
 		Mockito.when(accountRepository.findByIdAndUserIdAndStatus(0L, 0L, BankAccount.ACCOUNT_STATUS.ACTIVE))
 				.thenReturn(mockAccount);

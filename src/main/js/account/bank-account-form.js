@@ -30,7 +30,7 @@ const BankAccountForm = (props) => {
         accountDescription: Yup.string()
           .max(255, "Must be 255 characters or less")
           .required("Required"),
-        balance: Yup.number().required("Required"),
+        balance: Yup.number().moreThan(0).required("Required"),
       })}
       onSubmit={(values, actions) => {
         props.handleBankAccountFormSubmit(values);
@@ -44,6 +44,7 @@ const BankAccountForm = (props) => {
             Select Type
           </FormLabel>
           <Field
+            id="accountType"
             as="select"
             name="accountType"
             className="form-control col-md-5"
@@ -63,6 +64,7 @@ const BankAccountForm = (props) => {
             Description
           </FormLabel>
           <Field
+            id="accountDescription"
             type="text"
             name="accountDescription"
             className="form-control col-md-5"
@@ -73,7 +75,12 @@ const BankAccountForm = (props) => {
           <FormLabel htmlFor="balance" className="form-label col-md-5">
             Balance
           </FormLabel>
-          <Field type="text" name="balance" className="form-control col-md-5" />
+          <Field
+            id="balance"
+            type="text"
+            name="balance"
+            className="form-control col-md-5"
+          />
           <ErrorMessage name="balance" component="div" />
         </FormGroup>
         <Button type="submit" variant="primary" className="mt-md-4 float-end">

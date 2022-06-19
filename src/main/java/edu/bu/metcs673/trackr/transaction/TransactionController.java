@@ -22,6 +22,7 @@ import edu.bu.metcs673.trackr.bankaccount.BankAccount;
 import edu.bu.metcs673.trackr.common.BaseController;
 import edu.bu.metcs673.trackr.common.CommonConstants;
 import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import edu.bu.metcs673.trackr.user.TrackrUser;
 
 /**
  * Controller for Transactions Management. Contains 'Create', 'Find', 'Modify',
@@ -37,6 +38,16 @@ public class TransactionController extends BaseController {
 
 	@Autowired
 	private TransactionService transactionService;
+
+	@GetMapping
+	public ResponseEntity<GenericApiResponse<List<Transaction>>> findAllTransactions() {
+		TrackrUser user = getUser();
+		List<Transaction> allTransactions = transactionService.findAllTransactions(user.getId());
+
+		return ResponseEntity.ok(GenericApiResponse.successResponse(
+				MessageFormat.format(CommonConstants.FIND_ALL_TRANSACTION_FOR_USER, user.getUsername()),
+				allTransactions));
+	}
 
 	/**
 	 * The purpose of this method is to find all transaction by 'bankAccountId'

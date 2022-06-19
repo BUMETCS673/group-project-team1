@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button, FormGroup, FormLabel } from "react-bootstrap";
 import * as Yup from "yup";
 
@@ -32,6 +32,7 @@ const LoginForm = (props) => {
             Username
           </FormLabel>
           <Field
+            id="username"
             type="text"
             name="username"
             className="form-control col-md-5"
@@ -43,6 +44,7 @@ const LoginForm = (props) => {
             Password
           </FormLabel>
           <Field
+            id="password"
             type="password"
             name="password"
             className="form-control col-md-5"

@@ -74,7 +74,7 @@ public class BankAccountTest {
 	@Test
 	public void fullArgsConstructorTest() {
 		BankAccount acct = new BankAccount(0L, TEST_USER, BankAccount.ACCOUNT_TYPE.CHECKING, TEST_DESCRIPTION,
-				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE);
+				TEST_BALANCE, BankAccount.ACCOUNT_STATUS.ACTIVE, null);
 
 		assertEquals(TEST_DESCRIPTION, acct.getAccountDescription());
 		assertEquals(BankAccount.ACCOUNT_STATUS.ACTIVE, acct.getStatus());
@@ -91,20 +91,15 @@ public class BankAccountTest {
 		assertFalse(violations.isEmpty());
 	}
 
-    private static Stream<Arguments> generateTestData() {
-        return Stream.of(
-                Arguments.of(new BankAccountDTO()),
-                Arguments.of(new BankAccountDTO(null, TEST_DESCRIPTION, TEST_BALANCE)),
+	private static Stream<Arguments> generateTestData() {
+		return Stream.of(Arguments.of(new BankAccountDTO()),
+				Arguments.of(new BankAccountDTO(null, TEST_DESCRIPTION, TEST_BALANCE)),
 				Arguments.of(new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, null)),
-                Arguments.of(new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, TEST_BALANCE * -1)),
-                Arguments.of(
-                        new BankAccountDTO(
-                                TEST_TYPE,
-                                IntStream.range(0, 256).boxed().map(Object::toString).collect(Collectors.joining()),
-                                TEST_BALANCE
-                        )
-                )
+				Arguments.of(new BankAccountDTO(TEST_TYPE, TEST_DESCRIPTION, TEST_BALANCE * -1)),
+				Arguments.of(new BankAccountDTO(TEST_TYPE,
+						IntStream.range(0, 256).boxed().map(Object::toString).collect(Collectors.joining()),
+						TEST_BALANCE))
 
-        );
-    }
+		);
+	}
 }

@@ -51,7 +51,7 @@ class TrackrUserService {
    */
   logout = () => {
     localStorage.removeItem("user");
-    return axios.get(LOGOUT_PATH);
+    return axios.post(LOGOUT_PATH);
   };
 
   /**
