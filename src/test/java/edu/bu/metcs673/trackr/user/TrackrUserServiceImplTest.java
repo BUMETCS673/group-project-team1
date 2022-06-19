@@ -1,14 +1,7 @@
 package edu.bu.metcs673.trackr.user;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
+import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
+import edu.bu.metcs673.trackr.security.JWTUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,8 +18,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import edu.bu.metcs673.trackr.common.TrackrInputValidationException;
-import edu.bu.metcs673.trackr.security.JWTUtil;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests the methods in the TrackrUserServiceImpl. Uses Mockito to fake
@@ -168,5 +167,17 @@ public class TrackrUserServiceImplTest {
 	@ValueSource(strings = { "Tim@$#@", "Jea@$T@$an", "Xioabi1/-+15$ng", "Wei LKJDSF_ *Y(*RYjie" })
 	public void testNameRegex_failure(String name) {
 		assertThrows(TrackrInputValidationException.class, () -> serviceImpl.regexNameValidation(name));
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "Tim", "Jean!", "Xiaobing?", "Weijie_", "Test-Name", "Tim123" })
+	public void testPasswordRegex_success(String password) {
+		assertDoesNotThrow(() -> serviceImpl.regexPasswordValidation(password));
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "Tim的", "Jeaالعربيةan", "Xiaobiにほんごng", "Wei한국어jie" })
+	public void testPasswordRegex_failure(String password) {
+		assertThrows(TrackrInputValidationException.class, () -> serviceImpl.regexPasswordValidation(password));
 	}
 }
