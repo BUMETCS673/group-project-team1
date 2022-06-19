@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "83697b57-9868-44ff-bc00-a120ba39bf23",
-		"name": "BU CS 673 Group Project",
+		"_postman_id": "6bac36c0-80e6-4a9b-b547-6362cddd403c",
+		"name": "BU CS 673 Group Project DEV",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "6395563"
 	},
@@ -28,12 +28,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/register",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/register",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"register"
 					]
@@ -63,12 +64,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/register",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/register",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"register"
 					]
@@ -98,12 +100,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/register",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/register",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"register"
 					]
@@ -133,12 +136,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/register",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/register",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"register"
 					]
@@ -147,7 +151,7 @@
 			"response": []
 		},
 		{
-			"name": "Get User Token Alt",
+			"name": "User Login",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -168,12 +172,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/login",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/login",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"login"
 					]
@@ -194,12 +199,13 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/profile",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/profile",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -231,12 +237,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/profile",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/profile",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -269,12 +276,13 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank-accounts",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/bank-accounts",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -307,12 +315,13 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank-accounts/7",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/bank-accounts/7",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -355,12 +364,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank-accounts",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/bank-accounts",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -402,12 +412,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank-accounts/7",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/bank-accounts/7",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -441,12 +452,13 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank-accounts/7",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/bank-accounts/7",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -473,12 +485,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transactions/7/7",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/transactions/7/7",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -506,12 +519,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transactions/7",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/transactions/7",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -538,12 +552,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transactions/7/7",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/transactions/7/7",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -580,12 +595,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transactions",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/transactions",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -620,12 +636,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transactions/7",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/transactions/7",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -652,12 +669,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/transactions/7/7",
-					"protocol": "http",
+					"raw": "https://trackr-dev.herokuapp.com/api/v1/transactions/7/7",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"trackr-dev",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
