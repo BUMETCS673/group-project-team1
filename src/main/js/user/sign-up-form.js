@@ -9,7 +9,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button, FormGroup, FormLabel } from "react-bootstrap";
 import * as Yup from "yup";
 
-const UserForm = (props) => {
+const SignUpForm = (props) => {
   return (
     <Formik
       enableReinitialize={true}
