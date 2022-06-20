@@ -102,6 +102,7 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
             if (!bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword())) {
                 throw new TrackrInputValidationException(CommonConstants.WRONG_PASSWORD);
             } else {
+                regexPasswordValidation(dto.getPassword());
                 trackrUser.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
             }
         }
