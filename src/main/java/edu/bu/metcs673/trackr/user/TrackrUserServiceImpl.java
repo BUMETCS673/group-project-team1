@@ -97,7 +97,6 @@ public class TrackrUserServiceImpl implements TrackrUserService, UserDetailsServ
     @Override
     public TrackrUserDTO updateUser(TrackrUserDTO dto) {
         TrackrUser trackrUser = getCurrentUser();
-        regexPasswordValidation(dto.getPassword());
 
         if (StringUtils.isNotBlank(dto.getNewPassword())) {
             if (!bCryptPasswordEncoder.matches(dto.getPassword(), trackrUser.getPassword())) {
