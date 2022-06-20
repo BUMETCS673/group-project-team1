@@ -1,0 +1,1058 @@
+swagger: "2.0"
+info:
+  description: "This is the Team 1 group project for Boston University's MET CS 673 class in Summer 1 2022 (May - June).  The application is modeled after personal finance applications like Mint and Truebill and allows users to input bank account and transaction data.  This data can then be accessed, modified, or voided at the user's discretion and it allows them to see their spending habits at a high level. \n\n Team members: Jean Dorancy, Timothy Flucker, Xiaobing Hou, Weijie Liang"
+  version: "1.0.0"
+  title: "Trackr - Personal Transaction Management"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "tflucker@bu.edu"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "trackr.swagger.io"
+basePath: "/v1"
+tags:
+  - name: "User Management"
+  - name: "Bank Account Management"
+  - name: "Transaction Management"
+schemes:
+  - "https"
+  - "http"
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    
+paths:
+  /register:
+    post:
+      tags: 
+        - "User Management"
+      summary: "Creates a new user with the provided data. Returns a JWT Token value."
+      description: "Unsecured API Endpoint that allows for new users to be created in the system. Upon valid inputs, a new user record will be created and a new JWT Token will be returned to the user for future API calls."
+      operationId: "register"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/TrackrUserDTO"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Successfully created new JWT token!"
+              additionalData:
+                type: "string"
+                example: "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSm9lIENvZGVyIn0.5dlp7GmziL2QS06sZgK4mtaqv0_xX4oFUuTDh1zHK4U"
+            
+  /login:
+    post:
+      tags: 
+        - "User Management"
+      summary: "Validate if that user exists using the provided login credentials and return a JWT Token value."
+      description: "Unsecured API Endpoint that allows users to enter the system (front-end) or generate a new JWT Token if they forgot their previous token or if it expired."
+      operationId: "login"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/TokenRetrievalDTO"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Successfully created new JWT token!"
+              additionalData:
+                type: "string"
+                example: "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSm9lIENvZGVyIn0.5dlp7GmziL2QS06sZgK4mtaqv0_xX4oFUuTDh1zHK4U"
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Invalid Login Credentials."
+            
+  /api/v1/profile:
+    get:
+      security:
+        - Bearer: []
+      tags: 
+        - "User Management"
+      summary: "Get the current user profile."
+      description: "Get the current user profile."
+      operationId: "getProfile"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  $ref: '#/definitions/TrackrUserDTO'
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+    put:
+      security:
+        - Bearer: []    
+      tags: 
+        - "User Management"
+      summary: "Update the current user profile information."
+      description: "Update the current user profile information, used primarily in the React front-end."
+      operationId: "updateProfile"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/TrackrUserDTO"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  $ref: '#/definitions/TrackrUserDTO'
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+  
+  /api/v1/bank-accounts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Bank Account Management"
+      summary: "Retrieves all bank accounts tied to user."
+      description: "Retrieve all bank account records tied to the user"
+      operationId: "findBankAccounts"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  $ref: "#/definitions/BankAccount" 
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - "Bank Account Management"
+      summary: "Create a bank account tied to the user."
+      description: "Query the database to find a bank account record tied to the particular user with the provided id value."
+      operationId: "createBankAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON object used to create a bank account user in the application."
+        required: true
+        schema:
+          $ref: "#/definitions/BankAccountDTO"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                $ref: "#/definitions/BankAccount" 
+
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+
+  /api/v1/bank-accounts/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Bank Account Management"
+      summary: "Retrieves a bank account tied to the user based on the provided id"
+      description: "Query the database to find a bank account record tied to the particular user with the provided id value."
+      operationId: "findBankAccountById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                $ref: "#/definitions/BankAccount" 
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - "Bank Account Management"
+      summary: "Voids a bank account tied to the user based on the provided id"
+      description: "Query the database to find a bank account record tied to the particular user with the provided id value, if it exists then set status to VOID to prevent transactions from being added."
+      operationId: "voidBankAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - "Bank Account Management"
+      summary: "Updateds a bank account tied to the user based on the provided id"
+      description: "Query the database to find a bank account record tied to the particular user with the provided id value, if it exists then update it with the provided information, else return an error."
+      operationId: "updateBankAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "JSON object used to create a bank account user in the application."
+        required: true
+        schema:
+          type: "object"
+          properties:
+            accountType:
+              type: "string"
+              enum: ["CHECKING", "SAVINGS", "RETIREMENT", "OTHER"]
+              example: "CHECKING"
+            accountName:
+              type: "string"
+              example: "Personal checking account"
+            balance:
+              type: "number"
+              format: "float"
+              example: 5143.91
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                $ref: "#/definitions/BankAccount" 
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+
+  /api/v1/transactions/{bankAccountId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Transaction Management"
+      summary: "Retrieves all transactions tied to a specific bankAccountId."
+      description: "Retrieves all transactions tied to a specific bankAccountId."
+      operationId: "findAllTransactionById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "path"
+        name: "bankAccountId"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Transaction" 
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+  
+  /api/v1/transactions/{bankAccountId}/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - "Transaction Management"
+      summary: "Retrieves all transactions tied to a specific bankAccountId."
+      description: "Retrieves all transactions tied to a specific bankAccountId."
+      operationId: "findTransactionById"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "path"
+        name: "bankAccountId"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "path"
+        name: "id"
+        description: "ID of transaction"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                $ref: "#/definitions/Transaction"
+                  
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - "Transaction Management"
+      summary: "Voids a transaction tied to the user based on the provided id"
+      description: "Query the database to find a transaction record tied to the particular user with the provided id value, if it exists then set status to VOID and reverse the balance change to the related bank account."
+      operationId: "voidTransaction"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "path"
+        name: "bankAccountId"
+        description: "ID of bank account"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "path"
+        name: "id"
+        description: "ID of transaction"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "JSON object used to create a bank account user in the application."
+        required: true
+        schema:
+          $ref: '#/definitions/TransactionDTO'
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                $ref: "#/definitions/Transaction"
+                  
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+
+  /api/v1/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags: 
+        - "Transaction Management"
+      summary: "Retrieve all transaction associated to the current user."
+      description: "Retrieve all transaction associated to the current user."
+      operationId: "getAllTransactions"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Transaction"
+                  
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - "Transaction Management"
+      summary: "Create a transaction tied to the user and a specific bank account"
+      description: "Insert a new transaction record into the database tied to the user."
+      operationId: "createTransaction"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON object used to create a transaction database record."
+        required: true
+        schema:
+          type: "object"
+          properties:
+            bankAccountId:
+              type: "integer"
+              format: "integer64"
+              example: 123
+            transactionType:
+              type: "string"
+              enum: ["DEPOSIT","WITHDRAWL"]
+              example: "WITHDRAWL"
+            transactionDesc:
+              type: "string"
+              example: "Starbucks morning coffee, with croissant"
+            transactionAmount:
+              type: "number"
+              format: "float"
+              example: 7.95
+            transactionDate:
+              type: "string"
+              format: "date"
+              example: "2022-05-10"
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                $ref: "#/definitions/Transaction"
+                  
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+  
+  /api/v1/transaction/{id}:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - "Transaction Management"
+      summary: "Updates a transaction with the provided request body."
+      description: "If user is owner of the specified bank account, they can modify the transaction with the provided information.  Otherwise, return an error."
+      operationId: "modifyTransaction"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "ID of transaction"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "JSON object used to create a bank account user in the application."
+        required: true
+        schema:
+          $ref: '#/definitions/TransactionDTO'
+      responses:
+        "200": 
+          description: "success response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "SUCCESS"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                $ref: "#/definitions/Transaction"
+                  
+        "400": 
+          description: "error response"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "ERROR"
+              date:
+                type: "string"
+                format: "date"
+                example: "2022-06-10"
+              message:
+                type: "string"
+                example: "Some message here!"
+              additionalData:
+                type: "array"
+                items:
+                  type: "string"
+                  example: "some detailed error message"
+
+definitions:
+  TrackrUserDTO:
+    type: "object"
+    properties:
+      firstName:
+        type: "string"
+        example: "John"
+      lastName:
+        type: "string"
+        example: "Doe"
+      username:
+        type: "string"
+        example: "myUsername"
+      password:
+        type: "string"
+        format: "password"
+        example: "myCoolPassword"
+      email:
+        type: "string"
+        format: "email"
+        example: "myUser@email.com"        
+  TokenRetrievalDTO: 
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        example: "myUsername"
+      password:
+        type: "string"
+        format: "password"
+        example: "myCoolPassword"
+  BankAccountDTO:
+    type: "object"
+    properties:
+      accountType:
+        type: "string"
+        enum: 
+          - "CHECKING"
+          - "SAVINGS"
+          - "RETIREMENT"
+          - "OTHER"
+        example: "CHECKING"
+      accountDescription:
+        type: string
+        example: "My Checking Account"
+      balance:
+        type: "number"
+        format: "float"
+        example: 5143.91
+  TransactionDTO:
+    type: "object"
+    properties:
+      bankAccountId:
+        type: "integer"
+        format: "integer64"
+        example: 1
+      money:
+        type: "number"
+        format: "float"
+        example: 15.10
+      time:
+        type: "string"
+        example: "2022-05-10"
+      counterparty:
+        type: "string"
+        example: "HOA"
+      transactionDescription:
+        type: string
+        example: "Rent Payment"
+  BankAccount:
+    type: "object"
+    properties:
+      id: 
+        type: "integer"
+        format: "int64"
+        example: 1
+      userId:
+        type: "integer"
+        format: "integer64"
+        example: 12
+      accountType:
+        type: "string"
+        enum: 
+          - "CHECKING"
+          - "SAVINGS"
+          - "RETIREMENT"
+          - "OTHER"
+        example: "CHECKING"
+      accountName:
+        type: string
+        example: "My Checking Account"
+      balance:
+        type: "number"
+        format: "float"
+        example: 5143.91
+      status:
+        type: "string"
+        example: "ACTIVE"
+  Transaction:
+    type: "object"
+    properties:
+      id: 
+        type: "integer"
+        format: "int64"
+        example: 1
+      userId:
+        type: "integer"
+        format: "integer64"
+        example: 12
+      bankAccountId:
+        type: "integer"
+        format: "integer64"
+        example: 123
+      transactionType:
+        type: "string"
+        enum: 
+          - "DEPOSIT"
+          - "WITHDRAWL"
+        example: "WITHDRAWL"
+      transactionAmount:
+        type: "number"
+        format: "float"
+        example: 5143.91
+      transactionDesc:
+        type: "string"
+        example: "Starbucks morning coffee, with croissant"
+      transactionDate:
+        type: "string"
+        format: "date"
+        example: "2022-05-10"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

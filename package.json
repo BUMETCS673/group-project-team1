@@ -1,0 +1,49 @@
+{
+  "name": "bu-met-cs-673-trackr",
+  "version": "0.1.0",
+  "description": "Simple web application for tracking bank account transactions.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:BUMETCS673/group-project-team1.git"
+  },
+  "dependencies": {
+    "axios": "0.27.2",
+    "bootstrap": "5.1.3",
+    "formik": "2.2.9",
+    "js-cookie": "^3.0.1",
+    "npm": "^8.12.1",
+    "react": "18.1.0",
+    "react-bootstrap": "2.4.0",
+    "react-bootstrap-icons": "^1.8.2",
+    "react-dom": "18.1.0",
+    "react-router": "6.3.0",
+    "react-router-dom": "6.3.0",
+    "yup": "0.32.11"
+  },
+  "scripts": {
+    "watch": "webpack watch",
+    "format": "prettier --write \"src/main/js/**\"",
+    "sniff": "prettier --check \"src/main/js/**\"",
+    "test": "jest test"
+  },
+  "devDependencies": {
+    "@babel/core": "7.18.0",
+    "@babel/preset-env": "7.18.0",
+    "@babel/preset-react": "7.17.12",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.2.0",
+    "babel-loader": "8.2.5",
+    "css-loader": "6.7.1",
+    "jest": "^28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
+    "jsdom": "^19.0.0",
+    "prettier": "2.6.2",
+    "style-loader": "3.3.1",
+    "webpack": "5.72.1",
+    "webpack-cli": "4.9.2"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+  }
+}
