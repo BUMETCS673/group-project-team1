@@ -56,8 +56,7 @@ const TransactionForm = (props) => {
           : props.selectedTransaction.transactionDescription,
       }}
       validationSchema={Yup.object({
-        money: Yup.number()
-          .required("Required"),
+        money: Yup.number().required("Required"),
         counterparty: Yup.string()
           .max(100, "Must be 100 characters or less")
           .required("Required"),
